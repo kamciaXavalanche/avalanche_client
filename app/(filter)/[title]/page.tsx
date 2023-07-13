@@ -9,7 +9,14 @@ import { IoCloseOutline } from "react-icons/io5";
 import Products from "./Products";
 import { url } from "../../constants/constants";
 
-const FilterPage = ({ params }) => {
+interface FilterPageProps {
+  params: {
+    title: string;
+    // other properties if applicable
+  };
+}
+
+const FilterPage = ({ params }: FilterPageProps) => {
   const [activeParams, setActiveParams] = useState([
     params.title.toUpperCase(),
   ]);
