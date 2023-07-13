@@ -44,7 +44,7 @@ const Bestsellers = ({ products }) => {
           <li className="text-2xl cursor-pointer">KOMPLETY</li>
         </nav>
       </div>
-      <div className="w-full  grid grid-cols-1 lg:grid-cols-4 gap-4">
+      <div className="w-full  grid grid-cols-1 lg:grid-cols-4 gap-y-10 gap-x-5">
         {products?.map((product) => (
           <div
             className="w-full h-full relative cursor-pointer product"
@@ -79,6 +79,7 @@ const Bestsellers = ({ products }) => {
                   className="rear-img object-cover"
                 />
               )}
+              <h2 className="font-medium text-lg">{product.attributes.name}</h2>
             </Link>
           </div>
         ))}

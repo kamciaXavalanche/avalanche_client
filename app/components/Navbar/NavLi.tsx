@@ -34,7 +34,7 @@ const NavLi: React.FC<NavLiProps> = ({
 
   return (
     <Link
-      href={`/${title}`}
+      href={`/search/${title.toLocaleLowerCase()}`}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
       className={`

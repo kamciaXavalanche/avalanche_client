@@ -28,7 +28,6 @@ const FilterPage = ({ params }: FilterPageProps) => {
     to: 1000,
   });
 
-  // const url = process.env.NEXT_PUBLIC_API_URL;
 
   const { data, isLoading } = useQuery(
     ["productData", category, activeParams],

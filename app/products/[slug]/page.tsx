@@ -11,12 +11,15 @@ import Cookies from "js-cookie";
 import { useState } from "react";
 import { url } from "@/app/constants/constants";
 import { calculateDiscountedPrice, formatPrice } from "@/app/utils/functions";
+import BuyingPopup from "@/app/components/BuyingPopup/BuyingPopup";
+import Loader from "@/app/components/Loader";
 
 const ProductPage = ({ params }) => {
   const [cartItems, setCartItems] = useAtom(cartAtom);
   const [choosenSize, setChoosenSize] = useState("");
   const [choosenColor, setChoosenColor] = useState("");
   const [selectedColor, setSelectedColor] = useState(0);
+  const [popup, setPopup] = useState(false);
 
   function increaseCartQuantity(slug: string, size: string, color: string) {
     const uuid = crypto.randomUUID();
@@ -67,7 +70,7 @@ const ProductPage = ({ params }) => {
   });
 
   if (isLoading) {
-    return <div>Loading</div>;
+    return <Loader />;
   }
 
   if (!data || !data.data || !data.data.attributes) {
@@ -174,19 +177,21 @@ const ProductPage = ({ params }) => {
           </div>
         </div>
         <button
-          onClick={() =>
+          onClick={() => {
             increaseCartQuantity(
               data.data.attributes.slug,
               choosenSize,
               choosenColor
-            )
-          }
+            ),
+              setPopup(true);
+          }}
           className="button-secondary my-4"
         >
           dodaj do koszyka
         </button>
         <button className="button-primary">kup teraz</button>
       </div>
+      {popup && <BuyingPopup setPopup={setPopup} />}
     </div>
   );
 };

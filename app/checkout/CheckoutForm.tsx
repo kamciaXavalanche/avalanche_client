@@ -35,7 +35,7 @@ export default function CheckoutForm() {
       switch (paymentIntent.status) {
         case "succeeded":
           setMessage("Payment succeeded!");
-
+          alert("hej");
           setCartItems([]); // Set cartItems to an empty array
           Cookies.set("cart", JSON.stringify(cartItems));
 

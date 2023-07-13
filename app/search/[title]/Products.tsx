@@ -7,6 +7,8 @@ import { useQuery } from "@tanstack/react-query";
 import { motion } from "framer-motion";
 import ProductPrice from "@/app/components/ProductPrice";
 import Link from "next/link";
+import Loader from "@/app/components/Loader";
+import { url } from "@/app/constants/constants";
 
 interface ProductsProps {
   title: string;
@@ -17,14 +19,13 @@ interface ProductsProps {
 
 const Products: React.FC<ProductsProps> = ({
   title,
-  brand,
   size,
   price,
   category,
 }) => {
   const query = qs.stringify(
     {
-      populate: ["categories", "images"],
+      populate: ["categories", "coverImages"],
       filters: {
         categories: {
           title: {
@@ -48,24 +49,22 @@ const Products: React.FC<ProductsProps> = ({
     }
   );
 
-  const url = "http://localhost:1337/";
   const {
     data: responseData,
     isLoading,
     isError,
   } = useQuery(["productData", query], {
     queryFn: async () => {
-      const { data } = await axios.get(url + "api/products?" + query);
+      const { data } = await axios.get(
+        url + "/api/products?populate=coverImages"
+      );
+      // const { data } = await axios.get(url + "api/products?" + query);
       return data;
     },
   });
 
   if (isLoading) {
-    return (
-      <motion.div className="fixed top-0 left-0 w-full h-screen z-[999] bg-white flex justify-center items-center overflow-hidden">
-        <Logo />
-      </motion.div>
-    );
+    return <Loader />;
   }
 
   if (isError) {
@@ -75,18 +74,18 @@ const Products: React.FC<ProductsProps> = ({
   console.log(responseData.data);
 
   return (
-    <div className="lg:flex gap-4 justify-center items-center my-4 lg:my-20">
+    <div className="lg:flex flex-wrap gap-y-16 gap-x-6 justify-center items-center my-4 lg:my-20">
       {responseData.data.map((item) => (
         <Link
           href={`/products/${item?.attributes?.slug}`}
-          className=" lg:w-[200px] lg:h-[300px]"
+          className=" lg:w-[220px] lg:h-[340px]"
         >
           <img
-            className="w-full h-full object-cover"
-            src={item?.attributes?.images?.data[0]?.attributes?.url}
+            className="w-full h-full object-cover hover:scale-[1.05] transition duration-300"
+            src={item?.attributes?.coverImages?.data[0]?.attributes?.url}
             alt=""
           />
-          <div>{item?.attributes?.name}</div>
+          <div className="mt-2">{item?.attributes?.name}</div>
           <ProductPrice
             price={item?.attributes?.price}
             discount={item?.attributes?.discount}

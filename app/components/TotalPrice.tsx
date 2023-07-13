@@ -5,13 +5,12 @@ import { useAtom } from "jotai";
 import { useEffect, useState } from "react";
 import { cartAtom } from "../lib/atoms";
 import { formatPrice } from "../utils/functions";
+import { url } from "../constants/constants";
 import Cookies from "js-cookie";
 
 const TotalPrice = () => {
   const [products, setProducts] = useState([]);
   const [cartItems, setCartItems] = useAtom(cartAtom);
-
-  const url = "http://localhost:1337";
 
   useEffect(() => {
     const fetchData = async () => {
