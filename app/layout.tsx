@@ -20,6 +20,8 @@ export default async function RootLayout({
   return (
     <ReactQueryProvider>
       <html lang="en">
+        <script src="https://unpkg.com/pdfjs-dist/build/pdf.min.js"></script>
+        <script src="https://unpkg.com/pdfjs-dist/build/pdf.worker.min.js"></script>
         <body>
           <div>
             <Navbar categories={categories.data} />

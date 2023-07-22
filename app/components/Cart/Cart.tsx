@@ -25,7 +25,7 @@ const Cart: React.FC<CartProps> = ({ setToggle }) => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get(url + "/api/products"); // Zmień ścieżkę na odpowiednią dla twojej aplikacji
+        const response = await axios.get(url + "/api/products?populate=*"); // Zmień ścieżkę na odpowiednią dla twojej aplikacji
         setProducts(response.data);
       } catch (error) {
         console.error("Błąd podczas pobierania produktów:", error);
@@ -39,9 +39,14 @@ const Cart: React.FC<CartProps> = ({ setToggle }) => {
     const item = products?.data?.find(
       (item) => item.attributes.slug === array.slug
     );
-    const price = item?.attributes.price ?? 0;
-    const discount = item?.attributes.discount ?? 0;
-    return total + (price - (price * discount) / 100) * array.quantity;
+    const test = item?.attributes?.productAttributes;
+    const znalezionyObiekt = test?.find(
+      (obiekt) => obiekt.color === array.color
+    );
+
+    const price = znalezionyObiekt?.price ?? 0;
+    const discount = znalezionyObiekt?.discount ?? 0;
+    return total + (price - (price * discount) / 100) * (array.quantity ?? 0);
   }, 0);
 
   useEffect(() => {

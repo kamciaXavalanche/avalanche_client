@@ -40,7 +40,9 @@ const Product: React.FC<ProductProps> = ({
     });
   }
 
-  console.log(productData);
+  const test = productData.data.attributes.productAttributes;
+
+  const znalezionyObiekt = test.find((obiekt) => obiekt.color === color);
 
   return (
     <div className="flex gap-8">
@@ -56,8 +58,8 @@ const Product: React.FC<ProductProps> = ({
           <h2>Rozmiar: {size}</h2>
           <h2>Kolor: {color}</h2>
           <ProductPrice
-            price={productData.data?.attributes?.price * quantity}
-            discount={productData.data?.attributes?.discount * quantity}
+            price={znalezionyObiekt.price * quantity}
+            discount={znalezionyObiekt.discount * quantity}
           />
         </div>
         <div className="flex justify-between items-center">

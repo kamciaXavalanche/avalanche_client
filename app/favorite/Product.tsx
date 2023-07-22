@@ -3,6 +3,7 @@ import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import { url } from "../constants/constants";
 import Image from "next/image";
+import Link from "next/link";
 
 const Product = ({ slug }) => {
   const { data, isLoading } = useQuery(["productData", slug], {
@@ -15,34 +16,27 @@ const Product = ({ slug }) => {
   });
 
   if (isLoading) {
-    return <div>Loading</div>;
+    return <div>Loading image</div>;
   }
 
   if (!data || !data.data || !data.data.attributes) {
     return <div>Error: Failed to fetch data</div>;
   }
 
-  const {
-    brand,
-    name,
-    price,
-    discount,
-    coverImages,
-    description,
-    color,
-    sizes,
-  } = data.data.attributes;
+  const { name, coverImages } = data.data.attributes;
 
   return (
-    <div>
-      <Image
-        width={160}
-        height={260}
-        src={coverImages.data[0].attributes.url}
-        alt=""
-      />
-      <h2>{name}</h2>
-    </div>
+    <Link href={`/products/${slug}`}>
+      <div className="w-40 h-80 relative">
+        <Image
+          fill
+          style={{ objectFit: "cover" }}
+          src={coverImages.data[0].attributes.url}
+          alt=""
+        />
+      </div>
+      <h2 className="text-center">{name}</h2>
+    </Link>
   );
 };
 

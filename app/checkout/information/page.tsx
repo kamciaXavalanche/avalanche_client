@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useAtom } from "jotai";
 import FloatingLabel from "../FloatingLabel";
 import Summary from "../Summary";
@@ -18,6 +18,7 @@ import {
 } from "@/app/lib/atoms";
 import StepBack from "../StepBack";
 import { useRouter } from "next/navigation";
+import Cookies from "js-cookie";
 
 const Information = () => {
   const [email, setEmail] = useAtom(emailAtom);
@@ -30,6 +31,24 @@ const Information = () => {
   const [number, setNumber] = useAtom(numberAtom);
   const [formError, setFormError] = useState("");
   const router = useRouter();
+
+  useEffect(() => {
+    Cookies.set(
+      "userData",
+      JSON.stringify([
+        {
+          email: email,
+          address: address,
+          country: country,
+          firstname: name,
+          secondname: secondName,
+          postcode: zipcode,
+          city: city,
+          number: number,
+        },
+      ])
+    );
+  }, [email, address, country, name, secondName, zipcode, city, number]);
 
   const handleEmailChange = (value: string) => {
     setEmail(value);

@@ -28,7 +28,6 @@ const FilterPage = ({ params }: FilterPageProps) => {
     to: 1000,
   });
 
-
   const { data, isLoading } = useQuery(
     ["productData", category, activeParams],
     {
@@ -38,18 +37,40 @@ const FilterPage = ({ params }: FilterPageProps) => {
       },
     }
   );
+  const { data: categoryData, isLoading: categoryLoading } = useQuery(
+    ["category", category, activeParams],
+    {
+      queryFn: async () => {
+        const { data } = await axios.get(`${url}/api/categories`);
+        return data;
+      },
+    }
+  );
+  const { data: subcategoryData, isLoading: subcategoryLoading } = useQuery(
+    ["subcategory"],
+    {
+      queryFn: async () => {
+        const { data } = await axios.get(`${url}/api/subcategories`);
+        return data;
+      },
+    }
+  );
+
+  const allCategories =
+    categoryData && categoryData.data
+      ? categoryData.data.map((item) => item.attributes.title)
+      : [];
+
+  const allSubcategories =
+    subcategoryData && subcategoryData.data
+      ? subcategoryData.data.map((item) => item.attributes.name)
+      : [];
+
+  console.log(allSubcategories);
 
   if (isLoading) {
     return <div>Loading</div>;
   }
-
-  const brandItems = data?.data?.map((item) => {
-    return item.attributes.brand;
-  });
-
-  const allSizes = Array.from(
-    new Set(data.data.flatMap((item) => item.attributes.sizes))
-  ).filter((size) => size !== null);
 
   const handleCategoryChange = (item) => {
     setCategory(item);
@@ -67,21 +88,17 @@ const FilterPage = ({ params }: FilterPageProps) => {
           activeParams={activeParams}
           setActiveParams={setActiveParams}
           title="CATEGORY"
-          subitems={["SUKIENKI", "KOMPLETY"]}
+          subitems={allCategories}
           handleChange={handleCategoryChange}
           setCategory={setCategory}
         />
         <Filter
           activeParams={activeParams}
           setActiveParams={setActiveParams}
-          title="BRAND"
-          subitems={brandItems.filter((item) => item !== null)}
-        />
-        <Filter
-          activeParams={activeParams}
-          setActiveParams={setActiveParams}
-          title="SIZE"
-          subitems={allSizes}
+          title="SUBCATEGORY"
+          subitems={allSubcategories}
+          handleChange={handleCategoryChange}
+          setCategory={setCategory}
         />
         <PriceFilter
           activeParams={activeParams}

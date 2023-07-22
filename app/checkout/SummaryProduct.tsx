@@ -29,6 +29,13 @@ const SummaryProduct: React.FC<SummaryProductProps> = ({
     return <div>Loading</div>;
   }
 
+  console.log(productData);
+
+  // const test = item?.attributes?.productAttributes;
+  // const znalezionyObiekt = test?.find(
+  //   (obiekt) => obiekt.color === array.color
+  // );
+
   return (
     <div className="flex justify-between">
       <div className="flex gap-4">

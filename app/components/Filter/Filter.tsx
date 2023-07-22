@@ -43,7 +43,7 @@ const Filter: React.FC<FilterProps> = ({
         </div>
       </div>
       {isOpen && subitems && subitems.length > 0 && (
-        <div className="absolute z-20 h-fit w-full bg-white border px-6 py-3 flex flex-col gap-2">
+        <div className="absolute z-20 h-fit w-full bg-white border px-4 py-3 flex flex-col gap-2">
           {subitems.map((item) => (
             <div
               key={item}

@@ -77,27 +77,20 @@ const ProductPage = ({ params }) => {
     return <div>Error: Failed to fetch data</div>;
   }
 
-  const {
-    brand,
-    name,
-    price,
-    discount,
-    description,
-    sizes,
-    categories,
-    subcategories,
-  } = data.data.attributes;
+  const { brand, name, description, sizes, categories, subcategories } =
+    data.data.attributes;
 
-  const selectedImage =
-    data.data.attributes.productAttributes[selectedColor].images.data[0]
-      .attributes.url;
-  const selectedSize = data.data.attributes.productAttributes[selectedColor];
   const availabilitySizes =
     data.data.attributes.productAttributes[selectedColor].availability;
 
   const photos = data.data.attributes.productAttributes.flatMap(
     (item) => item.images.data
   );
+
+  const selectedVariant = data.data.attributes.productAttributes[selectedColor];
+
+  const price = selectedVariant.price;
+  const discount = selectedVariant.discount;
 
   return (
     <div className="px-4 lg:pl-[9rem] lg:pr-[12rem] flex flex-col lg:flex-row gap-10 justify-between my-10">
@@ -113,10 +106,16 @@ const ProductPage = ({ params }) => {
           <h2 className="pb-1">{brand}</h2>
           <h1 className="text-xl font-medium">{name}</h1>
           <span className="text-lg text-neutral-500 pt-2 pb-4">
-            {calculateDiscountedPrice(price, discount)}{" "}
-            <span className="line-through text-black/90">
-              {formatPrice(price)}
-            </span>
+            {discount ? (
+              <>
+                <span>{calculateDiscountedPrice(price, discount)} </span>
+                <span className="line-through text-black/90">
+                  {formatPrice(price)}
+                </span>
+              </>
+            ) : (
+              <span>{formatPrice(price)}</span>
+            )}
           </span>
         </div>
         <ReactMarkdown className="pt-4 pb-1">{description}</ReactMarkdown>
@@ -130,26 +129,40 @@ const ProductPage = ({ params }) => {
           )}
         </div>
         <div className="flex gap-4">
-          {data.data.attributes.productAttributes.map((item, index) => {
-            return (
-              <div
-                className={`flex flex-col items-center gap-1 cursor-pointer ${
-                  choosenColor !== "" &&
-                  selectedColor === index &&
-                  "border-2 border-black"
-                }`}
-                onClick={() => {
-                  setSelectedColor(index), setChoosenColor(item.color);
-                }}
-              >
-                <img
-                  className="w-28 h-40 object-cover"
-                  src={item.images.data[0].attributes.url}
-                  alt=""
-                />
-              </div>
-            );
-          })}
+          {data.data.attributes.productAttributes &&
+            Array.isArray(data.data.attributes.productAttributes) &&
+            data.data.attributes.productAttributes.map((item, index) => {
+              // Sprawdzenie czy item.images.data jest zdefiniowane i czy jest tablicą
+              const imageUrl =
+                item.images?.data && Array.isArray(item.images.data)
+                  ? item.images.data[0]?.attributes?.url
+                  : null;
+
+              return (
+                <div
+                  key={index}
+                  className={`flex flex-col items-center gap-1 cursor-pointer ${
+                    choosenColor !== "" &&
+                    selectedColor === index &&
+                    "border-2 border-black"
+                  }`}
+                  onClick={() => {
+                    setSelectedColor(index);
+                    setChoosenColor(item.color);
+                  }}
+                >
+                  {imageUrl ? (
+                    <img
+                      className="w-28 h-40 object-cover"
+                      src={imageUrl}
+                      alt=""
+                    />
+                  ) : (
+                    <span>Image not available</span>
+                  )}
+                </div>
+              );
+            })}
         </div>
         <div>
           <span className="py-4">Wybierz rozmiar:</span>
@@ -167,8 +180,6 @@ const ProductPage = ({ params }) => {
                       {item.size}
                     </div>
                   );
-                } else {
-                  return <div>brak dostępnych produktów</div>;
                 }
               })
             ) : (
@@ -191,7 +202,7 @@ const ProductPage = ({ params }) => {
         </button>
         <button className="button-primary">kup teraz</button>
       </div>
-      {popup && <BuyingPopup setPopup={setPopup} />}
+      {popup && <BuyingPopup setPopup={setPopup} name={name} />}
     </div>
   );
 };

@@ -8,15 +8,46 @@ import {
   useElements,
 } from "@stripe/react-stripe-js";
 import { useAtom } from "jotai";
-import { cartAtom } from "../lib/atoms";
+import { addressAtom, cartAtom, emailAtom } from "../lib/atoms";
 import Cookies from "js-cookie";
+import axios from "axios";
+import { url } from "../constants/constants";
 
-export default function CheckoutForm() {
+export default function CheckoutForm({ userData, totalPrice }) {
   const stripe = useStripe();
   const elements = useElements();
   const [message, setMessage] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const [cartItems, setCartItems] = useAtom(cartAtom);
+
+  const sendEmail = async () => {
+    await axios
+      .post("http://localhost:5000/api/product/getbill", {
+        data: {
+          totalPrice: totalPrice,
+          products: cartItems,
+          customerData: userData,
+        },
+      })
+      .then((response) => {
+        console.log(response);
+      });
+  };
+
+  const postRequest = async () => {
+    await axios
+      .post(url + "/api/customer-orders", {
+        data: {
+          totalPrice: totalPrice,
+          products: cartItems,
+          customerData: userData,
+        },
+      })
+      .then((response) => {
+        console.log(response);
+        sendEmail();
+      });
+  };
 
   useEffect(() => {
     if (!stripe) {
@@ -35,9 +66,10 @@ export default function CheckoutForm() {
       switch (paymentIntent.status) {
         case "succeeded":
           setMessage("Payment succeeded!");
-          alert("hej");
+          postRequest();
           setCartItems([]); // Set cartItems to an empty array
-          Cookies.set("cart", JSON.stringify(cartItems));
+          Cookies.set("cart", JSON.stringify([]));
+          Cookies.set("userData", JSON.stringify([]));
 
           break;
         case "processing":
@@ -68,7 +100,8 @@ export default function CheckoutForm() {
       elements,
       confirmParams: {
         // Make sure to change this to your payment completion page
-        return_url: "http://localhost:3000/checkout/final",
+        // return_url: "http://localhost:3000/checkout/final",
+        return_url: "http://localhost:3000/checkout/payment",
       },
     });
 

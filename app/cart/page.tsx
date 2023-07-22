@@ -1,9 +1,7 @@
 "use client";
 import { loadStripe } from "@stripe/stripe-js";
-
-import { useAtomValue } from "jotai";
-
 import axios from "axios";
+import { url } from "../constants/constants";
 
 const products = [
   {
@@ -13,24 +11,24 @@ const products = [
 ];
 
 const Cart = () => {
-  const stripePromise = loadStripe(
-    "pk_live_51KsNPHD2JGtC3oa6aWSG2OMt6psjeg4T2T6CxKC4uW5TLoQnPExbEMiSSRXsghPzQj1NOXvXZV6YyyyMILrXW6Tp002y1MxE1B"
-  );
-
-  const handlePayment = async () => {
-    try {
-      const stripe = await stripePromise;
-
-      const res = await axios.post("http://localhost:1337/api/orders", {
-        products,
+  const postRequest = async () => {
+    await axios
+      .post(url + "/api/customer-orders", {
+        data: {
+          totalPrice: 421,
+          products: products,
+        },
+      })
+      .then((response) => {
+        console.log(response);
       });
-      await stripe?.redirectToCheckout({
-        sessionId: res.data.stripeSession.id,
-      });
-    } catch (error) {}
   };
 
-  return <button onClick={handlePayment}>checkout</button>;
+  return (
+    <button className="bg-blue-600 p-4 border-rounded" onClick={postRequest}>
+      checkout
+    </button>
+  );
 };
 
 export default Cart;

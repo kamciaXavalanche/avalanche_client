@@ -31,7 +31,7 @@ function ProductSlider({ images }) {
             className={`border-2 w-full full cursor-pointer z-20 ${
               index === slideNumber && "border-primaryColor"
             }`}
-            src={item.attributes.url}
+            src={item?.attributes?.url || "#"} // Dodajemy zabezpieczenie dla item.attributes.url
             alt=""
           />
         ))}

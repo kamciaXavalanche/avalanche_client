@@ -10,38 +10,28 @@ import Link from "next/link";
 import Loader from "@/app/components/Loader";
 import { url } from "@/app/constants/constants";
 
-interface ProductsProps {
-  title: string;
-  brand: string[];
-  size: string[];
-  price: number[];
-}
+interface ProductsProps {}
 
-const Products: React.FC<ProductsProps> = ({
-  title,
-  size,
-  price,
-  category,
-}) => {
+const Products: React.FC<ProductsProps> = ({}) => {
   const query = qs.stringify(
     {
       populate: ["categories", "coverImages"],
       filters: {
+        // categories: {
+        //   title: {
+        //     $contains: ,
+        //   },
+        // },
         categories: {
           title: {
-            $contains: category,
+            $contains: "Jednoczęsciowe",
           },
         },
-        // brand: {
-        //   $contains: brand,
+
+        // price: {
+        //   $gr: price.from,
+        //   $lt: price.to,
         // },
-        sizes: {
-          $contains: size,
-        },
-        price: {
-          $gr: price.from,
-          $lt: price.to,
-        },
       },
     },
     {
@@ -70,8 +60,6 @@ const Products: React.FC<ProductsProps> = ({
   if (isError) {
     return <div>Wystąpił błąd podczas pobierania danych.</div>;
   }
-
-  console.log(responseData.data);
 
   return (
     <div className="lg:flex flex-wrap gap-y-16 gap-x-6 justify-center items-center my-4 lg:my-20">

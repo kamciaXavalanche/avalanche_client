@@ -8,12 +8,13 @@ import Cookies from "js-cookie";
 
 const Payment = () => {
   const [totalPrice, setTotalPrice] = useState(null);
-
-  console.log(totalPrice);
+  const [userData, setUserData] = useState([]);
 
   useEffect(() => {
     const total = Cookies.get("totalPrice");
+    const userData = Cookies.get("userData");
     setTotalPrice(total);
+    setUserData(userData);
   }, []);
 
   return (
@@ -22,7 +23,7 @@ const Payment = () => {
         <Header />
         <div>
           {totalPrice !== null ? (
-            <Checkout totalPrice={Math.round(totalPrice)} />
+            <Checkout totalPrice={Math.round(totalPrice)} userData={userData} />
           ) : (
             "Loading..."
           )}
