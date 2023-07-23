@@ -59,8 +59,11 @@ const Counter: React.FC<CounterProps> = ({ slug, quantity, size, uuid }) => {
 
   return (
     <div className="inline-flex items-center border border-borderColor whitespace-nowrap w-fit">
-      <button onClick={() => decreaseCartQuantity(uuid)} className="py-2 px-3">
-        <BiMinus size={18} />
+      <button
+        onClick={() => decreaseCartQuantity(uuid)}
+        className="py-1 px-2 lg:py-2 lg:px-3"
+      >
+        <BiMinus className="text-[16px]  lg:text-[18px]" />
       </button>
       <input
         className="w-[20px] text-center bg-transparent outline-none"
@@ -69,9 +72,9 @@ const Counter: React.FC<CounterProps> = ({ slug, quantity, size, uuid }) => {
       />
       <button
         onClick={() => increaseCartQuantity(slug, size, uuid)}
-        className="py-2 px-3"
+        className="py-1 px-2 lg:py-2 lg:px-3"
       >
-        <BiPlus size={18} />
+        <BiPlus className="text-[16px] lg:text-[18px]" />
       </button>
     </div>
   );

@@ -41,6 +41,7 @@ const ProductPage = ({ params }) => {
           { slug, size, color, quantity: 1, uuid },
         ];
         Cookies.set("cart", JSON.stringify(updatedItems));
+        setPopup(true);
         return updatedItems;
       } else {
         const updatedItems = currItems.map((item) => {
@@ -55,6 +56,7 @@ const ProductPage = ({ params }) => {
           }
         });
         Cookies.set("cart", JSON.stringify(updatedItems));
+        setPopup(true);
         return updatedItems;
       }
     });
@@ -193,8 +195,7 @@ const ProductPage = ({ params }) => {
               data.data.attributes.slug,
               choosenSize,
               choosenColor
-            ),
-              setPopup(true);
+            );
           }}
           className="button-secondary my-4"
         >

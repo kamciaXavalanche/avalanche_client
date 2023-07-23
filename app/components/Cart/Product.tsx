@@ -6,6 +6,7 @@ import axios from "axios";
 import Cookies from "js-cookie";
 import ProductPrice from "../ProductPrice";
 import { url } from "@/app/constants/constants";
+import Image from "next/image";
 
 interface ProductProps {
   slug: string;
@@ -45,18 +46,26 @@ const Product: React.FC<ProductProps> = ({
   const znalezionyObiekt = test.find((obiekt) => obiekt.color === color);
 
   return (
-    <div className="flex gap-8">
-      <div className="basis-[35%]">
-        <img
-          src={productData.data.attributes.coverImages.data[0].attributes.url}
-          alt=""
-        />
+    <div className="flex gap-3 lg:gap-8">
+      <div className="basis-[45%]">
+        <div className="w-30 h-48 relative">
+          <Image
+            fill
+            className="object-cover"
+            src={productData.data.attributes.coverImages.data[0].attributes.url}
+            alt=""
+          />
+        </div>
       </div>
-      <div className="basis-[65%] flex flex-col justify-between">
+      <div className="basis-[55%] flex flex-col justify-between">
         <div className="flex flex-col gap-2">
-          <h2>{productData.data.attributes.name}</h2>
-          <h2>Rozmiar: {size}</h2>
-          <h2>Kolor: {color}</h2>
+          <h2 className="font-medium">{productData.data.attributes.name}</h2>
+          <h2 className="text-sm lg:">
+            Rozmiar: <span className="font-medium">{size}</span>
+          </h2>
+          <h2 className="text-sm lg:">
+            Kolor: <span className="font-medium">{color}</span>
+          </h2>
           <ProductPrice
             price={znalezionyObiekt.price * quantity}
             discount={znalezionyObiekt.discount * quantity}
@@ -66,7 +75,7 @@ const Product: React.FC<ProductProps> = ({
           <Counter slug={slug} quantity={quantity} size={size} uuid={uuid} />
           <div
             onClick={() => removeFromCart(uuid)}
-            className="border-b-[1.2px] border-black  hover:border-white text-sm transition duration-500 cursor-pointer"
+            className="border-b-[1.2px] border-black  hover:border-white text-xs lg:text-sm transition duration-500 cursor-pointer"
           >
             USUŃ
           </div>
