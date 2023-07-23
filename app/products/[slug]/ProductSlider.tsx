@@ -29,7 +29,7 @@ function ProductSlider({ images }) {
             onClick={() => setSlideNumber(index)}
             key={index}
             className={`border-2 w-full full cursor-pointer z-20 ${
-              index === slideNumber && "border-primaryColor"
+              index === slideNumber && "border-black/70"
             }`}
             src={item?.attributes?.url || "#"} // Dodajemy zabezpieczenie dla item.attributes.url
             alt=""

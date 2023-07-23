@@ -21,7 +21,7 @@ const Header = () => {
     <header>
       <Logo />
       <nav className="py-6">
-        <ul className="flex gap-2">
+        <ul className="flex gap-2 text-sm lg:text-base">
           {navigation.map((item, index) => (
             <li key={item.url}>
               <Link href={`/checkout/${item.url}`}>

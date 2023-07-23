@@ -28,7 +28,7 @@ const StepBack: React.FC<StepBackProps> = ({
       <div>
         <button
           type="submit"
-          className="bg-black text-white px-6 py-4 rounded-md hover:bg-black/80"
+          className="bg-black text-white px-3 py-2 text-sm lg:text-base lg:px-6 lg:py-4 rounded-md hover:bg-black/80"
         >
           Przejdź do {goToLabel}
         </button>

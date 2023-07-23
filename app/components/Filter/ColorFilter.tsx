@@ -1,3 +1,5 @@
+"use client";
+
 import { useState } from "react";
 import { BsChevronDown } from "react-icons/bs";
 
@@ -6,21 +8,21 @@ interface FilterProps {
   subitems: string[];
   activeParams: string[];
   setActiveParams: (param: any) => void;
-  setCategory: (param: any) => void;
+  setColors: (colors: string[]) => void; // New prop for setting colors array
 }
 
-const Filter: React.FC<FilterProps> = ({
+const ColorFilter: React.FC<FilterProps> = ({
   title,
   subitems,
   activeParams,
   setActiveParams,
-  setCategory,
+  setColors, // Include setColors in the props
 }) => {
   const [isOpen, setIsOpen] = useState(false);
-  const [tempParams, setTempParams] = useState<string[]>(activeParams); // Tymczasowa tablica wybranych parametrów
+  const [tempParams, setTempParams] = useState<string[]>(activeParams); // Temporary array of selected parameters
 
   const handleClick = (item: string) => {
-    // Aktualizacja tymczasowej tablicy tempParams przy kliknięciu subitemu
+    // Update the temporary array tempParams when a subitem is clicked
     if (!tempParams.includes(item)) {
       setTempParams((prev) => [...prev, item]);
     } else {
@@ -29,11 +31,11 @@ const Filter: React.FC<FilterProps> = ({
   };
 
   const handleApply = (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault(); // Zapobiegamy domyślnemu działaniu submita
-    // Zastosowanie filtrowania tylko po kliknięciu "apply"
+    event.preventDefault(); // Prevent the default form submission
+    // Apply filtering only when "apply" is clicked
     setActiveParams(tempParams);
-    setCategory(tempParams);
-    setIsOpen(false); // Zamknięcie formularza po kliknięciu "apply"
+    setColors(tempParams); // Update the colors array using setColors
+    setIsOpen(false); // Close the form when "apply" is clicked
   };
 
   return (
@@ -50,7 +52,7 @@ const Filter: React.FC<FilterProps> = ({
       {isOpen && subitems && subitems.length > 0 && (
         <form
           className="absolute z-20 h-fit w-full bg-white border px-4 py-3 flex flex-col gap-2"
-          onSubmit={handleApply} // Obsługa submita formularza
+          onSubmit={handleApply} // Handle form submission
         >
           {subitems.map((item) => (
             <div
@@ -78,4 +80,4 @@ const Filter: React.FC<FilterProps> = ({
   );
 };
 
-export default Filter;
+export default ColorFilter;

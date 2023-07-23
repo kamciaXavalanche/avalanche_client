@@ -13,6 +13,9 @@ import { url } from "@/app/constants/constants";
 import { calculateDiscountedPrice, formatPrice } from "@/app/utils/functions";
 import BuyingPopup from "@/app/components/BuyingPopup/BuyingPopup";
 import Loader from "@/app/components/Loader";
+import { IoIosArrowForward } from "react-icons/io";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 const ProductPage = ({ params }) => {
   const [cartItems, setCartItems] = useAtom(cartAtom);
@@ -20,9 +23,15 @@ const ProductPage = ({ params }) => {
   const [choosenColor, setChoosenColor] = useState("");
   const [selectedColor, setSelectedColor] = useState(0);
   const [popup, setPopup] = useState(false);
+  const router = useRouter();
 
   function increaseCartQuantity(slug: string, size: string, color: string) {
     const uuid = crypto.randomUUID();
+
+    if (!color) {
+      alert("Wybierz kolor");
+      return;
+    }
 
     if (!size) {
       alert("Wybierz rozmiar");
@@ -62,6 +71,53 @@ const ProductPage = ({ params }) => {
     });
   }
 
+  function addToCart(slug: string, size: string, color: string) {
+    const uuid = crypto.randomUUID();
+
+    if (!size || !color) {
+      alert("Wybierz rozmiar i kolor");
+      return;
+    }
+
+    // Dodaj pojedynczy produkt do koszyka
+    setCartItems((currItems) => {
+      const existingItem = currItems.find(
+        (item) =>
+          item.slug === slug && item.size === size && item.color === color
+      );
+
+      if (existingItem == null) {
+        const updatedItems = [
+          ...currItems,
+          { slug, size, color, quantity: 1, uuid }, // Ustawiamy quantity na 1 dla nowego produktu
+        ];
+        Cookies.set("cart", JSON.stringify(updatedItems));
+        setPopup(true);
+        return updatedItems;
+      } else {
+        const updatedItems = currItems.map((item) => {
+          if (
+            item.slug === slug &&
+            item.size === size &&
+            item.color === color
+          ) {
+            return { ...item, quantity: item.quantity + 1 }; // Zwiększamy quantity dla istniejącego produktu
+          } else {
+            return item;
+          }
+        });
+        Cookies.set("cart", JSON.stringify(updatedItems));
+        setPopup(true);
+        return updatedItems;
+      }
+    });
+
+    // Przenieś użytkownika do strony koszyka
+    // Możesz zmienić ścieżkę do strony koszyka na odpowiednią dla Twojej aplikacji
+    // Tutaj zakładam, że ścieżka do koszyka to "/koszyk"
+    router.push("/cart");
+  }
+
   const { data, isLoading } = useQuery(["productData", params.slug], {
     queryFn: async () => {
       const { data } = await axios.get(
@@ -97,9 +153,12 @@ const ProductPage = ({ params }) => {
   return (
     <div className="px-4 lg:pl-[9rem] lg:pr-[12rem] flex flex-col lg:flex-row gap-10 justify-between my-10">
       <div>
-        <div className="mb-4">
-          Strona Główna {">"} {categories?.data[0]?.attributes?.title} {">"}{" "}
-          {subcategories?.data[0]?.attributes?.name}
+        <div className="mb-4 inline-flex items-center gap-1">
+          <Link href="/">Strona Główna</Link> <IoIosArrowForward />{" "}
+          {categories?.data[0]?.attributes?.title} <IoIosArrowForward />
+          <span className="font-medium">
+            {subcategories?.data[0]?.attributes?.name}
+          </span>
         </div>
         <ProductSlider images={photos} />
       </div>
@@ -123,7 +182,7 @@ const ProductPage = ({ params }) => {
         <ReactMarkdown className="pt-4 pb-1">{description}</ReactMarkdown>
         <div className="pb-1">
           {choosenColor === "" ? (
-            <div>Wybierz kolor</div>
+            <div>Wybierz kolor:</div>
           ) : (
             <div>
               Kolor: <span className="font-medium">{choosenColor}</span>
@@ -134,7 +193,6 @@ const ProductPage = ({ params }) => {
           {data.data.attributes.productAttributes &&
             Array.isArray(data.data.attributes.productAttributes) &&
             data.data.attributes.productAttributes.map((item, index) => {
-              // Sprawdzenie czy item.images.data jest zdefiniowane i czy jest tablicą
               const imageUrl =
                 item.images?.data && Array.isArray(item.images.data)
                   ? item.images.data[0]?.attributes?.url
@@ -201,7 +259,14 @@ const ProductPage = ({ params }) => {
         >
           dodaj do koszyka
         </button>
-        <button className="button-primary">kup teraz</button>
+        <button
+          onClick={() => {
+            addToCart(data.data.attributes.slug, choosenSize, choosenColor);
+          }}
+          className="button-primary"
+        >
+          kup teraz
+        </button>
       </div>
       {popup && <BuyingPopup setPopup={setPopup} name={name} />}
     </div>

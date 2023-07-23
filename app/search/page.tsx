@@ -7,37 +7,27 @@ import axios from "axios";
 import { useState } from "react";
 import { IoCloseOutline } from "react-icons/io5";
 import Products from "./Products";
-import { url } from "../../constants/constants";
+import { url } from "../constants/constants";
 import Loader from "@/app/components/Loader";
+import ColorFilter from "../components/Filter/ColorFilter";
 
-interface FilterPageProps {
-  params: {
-    title: string;
-    // other properties if applicable
-  };
-}
-
-const FilterPage = ({ params }: FilterPageProps) => {
-  const [activeParams, setActiveParams] = useState([
-    params.title.toUpperCase(),
-  ]);
+const FilterPage = () => {
+  const [activeParams, setActiveParams] = useState([]);
   const [category, setCategory] = useState([]);
-  const [brand, setBrand] = useState([]);
-  const [size, setSize] = useState([]);
+  const [colors, setColors] = useState([]);
   const [price, setPrice] = useState({
     from: 50,
     to: 1000,
   });
 
-  const { data, isLoading } = useQuery(
-    ["productData", category, activeParams],
-    {
-      queryFn: async () => {
-        const { data } = await axios.get(`${url}/api/products`);
-        return data;
-      },
-    }
-  );
+  const { data, isLoading } = useQuery(["productData", category], {
+    queryFn: async () => {
+      const { data } = await axios.get(
+        `${url}/api/products?populate=productAttributes`
+      );
+      return data;
+    },
+  });
   const { data: categoryData, isLoading: categoryLoading } = useQuery(
     ["category", category, activeParams],
     {
@@ -67,41 +57,54 @@ const FilterPage = ({ params }: FilterPageProps) => {
       ? subcategoryData.data.map((item) => item.attributes.name)
       : [];
 
+  function getColorsFromProductAttributes(products) {
+    return (
+      products?.flatMap(
+        (product) =>
+          product?.attributes?.productAttributes?.map(
+            (attribute) => attribute?.color
+          ) ?? []
+      ) ?? []
+    );
+  }
+
+  // Wykorzystanie zabezpieczeń przed błędami pobierania danych
+  const colorsArray = getColorsFromProductAttributes(data?.data);
+
+  const uniqueColorsArray = Array.isArray(colorsArray)
+    ? colorsArray.filter((color, index) => colorsArray.indexOf(color) === index)
+    : [];
+
   if (isLoading) {
     return <Loader />;
   }
 
-  const handleCategoryChange = (item) => {
-    setCategory(item);
-  };
+  console.log(colors);
 
   return (
     <div className="px-4 lg:px-[9rem] mt-5">
       <nav className="flex gap-4 mb-2 lg:mb-8">
         <div>STRONA GŁÓWNA</div>
-        <div>{params.title.toUpperCase()}</div>
       </nav>
-      <h1 className="text-xl">{params.title.toUpperCase()}</h1>
       <div className=" mt-6 lg:flex gap-10 ">
         <Filter
           activeParams={activeParams}
           setActiveParams={setActiveParams}
           title="CATEGORY"
           subitems={allCategories}
-          handleChange={handleCategoryChange}
           setCategory={setCategory}
         />
-        <Filter
+        <ColorFilter
           activeParams={activeParams}
           setActiveParams={setActiveParams}
-          title="SUBCATEGORY"
-          subitems={allSubcategories}
-          handleChange={handleCategoryChange}
-          setCategory={setCategory}
+          title="COLORS"
+          subitems={uniqueColorsArray}
+          setColors={setColors}
         />
         <PriceFilter
           activeParams={activeParams}
           setActiveParams={setActiveParams}
+          setPrice={setPrice}
         />
       </div>
       <div className="flex flex-wrap items-center gap-x-4">
@@ -121,13 +124,7 @@ const FilterPage = ({ params }: FilterPageProps) => {
           );
         })}
       </div>
-      <Products
-        category={category}
-        title={params.title}
-        brand={brand}
-        size={size}
-        price={price}
-      />
+      <Products category={category} price={price} colors={colors} />
     </div>
   );
 };

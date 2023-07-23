@@ -101,7 +101,7 @@ const Information = () => {
 
   return (
     <div className="flex flex-col lg:flex-row gap-14">
-      <div className="basis-[55%] pl-[9%] pt-10">
+      <div className="basis-[55%] px-6 lg:pl-[9%] pt-10">
         <Header isActive />
         <form onSubmit={handleSubmit}>
           <div className="">

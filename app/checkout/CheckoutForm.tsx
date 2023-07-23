@@ -100,8 +100,7 @@ export default function CheckoutForm({ userData, totalPrice }) {
       elements,
       confirmParams: {
         // Make sure to change this to your payment completion page
-        // return_url: "http://localhost:3000/checkout/final",
-        return_url: "http://localhost:3000/checkout/payment",
+        return_url: url + "checkout/payment",
       },
     });
 
