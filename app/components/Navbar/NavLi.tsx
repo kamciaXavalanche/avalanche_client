@@ -39,7 +39,7 @@ const NavLi: React.FC<NavLiProps> = ({
       onMouseLeave={handleMouseLeave}
       className={`
         relative 
-        text-xl
+        text-lg
         font-medium
         cursor-pointer
         text-textColor
@@ -68,6 +68,7 @@ const NavLi: React.FC<NavLiProps> = ({
           pb-2
           px-6
           text-left
+          rounded-b-[4px]
           shadow-[0_35px_60px_-15px_rgba(0,0,0,0.3)] 
           ${isSubMenuVisible ? "absolute" : "hidden"}
         `}
@@ -76,7 +77,7 @@ const NavLi: React.FC<NavLiProps> = ({
           <li
             className={`  
          relative 
-         text-xl
+         text-lg
          font-medium
          cursor-pointer
          text-textColor

@@ -15,7 +15,7 @@ const calculateDiscountedPrice = (price: number, discount: number) => {
     return formatPrice(discountedPrice);
   }
 
-  return price;
+  return formatPrice(price);
 };
 
 export { formatPrice, calculateDiscountedPrice };

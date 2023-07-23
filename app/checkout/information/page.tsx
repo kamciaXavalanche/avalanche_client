@@ -19,6 +19,8 @@ import {
 import StepBack from "../StepBack";
 import { useRouter } from "next/navigation";
 import Cookies from "js-cookie";
+import { AiOutlineInfoCircle } from "react-icons/ai";
+import Links from "../Links";
 
 const Information = () => {
   const [email, setEmail] = useAtom(emailAtom);
@@ -104,10 +106,12 @@ const Information = () => {
         <form onSubmit={handleSubmit}>
           <div className="">
             <div className="flex justify-between items-center mb-3">
-              <h2>Kontakt</h2>
+              <h2 className="font-semibold ">Kontakt</h2>
               <div>
                 Masz już konto?{" "}
-                <span className="underline text-primaryColor">Zaloguj się</span>
+                <Link href="/login" className="underline text-[#5E2C04]">
+                  Zaloguj się
+                </Link>
               </div>
             </div>
             <FloatingLabel
@@ -119,7 +123,7 @@ const Information = () => {
           </div>
           <div className="">
             <div className="flex justify-between items-center mb-3">
-              <h2>Adres wysyłki</h2>
+              <h2 className="font-semibold mt-2">Adres wysyłki</h2>
             </div>
             <FloatingLabel
               handleChange={handleCountryChange}
@@ -147,10 +151,8 @@ const Information = () => {
               typedValue={address}
               text="Adres"
             />
-            <div className="flex gap-2 items-center">
-              <div className="w-4 h-4 border border-black rounded-full flex items-center justify-center">
-                i
-              </div>
+            <div className="flex gap-2 mt-3 items-center">
+              <AiOutlineInfoCircle size={18} />
               <div>Dodaj numer domu, jeśli go posiadasz</div>
             </div>
             <div className="flex gap-4 my-4">
@@ -183,12 +185,7 @@ const Information = () => {
             goTo="shipping"
           />
         </form>
-        <hr className="bg-black w-full h-[1.2px] " />
-        <ul className="flex gap-4 py-6">
-          <Link href="">Polityka zwrotu kosztów</Link>
-          <Link href="">Polityka prywatności</Link>
-          <Link href="">Warunki świadczenia usług</Link>
-        </ul>
+        <Links />
       </div>
       <Summary />
     </div>

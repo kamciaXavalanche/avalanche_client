@@ -20,13 +20,15 @@ interface CartProps {
 const Cart: React.FC<CartProps> = ({ setToggle }) => {
   const [products, setProducts] = useState([]);
   const [cartItems, setCartItems] = useAtom(cartAtom);
+  const [isLoadingPrice, setIsLoadingPrice] = useState(true);
   const cartRef = useRef(null);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get(url + "/api/products?populate=*"); // Zmień ścieżkę na odpowiednią dla twojej aplikacji
+        const response = await axios.get(url + "/api/products?populate=*");
         setProducts(response.data);
+        setIsLoadingPrice(false); // Ustawiamy stan na false po zakończeniu pobierania produktów
       } catch (error) {
         console.error("Błąd podczas pobierania produktów:", error);
       }
@@ -118,13 +120,17 @@ const Cart: React.FC<CartProps> = ({ setToggle }) => {
           cartItems.length === 0 && "hidden"
         }`}
       >
-        <Link
-          onClick={() => setToggle(false)}
-          href="/checkout/information"
-          className="button-primary inline-flex items-center"
-        >
-          PODSUMOWANIE <BsDot /> {formatPrice(totalPrice)}
-        </Link>
+        {isLoadingPrice ? ( // Dodajemy warunek do wyświetlania ładowania lub ceny
+          "Wczytywanie ceny ... "
+        ) : (
+          <Link
+            onClick={() => setToggle(false)}
+            href="/checkout/information"
+            className="button-primary inline-flex items-center"
+          >
+            PODSUMOWANIE <BsDot /> {formatPrice(totalPrice)}
+          </Link>
+        )}
       </motion.div>
     </motion.div>
   );

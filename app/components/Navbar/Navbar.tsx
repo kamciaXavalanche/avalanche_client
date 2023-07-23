@@ -20,6 +20,7 @@ const Navbar = ({ categories }) => {
   const [toggle, setToggle] = useState(false);
   const [hideAnnouncementBar, setHideAnnouncementBar] = useState(false);
   const [cartItems, setCartItems] = useAtom(cartAtom);
+  const [toggleSearch, setToggleSearch] = useState(false);
 
   const attributes = categories?.map((item) => item.attributes);
 
@@ -75,13 +76,21 @@ const Navbar = ({ categories }) => {
         tracking-wider
         border-b
         border-textColor
+        relative
+        z-50
       `}
       >
-        <div className="flex justify-between items-center py-4">
-          <nav className="flex-1 -start text-center">
+        {toggleSearch && (
+          <div className="w-full h-screen bg-black/70 absolute top-[90px] lg:top-[100px] left-0 right-0 bottom-0">
+            <Search setToggleSearch={setToggleSearch} />
+          </div>
+        )}
+        <div className="flex justify-between items-center py-4 ">
+          <nav className="flex-1  start text-center">
             <ul className="hidden lg:flex  justify-start items-center gap-10">
               {attributes?.map((category) => (
                 <NavLi
+                  id={category.title}
                   title={category.title}
                   subcategories={category.subcategories.data}
                 />
@@ -97,8 +106,26 @@ const Navbar = ({ categories }) => {
           <Logo />
 
           <nav className="flex-1 text-center">
-            <ul className="flex justify-end items-center gap-2 lg:gap-6">
-              <Search />
+            <ul className="flex justify-end items-center gap-3 lg:gap-6">
+              <div onClick={() => setToggleSearch(true)}>
+                <svg
+                  className="w-[1.325rem] h-[1.325rem] text-textColor/90  cursor-pointer "
+                  role="presentation"
+                  viewBox="0 0 21 21"
+                >
+                  <g
+                    transform="translate(1 1)"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    fill="none"
+                    fill-rule="evenodd"
+                    stroke-linecap="square"
+                  >
+                    <path d="M18 18l-5.7096-5.7096"></path>
+                    <circle cx="7.2" cy="7.2" r="7.2"></circle>
+                  </g>
+                </svg>
+              </div>
               <Link className="hidden lg:block" href="/favorite">
                 <AiOutlineStar size={26} />
               </Link>

@@ -54,7 +54,7 @@ const Products: React.FC<ProductsProps> = ({}) => {
   });
 
   if (isLoading) {
-    return <Loader />;
+    return <div>Ładowanie ...</div>;
   }
 
   if (isError) {
@@ -74,10 +74,10 @@ const Products: React.FC<ProductsProps> = ({}) => {
             alt=""
           />
           <div className="mt-2">{item?.attributes?.name}</div>
-          <ProductPrice
+          {/* <ProductPrice
             price={item?.attributes?.price}
             discount={item?.attributes?.discount}
-          />
+          /> */}
         </Link>
       ))}
     </div>

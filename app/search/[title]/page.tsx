@@ -8,6 +8,7 @@ import { useState } from "react";
 import { IoCloseOutline } from "react-icons/io5";
 import Products from "./Products";
 import { url } from "../../constants/constants";
+import Loader from "@/app/components/Loader";
 
 interface FilterPageProps {
   params: {
@@ -66,10 +67,8 @@ const FilterPage = ({ params }: FilterPageProps) => {
       ? subcategoryData.data.map((item) => item.attributes.name)
       : [];
 
-  console.log(allSubcategories);
-
   if (isLoading) {
-    return <div>Loading</div>;
+    return <Loader />;
   }
 
   const handleCategoryChange = (item) => {

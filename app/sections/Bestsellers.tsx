@@ -84,9 +84,9 @@ const Bestsellers = ({ products }) => {
           </div>
         ))}
       </div>
-      <button className="button-primary mt-8 !w-fit">
+      <Link href="/search/sukienki" className="button-primary mt-8 !w-fit">
         SPRAWDZ WIĘCEJ PRODUKTÓW
-      </button>
+      </Link>
     </section>
   );
 };

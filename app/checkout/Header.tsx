@@ -1,10 +1,9 @@
-"use client";
-
 import Logo from "../components/Navbar/Logo";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useAtom } from "jotai";
 import { currentStepAtom } from "@/app/lib/atoms";
+import { IoIosArrowForward } from "react-icons/io";
 
 const Header = () => {
   const path = usePathname();
@@ -23,13 +22,18 @@ const Header = () => {
       <Logo />
       <nav className="py-6">
         <ul className="flex gap-2">
-          {navigation.map((item) => (
+          {navigation.map((item, index) => (
             <li key={item.url}>
               <Link href={`/checkout/${item.url}`}>
                 <div
-                  className={`${item.url === url ? "text-primaryColor" : ""}`}
+                  className={`inline-flex items-center gap-2 text-[#5E2C04] hover:brightness-150 ${
+                    item.url === url
+                      ? "text-black font-semibold cursor-text"
+                      : ""
+                  }`}
                 >
                   {item.name}
+                  {index !== navigation.length - 1 && <IoIosArrowForward />}
                 </div>
               </Link>
             </li>

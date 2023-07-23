@@ -3,10 +3,18 @@
 import { useAtom } from "jotai";
 import { cartAtom } from "../lib/atoms";
 import SummaryProduct from "./SummaryProduct";
-import TotalPrice from "../components/TotalPrice";
+import Cookies from "js-cookie"; // Step 1: Import Cookies
+import { useEffect, useState } from "react";
+import { formatPrice } from "../utils/functions";
 
 const Summary = () => {
   const [cartItems, setCartItems] = useAtom(cartAtom);
+  const [totalPrice, setTotalPrice] = useState(0);
+
+  useEffect(() => {
+    const totalPriceFromCookie = parseFloat(Cookies.get("totalPrice") || "0");
+    setTotalPrice(totalPriceFromCookie);
+  }, [cartItems, totalPrice]);
 
   return (
     <div className="basis-[45%] bg-gray-200 pr-[9%] pl-8 pt-10 border-l-2 border-black/60 ">
@@ -38,7 +46,7 @@ const Summary = () => {
       </div>
       <div className="flex justify-between mb-4">
         <div>Suma częściowa</div>
-        <TotalPrice />
+        {formatPrice(totalPrice)}
       </div>
       <div className="flex justify-between mb-4">
         <div>Wysyłka</div>
@@ -48,9 +56,7 @@ const Summary = () => {
         <div>
           <div className="font-medium text-lg">Suma</div>
         </div>
-        <span className="text-xl font-medium">
-          <TotalPrice />
-        </span>
+        <span className="text-xl font-medium">{formatPrice(totalPrice)}</span>
       </div>
     </div>
   );

@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import React from "react";
+import { IoIosArrowBack } from "react-icons/io";
 
 interface StepBackProps {
   goTo: string;
@@ -12,19 +13,22 @@ interface StepBackProps {
 }
 
 const StepBack: React.FC<StepBackProps> = ({
-  goTo,
   backTo,
   goToLabel,
   backToLabel,
-  handleSubmit,
 }) => {
   return (
     <div className="flex justify-between py-12">
-      <Link href={`/checkout/${backTo}`}>Wróc do {backToLabel}</Link>
+      <Link
+        className="text-[#5E2C04] hover:brightness-150 inline-flex items-center gap-2"
+        href={`/checkout/${backTo}`}
+      >
+        <IoIosArrowBack /> Wróc do {backToLabel}
+      </Link>
       <div>
         <button
           type="submit"
-          className="bg-black text-white px-6 py-1 rounded-md"
+          className="bg-black text-white px-6 py-4 rounded-md hover:bg-black/80"
         >
           Przejdź do {goToLabel}
         </button>

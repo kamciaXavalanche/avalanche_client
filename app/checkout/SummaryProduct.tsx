@@ -29,12 +29,12 @@ const SummaryProduct: React.FC<SummaryProductProps> = ({
     return <div>Loading</div>;
   }
 
-  console.log(productData);
+  const test = productData.data.attributes.productAttributes;
+  const znalezionyObiekt = test?.find(
+    (obiekt: string) => obiekt.color === color
+  );
 
-  // const test = item?.attributes?.productAttributes;
-  // const znalezionyObiekt = test?.find(
-  //   (obiekt) => obiekt.color === array.color
-  // );
+  console.log(znalezionyObiekt);
 
   return (
     <div className="flex justify-between">
@@ -57,8 +57,8 @@ const SummaryProduct: React.FC<SummaryProductProps> = ({
       </div>
       <div>
         {calculateDiscountedPrice(
-          productData.data.attributes.price,
-          productData.data.attributes.discount
+          znalezionyObiekt.price,
+          znalezionyObiekt.discount
         )}
       </div>
     </div>
