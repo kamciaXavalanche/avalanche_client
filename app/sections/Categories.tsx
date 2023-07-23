@@ -5,7 +5,7 @@ import Sukienki from "./IMG-20230703-WA0006.jpg";
 const Categories = () => {
   return (
     <div className="my-10 px-4 flex gap-8 items-center justify-center">
-      <Link href="/search/sukienki">
+      <Link href="/search">
         <img
           src={Sukienki.src}
           alt=""
@@ -13,7 +13,7 @@ const Categories = () => {
         />
         <h2 className="py-2 text-center text-2xl">Sukienki</h2>
       </Link>
-      <Link href="/search/komplety">
+      <Link href="/search">
         <img
           src={Komplety.src}
           alt=""
