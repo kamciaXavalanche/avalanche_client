@@ -14,3 +14,5 @@ export const summaryPriceAtom = atom(0);
 export const currentStepAtom = atom("information");
 export const checkoutAtom = atom([]);
 export const isAuthenticatedAtom = atom(false);
+
+export const searchQueryAtom = atom("");

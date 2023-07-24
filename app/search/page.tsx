@@ -16,8 +16,8 @@ const FilterPage = () => {
   const [category, setCategory] = useState([]);
   const [colors, setColors] = useState([]);
   const [price, setPrice] = useState({
-    from: 50,
-    to: 1000,
+    from: 30,
+    to: 900,
   });
 
   const { data, isLoading } = useQuery(["productData", category], {
@@ -68,18 +68,28 @@ const FilterPage = () => {
     );
   }
 
-  // Wykorzystanie zabezpieczeń przed błędami pobierania danych
   const colorsArray = getColorsFromProductAttributes(data?.data);
 
   const uniqueColorsArray = Array.isArray(colorsArray)
     ? colorsArray.filter((color, index) => colorsArray.indexOf(color) === index)
     : [];
 
+  function getPricesFromProductAttributes(products) {
+    return (
+      products?.flatMap(
+        (product) =>
+          product?.attributes?.productAttributes?.map(
+            (attribute) => attribute?.price
+          ) ?? []
+      ) ?? []
+    );
+  }
+
+  const pricesArray = getPricesFromProductAttributes(data?.data);
+
   if (isLoading) {
     return <Loader />;
   }
-
-  console.log(colors);
 
   return (
     <div className="px-4 lg:px-[9rem] mt-5">
@@ -105,6 +115,7 @@ const FilterPage = () => {
           activeParams={activeParams}
           setActiveParams={setActiveParams}
           setPrice={setPrice}
+          price={price}
         />
       </div>
       <div className="flex flex-wrap items-center gap-x-4">

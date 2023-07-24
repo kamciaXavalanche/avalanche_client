@@ -4,23 +4,36 @@ import Slider from "rc-slider";
 import "rc-slider/assets/index.css";
 import { BsChevronDown } from "react-icons/bs";
 
+type PriceProp = {
+  from: number;
+  to: number;
+};
+
 interface PriceFilterProps {
   activeParams: string[];
   setActiveParams: (param: any) => void;
+  setPrice: (param: any) => void;
+  price: PriceProp;
 }
 
 const PriceFilter: React.FC<PriceFilterProps> = ({
   setActiveParams,
   activeParams,
+  setPrice,
+  price,
 }) => {
   const [isOpen, setIsOpen] = useState(false);
-  const [priceRange, setPriceRange] = useState([50, 1000]);
+  const [tempPrice, setTempPrice] = useState({
+    from: price.from,
+    to: price.to,
+  });
 
-  const handlePriceRangeChange = (value) => {
-    setPriceRange(value);
+  const handlePriceRangeChange = (value: number[]) => {
+    setTempPrice({ from: value[0], to: value[1] });
   };
 
   const handleClick = () => {
+    setPrice(tempPrice);
     setActiveParams((prev: string[]) => {
       const updatedParams = [...prev];
       const priceFromIndex = updatedParams.findIndex((param) =>
@@ -31,20 +44,22 @@ const PriceFilter: React.FC<PriceFilterProps> = ({
       );
 
       if (priceFromIndex !== -1) {
-        updatedParams[priceFromIndex] = `PRICE FROM ${priceRange[0]}`;
+        updatedParams[priceFromIndex] = `PRICE FROM ${tempPrice.from}`;
       } else {
-        updatedParams.push(`PRICE FROM ${priceRange[0]}`);
+        updatedParams.push(`PRICE FROM ${tempPrice.from}`);
       }
 
       if (priceToIndex !== -1) {
-        updatedParams[priceToIndex] = `PRICE TO ${priceRange[1]}`;
+        updatedParams[priceToIndex] = `PRICE TO ${tempPrice.to}`;
       } else {
-        updatedParams.push(`PRICE TO ${priceRange[1]}`);
+        updatedParams.push(`PRICE TO ${tempPrice.to}`);
       }
 
       return updatedParams;
     });
+    setIsOpen(false); // Close the price filter after applying
   };
+
   return (
     <div className="relative">
       <div
@@ -65,7 +80,7 @@ const PriceFilter: React.FC<PriceFilterProps> = ({
                 type="text"
                 inputMode="numeric"
                 pattern="[0-9]+"
-                value={priceRange[0]}
+                value={tempPrice.from}
               />
               <div>-</div>
               <input
@@ -73,13 +88,13 @@ const PriceFilter: React.FC<PriceFilterProps> = ({
                 type="text"
                 inputMode="numeric"
                 pattern="[0-9]+"
-                value={priceRange[1]}
+                value={tempPrice.to}
               />
             </div>
             <Slider
               min={0}
               max={1000}
-              value={priceRange}
+              value={[tempPrice.from, tempPrice.to]}
               onChange={handlePriceRangeChange}
               range
             />

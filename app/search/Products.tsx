@@ -3,13 +3,24 @@
 const qs = require("qs");
 import axios from "axios";
 import { useQuery } from "@tanstack/react-query";
-import Link from "next/link";
 import { url } from "@/app/constants/constants";
+import Link from "next/link";
+import { useAtom } from "jotai";
+import { searchQueryAtom } from "../lib/atoms";
 
-interface ProductsProps {}
+type PriceProp = {
+  from: number;
+  to: number;
+};
 
-const Products: React.FC<ProductsProps> = ({ category, colors }) => {
-  console.log("product page", category);
+interface ProductsProps {
+  category: string[] | string;
+  colors: string[] | string;
+  price: PriceProp;
+}
+
+const Products: React.FC<ProductsProps> = ({ category, colors, price }) => {
+  const [searchQuery] = useAtom(searchQueryAtom);
 
   const query = qs.stringify(
     {
@@ -22,24 +33,21 @@ const Products: React.FC<ProductsProps> = ({ category, colors }) => {
       filters: {
         categories: {
           title: {
-            $contains: category,
+            $containsi: category,
           },
         },
         productAttributes: {
           color: {
-            $contains: colors,
+            $containsi: colors,
+          },
+          price: {
+            $gte: price.from,
+            $lt: price.to,
           },
         },
-        // categories: {
-        //   title: {
-        //     $contains: "Jednoczęsciowe",
-        //   },
-        // },
-
-        // price: {
-        //   $gr: 100,
-        //   $lt: 200,
-        // },
+        name: {
+          $containsi: searchQuery,
+        },
       },
     },
     {
@@ -70,7 +78,8 @@ const Products: React.FC<ProductsProps> = ({ category, colors }) => {
   return (
     <div>
       <div className="my-6 text-center">
-        Wyniki: <span className="font-medium">{responseData.data.length}</span>
+        Wyniki: <span className="font-medium">{responseData.data.length}</span>{" "}
+        {searchQuery && <span>dla "{searchQuery}"</span>}
       </div>
       <div className="lg:flex flex-wrap gap-y-16 gap-x-6 justify-center items-center my-4 lg:mb-20">
         {responseData.data.map((item) => (
