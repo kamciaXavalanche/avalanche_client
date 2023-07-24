@@ -16,7 +16,7 @@ const Logo = () => {
     // />
     <h1
       onClick={() => router.push("/")}
-      className="text-[1.325rem] lg:text-3xl transition duration-300 hover:opacity-70 cursor-pointer"
+      className="text-[1.5rem] lg:text-3xl transition duration-300 hover:opacity-70 cursor-pointer"
     >
       𝒜𝓋𝒶𝓁𝒶𝓃𝒸𝒽𝑒
     </h1>

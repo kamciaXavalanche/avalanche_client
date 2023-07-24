@@ -84,7 +84,7 @@ const Cart: React.FC<CartProps> = ({ setToggle }) => {
         duration: ".4",
       }}
       ref={cartRef}
-      className="bg-white right-0 w-[18rem] lg:w-[26rem] flex flex-col justify-between "
+      className="bg-white right-0 w-[20.125rem] lg:w-[26rem] flex flex-col justify-between "
     >
       <div className="flex justify-between items-center px-7 h-[80px] border-b ">
         <span>Koszyk</span>
@@ -126,9 +126,12 @@ const Cart: React.FC<CartProps> = ({ setToggle }) => {
           <Link
             onClick={() => setToggle(false)}
             href="/checkout/information"
-            className="button-primary inline-flex items-center"
+            className="button-primary flex items-center justify-center"
           >
-            PODSUMOWANIE <BsDot /> {formatPrice(totalPrice)}
+            <span className="flex gap-1 items-center text-sm lg:text-base">
+              PODSUMOWANIE <BsDot />
+            </span>
+            <span>{formatPrice(totalPrice)}</span>
           </Link>
         )}
       </motion.div>

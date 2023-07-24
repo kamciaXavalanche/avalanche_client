@@ -15,7 +15,7 @@ const Favorite = () => {
   }, []);
 
   return (
-    <div className="px-4 lg:px-[9%] py-6 flex gap-6">
+    <div className="px-4 lg:px-[9%] py-6 flex gap-6 overflow-x-auto">
       {wishlist.map((item) => (
         <Product slug={item} />
       ))}

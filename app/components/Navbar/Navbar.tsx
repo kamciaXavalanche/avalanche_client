@@ -69,7 +69,7 @@ const Navbar = ({ categories }) => {
       </AnimatePresence>
       <header
         className={`
-        px-4 lg:px-[9rem]
+        px-6 lg:px-[9rem]
         py-2 lg:py-4
         font-beautyFont 
         bg-backgroundColor

@@ -2,9 +2,10 @@
 
 import { useEffect, useRef } from "react";
 import { motion } from "framer-motion";
-import { BsDot } from "react-icons/bs";
+import { BsDot, BsFacebook, BsInstagram } from "react-icons/bs";
 import { IoCloseOutline } from "react-icons/io5";
 import NavLi from "./NavLi";
+import Link from "next/link";
 
 interface MenuProps {
   setToggleMenu: (toggle: boolean) => void;
@@ -59,11 +60,25 @@ const Menu: React.FC<MenuProps> = ({ setToggleMenu }) => {
       </div>
       <div className="h-full p-10 flex flex-col gap-4 overflow-y-scroll">
         <ul className="flex flex-col gap-2 justify-start items-center">
-          <NavLi title="sukienki" id={3} />
+          <NavLi onClick={() => setToggleMenu(false)} title="sukienki" id={3} />
           <hr className="bg-black w-full " />
-          <NavLi title="komplety" id={4} />
+          <NavLi onClick={() => setToggleMenu(false)} title="komplety" id={4} />
           <hr className="bg-black w-full " />
-          <li className="text-xl">Konto</li>
+          <Link
+            onClick={() => setToggleMenu(false)}
+            href="/login"
+            className="text-xl"
+          >
+            Konto
+          </Link>
+          <hr className="bg-black w-full " />
+          <Link
+            onClick={() => setToggleMenu(false)}
+            href="/favorite"
+            className="text-xl"
+          >
+            Ulubione
+          </Link>
         </ul>
       </div>
       <motion.div
@@ -74,8 +89,11 @@ const Menu: React.FC<MenuProps> = ({ setToggleMenu }) => {
           duration: ".2",
           delay: 0.4,
         }}
-        className="px-7 py-8 border-t-[1.5px]"
-      ></motion.div>
+        className="px-7 py-8 border-t-[1.5px] flex items-center justify-around"
+      >
+        <BsFacebook size={18} />
+        <BsInstagram size={18} />
+      </motion.div>
     </motion.div>
   );
 };
