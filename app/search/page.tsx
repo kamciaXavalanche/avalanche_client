@@ -32,16 +32,9 @@ const FilterPage = () => {
     ["category", category, activeParams],
     {
       queryFn: async () => {
-        const { data } = await axios.get(`${url}/api/categories`);
-        return data;
-      },
-    }
-  );
-  const { data: subcategoryData, isLoading: subcategoryLoading } = useQuery(
-    ["subcategory"],
-    {
-      queryFn: async () => {
-        const { data } = await axios.get(`${url}/api/subcategories`);
+        const { data } = await axios.get(
+          `${url}/api/categories?populate=subcategories`
+        );
         return data;
       },
     }
@@ -51,11 +44,12 @@ const FilterPage = () => {
     categoryData && categoryData.data
       ? categoryData.data.map((item) => item.attributes.title)
       : [];
-
-  const allSubcategories =
-    subcategoryData && subcategoryData.data
-      ? subcategoryData.data.map((item) => item.attributes.name)
+  const test =
+    categoryData && categoryData.data
+      ? categoryData.data.map((item) => item.attributes)
       : [];
+
+  console.log(test);
 
   function getColorsFromProductAttributes(products) {
     return (
@@ -101,7 +95,7 @@ const FilterPage = () => {
           activeParams={activeParams}
           setActiveParams={setActiveParams}
           title="CATEGORY"
-          subitems={allCategories}
+          subitems={test}
           setCategory={setCategory}
         />
         <ColorFilter

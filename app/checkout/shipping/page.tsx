@@ -32,7 +32,7 @@ const Shipping = () => {
     <div className="flex flex-col lg:flex-row gap-14">
       <form
         onSubmit={handleSubmit}
-        className="basis-[55%] pl-[9%] pt-10 flex flex-col justify-between"
+        className="basis-[55%] px-6 lg:pl-[9%] pt-10 flex flex-col justify-between"
       >
         <Header isActive />
         <div className="border border-gray-400 rounded-md px-6 py-2">

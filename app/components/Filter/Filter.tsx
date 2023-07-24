@@ -18,6 +18,7 @@ const Filter: React.FC<FilterProps> = ({
 }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [tempParams, setTempParams] = useState<string[]>(activeParams); // Tymczasowa tablica wybranych parametrów
+  const [openSubmenu, setOpensubmenu] = useState(false);
 
   const handleClick = (item: string) => {
     // Aktualizacja tymczasowej tablicy tempParams przy kliknięciu subitemu
@@ -35,6 +36,8 @@ const Filter: React.FC<FilterProps> = ({
     setCategory(tempParams);
     setIsOpen(false); // Zamknięcie formularza po kliknięciu "apply"
   };
+
+  console.log(subitems);
 
   return (
     <div className="relative">
@@ -54,16 +57,35 @@ const Filter: React.FC<FilterProps> = ({
         >
           {subitems.map((item) => (
             <div
-              key={item}
-              onClick={() => handleClick(item)}
-              className="flex items-center gap-3 cursor-pointer"
+              key={item.title}
+              onClick={() => handleClick(item.title)}
+              className="flex flex-col gap-3 cursor-pointer"
             >
-              <div
-                className={`w-4 h-4 border border-black ${
-                  tempParams.includes(item) && "bg-black"
-                } `}
-              />
-              <p className="uppercase">{item}</p>
+              <div className="flex gap-2 items-center">
+                <div
+                  className={`w-4 h-4 border border-black ${
+                    tempParams.includes(item.title) && "bg-black"
+                  } `}
+                />
+                <p
+                  onClick={() => setOpensubmenu((prev) => !prev)}
+                  className="uppercase"
+                >
+                  {item.title} +{" "}
+                </p>
+              </div>
+              {openSubmenu && (
+                <div className="pl-6 flex flex-col gap-2">
+                  {item.subcategories.data.map((subcategory) => {
+                    return (
+                      <div className="flex gap-1 items-center">
+                        <div className={`w-4 h-4 border border-black  `} />
+                        <p>{subcategory.attributes.name} </p>
+                      </div>
+                    );
+                  })}
+                </div>
+              )}
             </div>
           ))}
           <button

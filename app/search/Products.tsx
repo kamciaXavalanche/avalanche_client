@@ -31,11 +31,11 @@ const Products: React.FC<ProductsProps> = ({ category, colors, price }) => {
         "productAttributes",
       ],
       filters: {
-        categories: {
-          title: {
-            $containsi: category,
-          },
-        },
+        // categories: {
+        //   title: {
+        //     $containsi: category,
+        //   },
+        // },
         productAttributes: {
           color: {
             $containsi: colors,
