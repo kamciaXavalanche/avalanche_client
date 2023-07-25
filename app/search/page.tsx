@@ -14,11 +14,14 @@ import ColorFilter from "../components/Filter/ColorFilter";
 const FilterPage = () => {
   const [activeParams, setActiveParams] = useState([]);
   const [category, setCategory] = useState([]);
+  const [subcategory, setSubcategory] = useState([]);
   const [colors, setColors] = useState([]);
   const [price, setPrice] = useState({
     from: 30,
     to: 900,
   });
+
+  const subcategoryArray = Object.values(subcategory).flat();
 
   const { data, isLoading } = useQuery(["productData", category], {
     queryFn: async () => {
@@ -68,19 +71,6 @@ const FilterPage = () => {
     ? colorsArray.filter((color, index) => colorsArray.indexOf(color) === index)
     : [];
 
-  function getPricesFromProductAttributes(products) {
-    return (
-      products?.flatMap(
-        (product) =>
-          product?.attributes?.productAttributes?.map(
-            (attribute) => attribute?.price
-          ) ?? []
-      ) ?? []
-    );
-  }
-
-  const pricesArray = getPricesFromProductAttributes(data?.data);
-
   if (isLoading) {
     return <Loader />;
   }
@@ -97,6 +87,7 @@ const FilterPage = () => {
           title="CATEGORY"
           subitems={test}
           setCategory={setCategory}
+          setSubcategory={setSubcategory}
         />
         <ColorFilter
           activeParams={activeParams}
@@ -129,7 +120,12 @@ const FilterPage = () => {
           );
         })}
       </div>
-      <Products category={category} price={price} colors={colors} />
+      <Products
+        category={category}
+        subcategory={subcategoryArray}
+        price={price}
+        colors={colors}
+      />
     </div>
   );
 };

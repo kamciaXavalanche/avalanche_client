@@ -16,10 +16,16 @@ type PriceProp = {
 interface ProductsProps {
   category: string[] | string;
   colors: string[] | string;
+  subcategory: string[] | string;
   price: PriceProp;
 }
 
-const Products: React.FC<ProductsProps> = ({ category, colors, price }) => {
+const Products: React.FC<ProductsProps> = ({
+  category,
+  subcategory,
+  colors,
+  price,
+}) => {
   const [searchQuery] = useAtom(searchQueryAtom);
 
   const query = qs.stringify(
@@ -31,11 +37,16 @@ const Products: React.FC<ProductsProps> = ({ category, colors, price }) => {
         "productAttributes",
       ],
       filters: {
-        // categories: {
-        //   title: {
-        //     $containsi: category,
-        //   },
-        // },
+        categories: {
+          title: {
+            $containsi: category,
+          },
+        },
+        subcategories: {
+          name: {
+            $containsi: subcategory,
+          },
+        },
         productAttributes: {
           color: {
             $containsi: colors,
