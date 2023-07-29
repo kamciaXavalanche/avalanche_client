@@ -3,15 +3,13 @@
 import React, { useEffect, useState } from "react";
 import {
   PaymentElement,
-  LinkAuthenticationElement,
   useStripe,
   useElements,
 } from "@stripe/react-stripe-js";
 import { useAtom } from "jotai";
-import { addressAtom, cartAtom, emailAtom } from "../lib/atoms";
+import {  cartAtom } from "../lib/atoms";
 import Cookies from "js-cookie";
 import axios from "axios";
-import { url } from "../constants/constants";
 
 export default function CheckoutForm({ userData, totalPrice }) {
   const stripe = useStripe();
@@ -19,6 +17,8 @@ export default function CheckoutForm({ userData, totalPrice }) {
   const [message, setMessage] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const [cartItems, setCartItems] = useAtom(cartAtom);
+
+  const url = "https://avalanche-client.vercel.app"
 
   const sendEmail = async () => {
     await axios

@@ -1,7 +1,7 @@
 "use client";
+import { url } from "@/app/constants/constants";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
-import { url } from "../constants/constants";
 import Image from "next/image";
 import Link from "next/link";
 

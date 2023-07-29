@@ -6,7 +6,7 @@ import { useQuery } from "@tanstack/react-query";
 import { url } from "@/app/constants/constants";
 import Link from "next/link";
 import { useAtom } from "jotai";
-import { searchQueryAtom } from "../lib/atoms";
+import { searchQueryAtom } from "../../lib/atoms";
 
 type PriceProp = {
   from: number;

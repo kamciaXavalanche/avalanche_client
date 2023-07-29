@@ -6,10 +6,12 @@ import SummaryProduct from "./SummaryProduct";
 import Cookies from "js-cookie"; 
 import { useEffect, useState } from "react";
 import { formatPrice } from "../utils/functions";
+import { BsCart2, BsChevronDown } from "react-icons/bs";
 
-const Summary = () => {
+const SummaryMobile = () => {
   const [cartItems, setCartItems] = useAtom(cartAtom);
   const [totalPrice, setTotalPrice] = useState(0);
+  const [openSummary, setOpenSummary] = useState(false)
 
   useEffect(() => {
     const totalPriceFromCookie = parseFloat(Cookies.get("totalPrice") || "0");
@@ -17,8 +19,14 @@ const Summary = () => {
   }, [cartItems, totalPrice]);
 
   return (
-    <div className="hidden lg:block basis-[45%] bg-gray-200 pr-[9%] pl-8 pt-10 border-l-2 border-black/60 ">
-      <div className="flex gap-2 flex-col">
+    <div className=" lg:hidden ">
+      <div className="flex items-center justify-between my-4">
+      <div onClick={() => setOpenSummary((prev) => !prev)} className="text-sm inline-flex items-center gap-1.5">
+        <BsCart2/> Pokaż podsumowanie zamówienia <BsChevronDown className="text-sm font-bold"/>
+      </div>
+      <div className="font-semibold">{formatPrice(totalPrice)}</div>
+      </div>
+      {openSummary && (<><div className="flex gap-2 flex-col">
         {cartItems?.map((item) => (
           <SummaryProduct
             key={item.id}
@@ -57,9 +65,9 @@ const Summary = () => {
           <div className="font-medium text-lg">Suma</div>
         </div>
         <span className="text-xl font-medium">{formatPrice(totalPrice)}</span>
-      </div>
+      </div></>)}
     </div>
   );
 };
 
-export default Summary;
+export default SummaryMobile;

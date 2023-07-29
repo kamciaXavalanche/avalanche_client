@@ -16,11 +16,15 @@ import {
   secondNameAtom,
   zipcodeAtom,
 } from "@/app/lib/atoms";
-import StepBack from "../StepBack";
 import { useRouter } from "next/navigation";
 import Cookies from "js-cookie";
 import { AiOutlineInfoCircle } from "react-icons/ai";
 import Links from "../Links";
+
+export const metadata = {
+  title: "Informacja",
+  description: "Avalanche - realizacja zakupu",
+};
 
 const Information = () => {
   const [email, setEmail] = useAtom(emailAtom);
@@ -101,13 +105,13 @@ const Information = () => {
 
   return (
     <div className="flex flex-col lg:flex-row gap-14">
-      <div className="basis-[55%] px-6 lg:pl-[9%] pt-10">
+      <div className="lg:basis-[55%] px-6 lg:pl-[9%] pt-10">
         <Header isActive />
         <form onSubmit={handleSubmit}>
           <div className="">
             <div className="flex justify-between items-center mb-3">
               <h2 className="font-semibold ">Kontakt</h2>
-              <div>
+              <div className="text-sm">
                 Masz już konto?{" "}
                 <Link href="/login" className="underline text-[#5E2C04]">
                   Zaloguj się
@@ -161,7 +165,6 @@ const Information = () => {
                 type="text"
                 handleChange={handleZipcodeChange}
                 typedValue={zipcode}
-                required
               />
               <FloatingLabel
                 text="Miasto"
@@ -178,12 +181,15 @@ const Information = () => {
             />
           </div>
           {formError && <p className="text-red-500">{formError}</p>}
-          <StepBack
-            backTo="cart"
-            backToLabel="koszyka"
-            goToLabel="wysyłki"
-            goTo="shipping"
-          />
+          <div className="flex justify-between py-12">
+      
+        <button
+          type="submit"
+          className="bg-black w-full text-white px-3 py-3 text-sm lg:text-base lg:px-6 lg:py-4 rounded-md hover:bg-black/80"
+        >
+          Przejdź do wysyłki
+        </button>
+    </div>
         </form>
         <Links />
       </div>

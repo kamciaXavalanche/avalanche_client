@@ -14,18 +14,13 @@ export default async function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
-  const res = await fetch(`${url}/api/categories?populate=subcategories`);
-  const categories = await res.json();
+  
 
   return (
     <ReactQueryProvider>
       <html lang="en">
         <body>
-          <div>
-            <Navbar categories={categories.data} />
             {children}
-            <Footer />
-          </div>
         </body>
       </html>
     </ReactQueryProvider>

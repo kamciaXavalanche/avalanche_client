@@ -1,8 +1,9 @@
-import Slider from "./components/Slider";
-import Newsletter from "./components/Newsletter";
-import Bestsellers from "./sections/Bestsellers";
-import Categories from "./sections/Categories";
-import { url } from "./constants/constants";
+import Newsletter from "../components/Newsletter";
+import Slider from "../components/Slider";
+import { url } from "../constants/constants";
+import Bestsellers from "../sections/Bestsellers";
+import Categories from "../sections/Categories";
+
 
 export default async function Home() {
   const res = await fetch(`${url}/api/products?populate=coverImages`);

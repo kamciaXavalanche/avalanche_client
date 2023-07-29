@@ -1,10 +1,10 @@
 "use client";
 
 import { useQuery } from "@tanstack/react-query";
-import Counter from "../components/Cart/Counter";
+import Counter from "../../components/Cart/Counter";
 import axios from "axios";
 import Cookies from "js-cookie";
-import ProductPrice from "../components/ProductPrice";
+import ProductPrice from "../../components/ProductPrice";
 import { url } from "@/app/constants/constants";
 import Image from "next/image";
 

@@ -15,6 +15,7 @@ import { useRouter } from "next/navigation";
 import { BsArrowReturnLeft } from "react-icons/bs";
 import Link from "next/link";
 import Links from "../Links";
+import { IoIosArrowBack } from "react-icons/io";
 
 const Shipping = () => {
   const email = useAtomValue(emailAtom);
@@ -76,12 +77,20 @@ const Shipping = () => {
             </Link>
           )}
         </div>
-        <StepBack
-          backToLabel="informacji"
-          goToLabel="płatności"
-          backTo="information"
-          goTo="payment"
-        />
+        <div className="flex justify-between py-12">
+      <Link
+        className="text-[#5E2C04] hover:brightness-150 inline-flex items-center gap-2"
+        href={`/checkout/information`}
+      >
+        <IoIosArrowBack /> Wróc do informacji
+      </Link>
+      <Link  className="bg-black text-white px-3 py-2 text-sm lg:text-base lg:px-6 lg:py-4 rounded-md hover:bg-black/80"
+ href={`/checkout/payment`}
+ >
+       
+          Przejdź do płatności
+      </Link>
+    </div>
         <Links />
       </form>
       <Summary />

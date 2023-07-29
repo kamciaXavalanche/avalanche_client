@@ -1,6 +1,6 @@
 "use client";
 import axios from "axios";
-import { url } from "../constants/constants";
+import { url } from "../../constants/constants";
 import { useState } from "react";
 import Cookies from "js-cookie";
 import { useRouter } from "next/navigation";

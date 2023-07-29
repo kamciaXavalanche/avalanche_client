@@ -3,7 +3,7 @@
 import axios from "axios";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { isAuthenticatedAtom } from "../lib/atoms";
+import { isAuthenticatedAtom } from "../../lib/atoms";
 import { useAtom } from "jotai";
 import { useEffect, useState } from "react";
 

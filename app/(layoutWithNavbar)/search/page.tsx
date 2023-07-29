@@ -7,9 +7,9 @@ import axios from "axios";
 import { useState } from "react";
 import { IoCloseOutline } from "react-icons/io5";
 import Products from "./Products";
-import { url } from "../constants/constants";
+import { url } from "../../constants/constants";
 import Loader from "@/app/components/Loader";
-import ColorFilter from "../components/Filter/ColorFilter";
+import ColorFilter from "../../components/Filter/ColorFilter";
 
 const FilterPage = () => {
   const [activeParams, setActiveParams] = useState([]);
