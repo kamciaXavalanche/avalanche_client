@@ -99,7 +99,7 @@ const Products: React.FC<ProductsProps> = ({
             className=" lg:w-[220px] lg:h-[340px]"
           >
             <img
-              className="w-full h-full object-cover hover:scale-[1.05] transition duration-300"
+              className="w-full h-full object-cover lg:hover:scale-[1.05] transition duration-300"
               src={item?.attributes?.coverImages?.data[0]?.attributes?.url}
               alt=""
             />

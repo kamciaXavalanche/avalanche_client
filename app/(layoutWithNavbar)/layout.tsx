@@ -17,10 +17,12 @@ const layout = async ({children}) => {
     const images = await imagesResponse.json();
 
   return (
-    <div>
-        <Navbar categories={categories.data} />
+    <div className="flex flex-col min-h-screen">
+      <Navbar categories={categories.data} />
+      <main className="flex-grow">
         {children}
-        <Footer />
+      </main>
+      <Footer />
     </div>
   )
 }

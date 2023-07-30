@@ -25,7 +25,7 @@ const Payment = () => {
   }, []);
 
   return (
-    <div className="flex flex-col lg:flex-row gap-14">
+    <div className="flex flex-col lg:flex-row gap-14 h-screen ">
       <div className="basis-[55%] px-6 lg:pl-[9%] pt-10 flex flex-col justify-between">
         <Header />
         {email && address ? (

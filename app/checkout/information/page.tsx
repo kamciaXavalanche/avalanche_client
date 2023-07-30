@@ -21,11 +21,6 @@ import Cookies from "js-cookie";
 import { AiOutlineInfoCircle } from "react-icons/ai";
 import Links from "../Links";
 
-export const metadata = {
-  title: "Informacja",
-  description: "Avalanche - realizacja zakupu",
-};
-
 const Information = () => {
   const [email, setEmail] = useAtom(emailAtom);
   const [address, setAddress] = useAtom(addressAtom);

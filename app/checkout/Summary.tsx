@@ -17,7 +17,7 @@ const Summary = () => {
   }, [cartItems, totalPrice]);
 
   return (
-    <div className="hidden lg:block basis-[45%] bg-gray-200 pr-[9%] pl-8 pt-10 border-l-2 border-black/60 ">
+    <div className="hidden lg:block lg:basis-[45%] bg-gray-200 pr-[9%] pl-8 pt-10 border-l-2 border-black/60 ">
       <div className="flex gap-2 flex-col">
         {cartItems?.map((item) => (
           <SummaryProduct
