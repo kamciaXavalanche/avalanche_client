@@ -9,9 +9,10 @@ import Link from "next/link";
 
 interface MenuProps {
   setToggleMenu: (toggle: boolean) => void;
+  subcategories: string[]
 }
 
-const Menu: React.FC<MenuProps> = ({ setToggleMenu }) => {
+const Menu: React.FC<MenuProps> = ({ setToggleMenu, subcategories }) => {
   const cartRef = useRef(null);
 
   useEffect(() => {
@@ -60,9 +61,8 @@ const Menu: React.FC<MenuProps> = ({ setToggleMenu }) => {
       </div>
       <div className="h-full p-10 flex flex-col gap-4 overflow-y-scroll">
         <ul className="flex flex-col gap-2 justify-start items-center">
-          <NavLi onClick={() => setToggleMenu(false)} title="sukienki" id={3} />
-          <hr className="bg-black w-full " />
-          <NavLi onClick={() => setToggleMenu(false)} title="komplety" id={4} />
+         <li>Sukienki</li>
+         <li>Komplety</li>
           <hr className="bg-black w-full " />
           <Link
             onClick={() => setToggleMenu(false)}

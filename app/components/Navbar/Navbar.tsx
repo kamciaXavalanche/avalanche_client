@@ -188,7 +188,8 @@ const Navbar = ({ categories }) => {
         <AnimatePresence>
           {toggleMenu && (
             <div className="fixed top-0 left-0 right-0 w-full h-full bg-black/70 flex justify-start">
-              <Menu setToggleMenu={setToggleMenu} />
+              <Menu  setToggleMenu={setToggleMenu}                   subcategories={["Test", "TEST!"]}
+ />
             </div>
           )}
         </AnimatePresence>

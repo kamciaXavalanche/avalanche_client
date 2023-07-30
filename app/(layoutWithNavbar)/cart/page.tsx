@@ -81,7 +81,7 @@ const Cart: React.FC<CartProps> = () => {
         ) : (
           <Link
             href="/checkout/information"
-            className="button-primary inline-flex items-center justify-center"
+            className="button-primary inline-flex items-center justify-center !w-80"
           >
             PODSUMOWANIE <BsDot /> {formatPrice(totalPrice)}
           </Link>

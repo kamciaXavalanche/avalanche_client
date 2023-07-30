@@ -25,16 +25,21 @@ const NavLi: React.FC<NavLiProps> = ({
   const [isSubMenuVisible, setIsSubMenuVisible] = useState(false);
 
   const handleMouseEnter = () => {
-    setIsSubMenuVisible(true);
+    if (window.innerWidth >= 768) {
+      setIsSubMenuVisible(true);
+    }
   };
-
+  
   const handleMouseLeave = () => {
-    setIsSubMenuVisible(false);
+    if (window.innerWidth >= 768) {
+      setIsSubMenuVisible(false);
+    }
   };
 
   return (
-    <Link
-      href={`/search`}
+    <div
+      // href={`/search`}
+      onClick={() => setIsSubMenuVisible(true)}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
       className={`
@@ -101,7 +106,7 @@ const NavLi: React.FC<NavLiProps> = ({
           </li>
         ))}
       </div>
-    </Link>
+    </div>
   );
 };
 
