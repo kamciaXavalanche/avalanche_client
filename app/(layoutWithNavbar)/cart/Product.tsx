@@ -47,18 +47,18 @@ const Product: React.FC<ProductProps> = ({
 
   return (
     <div className="flex justify-center gap-3 lg:gap-8">
-      <div className="basis-[45%] lg:basis-0">
-        <div className="w-24 h-36 relative">
+      <div className="basis-[45%] lg:basis-[15%]">
+        <div className="w-24 h-36 lg:w-36 lg:h-56 relative">
           <Image
             fill
-            className="object-cover"
+            className="object-cover "
             src={productData.data.attributes.coverImages.data[0].attributes.url}
             alt=""
           />
         </div>
       </div>
-      <div className="basis-[55%] lg:basis-0 flex flex-col lg:flex-row justify-between lg:gap-20">
-        <div className="flex flex-col gap-2">
+      <div className="basis-[55%] lg:basis-0 flex flex-col lg:flex-row justify-between lg:items-center lg:gap-6">
+        <div className="flex flex-col lg:min-w-[200px] gap-2">
           <h2 className="font-medium">{productData.data.attributes.name}</h2>
           <h2 className="text-sm lg:">
             Rozmiar: <span className="font-medium">{size}</span>
@@ -71,7 +71,7 @@ const Product: React.FC<ProductProps> = ({
             discount={znalezionyObiekt.discount * quantity}
           />
         </div>
-        <div className="flex justify-start gap-4 lg:gap-10  items-center">
+        <div className="flex lg:flex-col justify-start gap-6 lg:gap-2 items-center">
           <Counter slug={slug} quantity={quantity} size={size} uuid={uuid} />
           <div
             onClick={() => removeFromCart(uuid)}

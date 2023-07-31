@@ -1,47 +1,44 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { motion } from "framer-motion";
-import { BsDot, BsFacebook, BsInstagram } from "react-icons/bs";
+import { BsFacebook, BsInstagram } from "react-icons/bs";
+import { BiMinus, BiPlus } from "react-icons/bi";
 import { IoCloseOutline } from "react-icons/io5";
-import NavLi from "./NavLi";
 import Link from "next/link";
 
 interface MenuProps {
   setToggleMenu: (toggle: boolean) => void;
-  subcategories: string[]
+  categories: any;
 }
 
-const Menu: React.FC<MenuProps> = ({ setToggleMenu, subcategories }) => {
+const Menu: React.FC<MenuProps> = ({ setToggleMenu, categories }) => {
   const cartRef = useRef(null);
+  const [expandedCategory, setExpandedCategory] = useState<string | null>(null);
 
   useEffect(() => {
     const handleOutsideClick = (event) => {
-      // Sprawdź, czy kliknięcie nastąpiło poza elementem <Cart />
       if (cartRef.current && !cartRef.current.contains(event.target)) {
-        // Zamknij koszyk
         setToggleMenu(false);
       }
     };
 
-    // Dodaj obsługę zdarzeń dla kliknięcia na elementach nadrzędnych
     document.addEventListener("click", handleOutsideClick);
 
-    // Usuń obsługę zdarzeń po odmontowaniu komponentu
     return () => {
       document.removeEventListener("click", handleOutsideClick);
     };
   }, [setToggleMenu]);
 
   useEffect(() => {
-    // Blokuj przewijanie, gdy komponent zostanie zamontowany
     document.body.style.overflow = "hidden";
 
-    // Odblokuj przewijanie, gdy komponent zostanie odmontowany
     return () => {
       document.body.style.overflow = "visible";
     };
   }, []);
+
+  console.log(categories);
 
   return (
     <motion.div
@@ -60,10 +57,50 @@ const Menu: React.FC<MenuProps> = ({ setToggleMenu, subcategories }) => {
         </div>
       </div>
       <div className="h-full p-10 flex flex-col gap-4 overflow-y-scroll">
-        <ul className="flex flex-col gap-2 justify-start items-center">
-         <li>Sukienki</li>
-         <li>Komplety</li>
-          <hr className="bg-black w-full " />
+        <ul className="flex flex-col gap-2 justify-start ">
+          {categories.map((category) => {
+            const isExpanded = expandedCategory === category.id;
+            return (
+              <div key={category.id}>
+                <div
+                  className="flex justify-between items-center cursor-pointer"
+                  onClick={() =>
+                    setExpandedCategory((prev) =>
+                      prev === category.id ? null : category.id
+                    )
+                  }
+                >
+                  <li className="text-lg font-semibold pb-2">
+                    {category.attributes.title}
+                  </li>
+                  {isExpanded ? "-" : "+"}
+                </div>
+                <hr className="bg-black w-full " />
+                {isExpanded && (
+                  <div className="ml-6">
+                    {category.attributes.subcategories.data.map(
+                      (subcategory) => (
+                        <>
+                          <Link
+                            onClick={() => setToggleMenu(false)}
+                            href="/search"
+                          >
+                            <li
+                              className="py-2 font-medium"
+                              key={subcategory.id}
+                            >
+                              {subcategory.attributes.name}
+                            </li>
+                          </Link>
+                          <hr className="bg-black w-full " />
+                        </>
+                      )
+                    )}
+                  </div>
+                )}
+              </div>
+            );
+          })}
           <Link
             onClick={() => setToggleMenu(false)}
             href="/login"
