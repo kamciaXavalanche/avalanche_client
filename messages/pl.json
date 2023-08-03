@@ -1,0 +1,19 @@
+{
+  "announcmentbar": {
+    "message": "DARMOWA DOSTAWA! ZAPRASZAMY DO ZAKUPÓW."
+  },
+  "search": {
+    "search-input": "Szukaj"
+  },
+  "newsletter": {
+    "header": "ZAPISZ SIĘ DO NASZEGO NEWSLETTERA",
+    "discount-message": "OTRZYMASZ",
+    "discount-message2": "NA ZAKUPY",
+    "input": "Wprowadź email",
+    "button": "Subskrybuj"
+  },
+  "bestsellers": {
+    "dresses": "sukienki",
+    "sets": "komplety"
+  }
+}

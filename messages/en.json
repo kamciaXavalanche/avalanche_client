@@ -1,0 +1,19 @@
+{
+  "announcmentbar": {
+    "message": "Free shipping! Welcome."
+  },
+  "search": {
+    "search-input": "Search"
+  },
+  "newsletter": {
+    "header": "Sign in to our newslettter",
+    "discount-message": "You will gain",
+    "discount-message2": "on purchases",
+    "input": "Enter email",
+    "button": "Subscribe"
+  },
+  "bestsellers": {
+    "dresses": "dresses",
+    "sets": "sets"
+  }
+}
