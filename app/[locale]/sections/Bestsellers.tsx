@@ -4,9 +4,11 @@ import { AiOutlineStar, AiFillStar } from "react-icons/ai";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import Cookies from "js-cookie";
+import { useTranslations } from "next-intl";
 
 const Bestsellers = ({ products }) => {
   const [wishlist, setWishlist] = useState([]);
+  const t = useTranslations("bestsellers");
 
   useEffect(() => {
     const wishlistFromCookies = Cookies.get("wishlist");
@@ -36,12 +38,12 @@ const Bestsellers = ({ products }) => {
   return (
     <section className="px-4 lg:px-[9rem] flex flex-col items-center text-center mb-20">
       <div className="my-10">
-        <h2>NASZE BESTSELLERY</h2>
+        <h2>{t("header")}</h2>
         <nav className="flex gap-10 list-none mt-4">
           <li className="text-2xl border-b-2 border-black cursor-pointer">
-            SUKIENKI
+            {t("dresses")}
           </li>
-          <li className="text-2xl cursor-pointer">KOMPLETY</li>
+          <li className="text-2xl cursor-pointer">{t("sets")}</li>
         </nav>
       </div>
       <div className="w-full  grid grid-cols-1 lg:grid-cols-4 gap-y-10 gap-x-5">
@@ -85,7 +87,7 @@ const Bestsellers = ({ products }) => {
         ))}
       </div>
       <Link href="/search" className="button-primary mt-8 !w-fit">
-        SPRAWDZ WIĘCEJ PRODUKTÓW
+        {t("check-more")}
       </Link>
     </section>
   );

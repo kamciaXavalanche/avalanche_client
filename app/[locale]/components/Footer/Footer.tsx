@@ -1,7 +1,8 @@
 import { BsFacebook, BsInstagram } from "react-icons/bs";
 import Logo from "../Navbar/Logo";
+import { useTranslations } from "next-intl";
 const Footer = () => {
-  const avalanche = ["Sukienki", "Komplety"];
+  const t = useTranslations("footer");
 
   return (
     <footer className="border-t border-textColor bg-primaryColor">
@@ -9,16 +10,7 @@ const Footer = () => {
         <div className="md:flex md:justify-between">
           <div className="mb-6 md:mb-0">
             <Logo />
-            <p className="mt-3 max-w-[500px]">
-              Avalanche powstało z myślą o wyjątkowych chwilach w życiu każdego
-              z nas! Stawiamy na najwyższa jakość produktów, wierzymy w to, że
-              ubranie jest sztuką a sztuka częścią nas, podkreśla nasza
-              osobowość oraz charakter. Zamawiane kolekcje są odpowiednio
-              wyselekcjonowane tak, aby zaspokoić gusta najbardziej wymagających
-              klientów. Ich prestiżowy i modny wygląd wciągnie Państwa w
-              eklektyczną podróż do świata nowoczesnego designu i klasycznych
-              trendów.
-            </p>
+            <p className="mt-3 max-w-[500px]">{t("description")}</p>
           </div>
           <div className="grid grid-cols-2 gap-8 sm:gap-6 sm:grid-cols-3">
             <div>

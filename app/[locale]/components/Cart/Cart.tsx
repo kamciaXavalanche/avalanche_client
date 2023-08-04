@@ -13,6 +13,7 @@ import Link from "next/link";
 import Cookies from "js-cookie";
 import { url } from "@/app/[locale]/constants/constants";
 import { useLocale } from "next-intl";
+import { useTranslations } from "next-intl";
 
 interface CartProps {
   setToggle: (toggle: boolean) => void;
@@ -24,6 +25,7 @@ const Cart: React.FC<CartProps> = ({ setToggle }) => {
   const [isLoadingPrice, setIsLoadingPrice] = useState(true);
   const cartRef = useRef(null);
   const locale = useLocale();
+  const t = useTranslations("cart");
 
   useEffect(() => {
     const fetchData = async () => {
@@ -91,26 +93,28 @@ const Cart: React.FC<CartProps> = ({ setToggle }) => {
       className="bg-white right-0 w-[20.125rem] lg:w-[26rem] flex flex-col justify-between "
     >
       <div className="flex justify-between items-center px-7 h-[80px] border-b ">
-        <span>Koszyk</span>
+        <span className="uppercase">{t("cart")}</span>
         <div className="cursor-pointer" onClick={() => setToggle(false)}>
           <IoCloseOutline size={26} />
         </div>
       </div>
       <div className="h-full p-4 lg:p-10 flex flex-col gap-4 overflow-y-scroll">
-        {cartItems.length === 0
-          ? "TWÓJ KOSZYK JEST PUSTY"
-          : cartItems?.map((item) => (
-              <Product
-                key={item.id}
-                slug={item.slug}
-                quantity={item.quantity}
-                size={item.size}
-                setCartItems={setCartItems}
-                cartItems={cartItems}
-                uuid={item.uuid}
-                color={item.color}
-              />
-            ))}
+        {cartItems.length === 0 ? (
+          <p className="uppercase text-center">{t("empty")}</p>
+        ) : (
+          cartItems?.map((item) => (
+            <Product
+              key={item.id}
+              slug={item.slug}
+              quantity={item.quantity}
+              size={item.size}
+              setCartItems={setCartItems}
+              cartItems={cartItems}
+              uuid={item.uuid}
+              color={item.color}
+            />
+          ))
+        )}
       </div>
       <motion.div
         initial={{ opacity: 0, y: "100%" }}
@@ -132,8 +136,8 @@ const Cart: React.FC<CartProps> = ({ setToggle }) => {
             href="/checkout/information"
             className="button-primary flex items-center justify-center"
           >
-            <span className="flex gap-1 items-center text-sm lg:text-base">
-              PODSUMOWANIE <BsDot />
+            <span className="flex gap-1 items-center uppercase text-sm lg:text-base">
+              {t("summary")} <BsDot />
             </span>
             <span>{formatPrice(totalPrice)}</span>
           </Link>

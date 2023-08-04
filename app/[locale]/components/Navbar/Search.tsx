@@ -5,11 +5,13 @@ import { useAtom } from "jotai";
 import { IoCloseOutline } from "react-icons/io5";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
+import { useTranslations } from "next-intl";
 
 const Search = ({ setToggleSearch }) => {
   const [inputQuery, setInputQuery] = useState("");
   const [searchQuery, setSearchQuery] = useAtom(searchQueryAtom);
   const router = useRouter();
+  const t = useTranslations("search");
 
   const handleInputChange = (e: any) => {
     setInputQuery(e.target.value);
@@ -50,7 +52,7 @@ const Search = ({ setToggleSearch }) => {
             <input
               onChange={handleInputChange}
               className="bg-transparent outline-none text-black w-full placeholder:text-textColor/90 uppercase text-md lg:text-lg"
-              placeholder="SZUKAJ . . ."
+              placeholder={`${t("search-input")} . . .`}
               type="text"
             />
           </div>

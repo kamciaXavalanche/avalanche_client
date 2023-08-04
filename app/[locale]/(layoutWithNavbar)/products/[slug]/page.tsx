@@ -19,6 +19,7 @@ import {
 import { IoIosArrowForward } from "react-icons/io";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { useTranslations } from "next-intl";
 
 const ProductPage = ({ params }) => {
   const [cartItems, setCartItems] = useAtom(cartAtom);
@@ -27,6 +28,7 @@ const ProductPage = ({ params }) => {
   const [selectedColor, setSelectedColor] = useState(0);
   const [popup, setPopup] = useState(false);
   const router = useRouter();
+  const t = useTranslations("product");
 
   function increaseCartQuantity(slug: string, size: string, color: string) {
     const uuid = crypto.randomUUID();
@@ -153,7 +155,7 @@ const ProductPage = ({ params }) => {
     <div className="px-4 lg:pl-[9rem] lg:pr-[12rem] flex flex-col lg:flex-row gap-10 justify-between my-10">
       <div>
         <div className="mb-4 inline-flex items-center gap-1">
-          <Link href="/">Strona Główna</Link> <IoIosArrowForward />{" "}
+          <Link href="/">{t("home")}</Link> <IoIosArrowForward />{" "}
           {categories?.data[0]?.attributes?.title} <IoIosArrowForward />
           <span className="font-medium">
             {subcategories?.data[0]?.attributes?.name}
@@ -181,10 +183,10 @@ const ProductPage = ({ params }) => {
         <ReactMarkdown className="pt-4 pb-1">{description}</ReactMarkdown>
         <div className="pb-1">
           {choosenColor === "" ? (
-            <div>Wybierz kolor:</div>
+            <p>{t("select-color")}:</p>
           ) : (
             <div>
-              Kolor: <span className="font-medium">{choosenColor}</span>
+              {t("color")}: <span className="font-medium">{choosenColor}</span>
             </div>
           )}
         </div>
@@ -224,7 +226,7 @@ const ProductPage = ({ params }) => {
             })}
         </div>
         <div>
-          <span className="py-4">Wybierz rozmiar:</span>
+          <span className="py-4">{t("select-size")}:</span>
           <div className="flex gap-4">
             {availabilitySizes.length > 0 ? (
               availabilitySizes.map((item) => {
@@ -256,7 +258,7 @@ const ProductPage = ({ params }) => {
           }}
           className="button-secondary my-4"
         >
-          dodaj do koszyka
+          {t("add-button")}
         </button>
         <button
           onClick={() => {
@@ -264,7 +266,7 @@ const ProductPage = ({ params }) => {
           }}
           className="button-primary"
         >
-          kup teraz
+          {t("buy-button")}
         </button>
       </div>
       {popup && <BuyingPopup setPopup={setPopup} name={name} />}

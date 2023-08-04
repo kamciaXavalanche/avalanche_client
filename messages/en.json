@@ -13,7 +13,29 @@
     "button": "Subscribe"
   },
   "bestsellers": {
-    "dresses": "dresses",
-    "sets": "sets"
+    "header": "OUR BESTSELLES",
+    "dresses": "DRESSES",
+    "sets": "SETS",
+    "check-more": "check for more products"
+  },
+  "footer": {
+    "description": "Avalanche was created with special moments in everyone's life in mind! We focus on the highest quality of products, we believe that clothes are art and art is part of us, it emphasizes our personality and character. The ordered collections are properly selected to satisfy the tastes of the most demanding customers. Their prestigious and fashionable appearance will draw you into an eclectic journey to the world of modern design and classic trends."
+  },
+  "cart": {
+    "cart": "cart",
+    "empty": "your basket is empty",
+    "summary": "summary",
+    "size": "SIZE",
+    "color": "COLOR",
+    "delete": "delete"
+  },
+  "product": {
+    "home": "Home",
+    "color": "COLOR",
+    "size": "size",
+    "select-color": "Select color",
+    "select-size": "Select size",
+    "add-button": "add to cart",
+    "buy-button": "Buy now"
   }
 }
