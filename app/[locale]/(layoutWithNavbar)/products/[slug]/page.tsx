@@ -114,10 +114,6 @@ const ProductPage = ({ params }) => {
         return updatedItems;
       }
     });
-
-    // Przenieś użytkownika do strony koszyka
-    // Możesz zmienić ścieżkę do strony koszyka na odpowiednią dla Twojej aplikacji
-    // Tutaj zakładam, że ścieżka do koszyka to "/koszyk"
     router.push("/cart");
   }
 

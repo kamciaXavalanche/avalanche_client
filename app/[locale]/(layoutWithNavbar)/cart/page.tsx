@@ -10,16 +10,20 @@ import { formatPrice } from "@/app/[locale]/utils/functions";
 import Link from "next/link";
 import Cookies from "js-cookie";
 import { url } from "@/app/[locale]/constants/constants";
+import { useLocale } from "next-intl";
 
 const Cart: React.FC<CartProps> = () => {
   const [products, setProducts] = useState([]);
   const [cartItems, setCartItems] = useAtom(cartAtom);
   const [isLoadingPrice, setIsLoadingPrice] = useState(true);
+  const locale = useLocale();
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get(url + "/api/products?populate=*");
+        const response = await axios.get(
+          `${url}/api/products?locale=${locale}&populate=*`
+        );
         setProducts(response.data);
         setIsLoadingPrice(false); // Ustawiamy stan na false po zakończeniu pobierania produktów
       } catch (error) {

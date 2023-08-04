@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { AiOutlineStar } from "react-icons/ai";
 import { RxHamburgerMenu } from "react-icons/rx";
+import { RiGlobalLine } from "react-icons/ri";
 import AnnouncementBar from "./AnnouncementBar";
 import Link from "next/link";
 import Logo from "./Logo";
@@ -68,7 +69,6 @@ const Navbar = ({ categories }) => {
           </motion.div>
         )}
       </AnimatePresence>
-      <LaunguageSwitcher />
       <header
         className={`
         px-6 lg:px-[9rem]
@@ -176,6 +176,7 @@ const Navbar = ({ categories }) => {
                   ></path>
                 </svg>
               </div>
+              <LaunguageSwitcher />
             </ul>
           </nav>
         </div>
