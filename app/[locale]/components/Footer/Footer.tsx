@@ -2,6 +2,7 @@ import { BsFacebook, BsInstagram } from "react-icons/bs";
 import Logo from "../Navbar/Logo";
 import { useTranslations } from "next-intl";
 import LaunguageSwitcher from "../Navbar/LaunguageSwitcher";
+import Link from "next/link";
 const Footer = () => {
   const t = useTranslations("footer");
 
@@ -16,24 +17,24 @@ const Footer = () => {
           <div className="grid grid-cols-2 gap-8 sm:gap-6 sm:grid-cols-3">
             <div>
               <h2 className="mb-6 text-lg cursor-pointer font-semibold  capitalize font-beautyFont">
-                Avalanche
+                Levarde
               </h2>
               <ul className="font-base">
                 <li className="mb-4">
                   <a href="" className="hover:underline">
-                    O nas
+                    {t("about")}
                   </a>
                 </li>
                 <li>
                   <a href="" className="hover:underline">
-                    Logowanie
+                    {t("login")}
                   </a>
                 </li>
               </ul>
             </div>
             <div>
               <h2 className="mb-6 text-lg cursor-pointer font-semibold capitalize font-beautyFont">
-                Śledź nas
+                {t("follow")}
               </h2>
               <ul className=" font-base">
                 <li className="mb-4">
@@ -46,7 +47,7 @@ const Footer = () => {
                 </li>
                 <li>
                   <a
-                    href="https://discord.gg/4eeurUVvTy"
+                    href="https://www.facebook.com/profile.php?id=100093022143540"
                     className="hover:underline"
                   >
                     Facebook
@@ -56,17 +57,17 @@ const Footer = () => {
             </div>
             <div>
               <h2 className="mb-6 text-lg cursor-pointer font-semibold capitalize font-beautyFont">
-                obsługa klienta
+                {t("client")}
               </h2>
               <ul className="font-base">
                 <li className="mb-4">
                   <a href="#" className="hover:underline">
-                    Polityka Prywatności
+                    {t("policy")}
                   </a>
                 </li>
                 <li>
                   <a href="#" className="hover:underline">
-                    Regulamin
+                    {t("statue")}
                   </a>
                 </li>
               </ul>
@@ -78,14 +79,24 @@ const Footer = () => {
           <LaunguageSwitcher />
           <span className="text-sm text-textColor sm:text-center">
             © 2023{" "}
-            <a href="https://flowbite.com/" className="hover:underline">
+            <a href="/" className="hover:underline">
               Avalanche™
             </a>
             . All Rights Reserved.
           </span>
           <div className="flex mt-4 space-x-6 sm:justify-center sm:mt-0">
-            <BsFacebook size={18} />
-            <BsInstagram size={18} />
+            <Link href="https://www.facebook.com/profile.php?id=100093022143540">
+              <BsFacebook
+                className="hover:fill-white hover:scale-[1.1]"
+                size={18}
+              />
+            </Link>
+            <Link href="https://www.instagram.com/levarde_/?fbclid=IwAR3CwA2SzAOvrM8QtXC65JEJDJZMKeSYljOVw1zsh-4spmbX9uQIrFX2ipI">
+              <BsInstagram
+                className="hover:fill-white hover:scale-[]"
+                size={18}
+              />
+            </Link>
           </div>
         </div>
       </div>

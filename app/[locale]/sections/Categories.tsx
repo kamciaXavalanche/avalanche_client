@@ -6,7 +6,7 @@ import { useTranslations } from "next-intl";
 const Categories = () => {
   const t = useTranslations("bestsellers");
   return (
-    <div className="my-10 px-4 flex gap-8 items-center justify-center">
+    <div className="my-10 px-4 flex gap-3 items-center justify-center">
       <Link href={`/collections/${t("dresses")}`}>
         <img
           src={Sukienki.src}

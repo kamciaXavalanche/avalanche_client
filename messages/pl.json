@@ -19,7 +19,13 @@
     "check-more": "sprawdź więcej produktów"
   },
   "footer": {
-    "description": "Avalanche powstało z myślą o wyjątkowych chwilach w życiu każdego z nas! Stawiamy na najwyższa jakość produktów, wierzymy w to, że ubranie jest sztuką a sztuka częścią nas, podkreśla nasza osobowość oraz charakter. Zamawiane kolekcje są odpowiednio wyselekcjonowane tak, aby zaspokoić gusta najbardziej wymagających klientów. Ich prestiżowy i modny wygląd wciągnie Państwa w eklektyczną podróż do świata nowoczesnego designu i klasycznych trendów."
+    "description": "Avalanche powstało z myślą o wyjątkowych chwilach w życiu każdego z nas! Stawiamy na najwyższa jakość produktów, wierzymy w to, że ubranie jest sztuką a sztuka częścią nas, podkreśla nasza osobowość oraz charakter. Zamawiane kolekcje są odpowiednio wyselekcjonowane tak, aby zaspokoić gusta najbardziej wymagających klientów. Ich prestiżowy i modny wygląd wciągnie Państwa w eklektyczną podróż do świata nowoczesnego designu i klasycznych trendów.",
+    "follow": "Śledź nas",
+    "client": "Obsługa Klienta",
+    "policy": "Polityka prywatności",
+    "statue": "Regulamin",
+    "about": "O nas",
+    "login": "Logowanie"
   },
   "cart": {
     "cart": "koszyk",
@@ -37,5 +43,10 @@
     "select-size": "Wybierz rozmiar",
     "add-button": "Dodaj do koszyka",
     "buy-button": "Kup teraz"
+  },
+  "searchPage": {
+    "home": "Strona Główna",
+    "results": "Wyniki",
+    "for": "dla"
   }
 }

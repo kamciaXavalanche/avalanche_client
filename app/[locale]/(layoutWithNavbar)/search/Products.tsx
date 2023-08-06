@@ -5,6 +5,7 @@ import axios from "axios";
 import { useQuery } from "@tanstack/react-query";
 import { url } from "@/app/[locale]/constants/constants";
 import Link from "next/link";
+import { useTranslations } from "next-intl";
 
 type PriceProp = {
   from: number;
@@ -65,6 +66,7 @@ const Products: React.FC<ProductsProps> = ({
       encodeValuesOnly: true,
     }
   );
+  const t = useTranslations("searchPage");
 
   const {
     data: responseData,
@@ -91,8 +93,13 @@ const Products: React.FC<ProductsProps> = ({
   return (
     <div>
       <div className="my-6 text-center">
-        Wyniki: <span className="font-medium">{responseData.data.length}</span>{" "}
-        {searchQueryParam && <span>dla "{searchQueryParam}"</span>}
+        {t("results")}:{" "}
+        <span className="font-medium">{responseData.data.length}</span>{" "}
+        {searchQueryParam && (
+          <span>
+            {t("for")} "{searchQueryParam}"
+          </span>
+        )}
       </div>
       <div className="lg:flex flex-wrap gap-y-16 gap-x-6 justify-center items-center my-4 lg:mb-20">
         {responseData.data.map((item) => (

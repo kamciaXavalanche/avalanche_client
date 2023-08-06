@@ -10,7 +10,7 @@ import Products from "./Products";
 import { url } from "../../constants/constants";
 import Loader from "@/app/[locale]/components/Loader";
 import ColorFilter from "../../components/Filter/ColorFilter";
-import { useLocale } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 import { useSearchParams } from "next/navigation";
 
 const SearchPage = () => {
@@ -25,6 +25,7 @@ const SearchPage = () => {
   const locale = useLocale();
   const searchParams = useSearchParams();
   const query = searchParams.get("query");
+  const t = useTranslations("searchPage");
 
   const subcategoryArray = Object.values(subcategory).flat();
 
@@ -76,7 +77,7 @@ const SearchPage = () => {
   return (
     <div className="px-4 lg:px-[9rem] mt-5">
       <nav className="flex gap-4 mb-2 lg:mb-8">
-        <div>STRONA GŁÓWNA</div>
+        <div>{t("home")}</div>
       </nav>
       <div className=" mt-6 lg:flex gap-10 ">
         <Filter
