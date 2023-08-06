@@ -1,6 +1,5 @@
 "use client";
 
-import Counter from "./Counter";
 import ProductSlider from "./ProductSlider";
 import BuyingPopup from "@/app/[locale]/components/BuyingPopup/BuyingPopup";
 import Loader from "@/app/[locale]/components/Loader";

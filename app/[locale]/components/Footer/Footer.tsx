@@ -1,6 +1,7 @@
 import { BsFacebook, BsInstagram } from "react-icons/bs";
 import Logo from "../Navbar/Logo";
 import { useTranslations } from "next-intl";
+import LaunguageSwitcher from "../Navbar/LaunguageSwitcher";
 const Footer = () => {
   const t = useTranslations("footer");
 
@@ -74,6 +75,7 @@ const Footer = () => {
         </div>
         <hr className="my-6 border-white sm:mx-auto  lg:my-8" />
         <div className="sm:flex sm:items-center sm:justify-between">
+          <LaunguageSwitcher />
           <span className="text-sm text-textColor sm:text-center">
             © 2023{" "}
             <a href="https://flowbite.com/" className="hover:underline">

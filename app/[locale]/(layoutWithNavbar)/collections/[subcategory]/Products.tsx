@@ -5,31 +5,14 @@ import axios from "axios";
 import { useQuery } from "@tanstack/react-query";
 import { url } from "@/app/[locale]/constants/constants";
 import Link from "next/link";
-import { useAtom } from "jotai";
-import { searchQueryAtom } from "../../lib/atoms";
-
-type PriceProp = {
-  from: number;
-  to: number;
-};
+import { useLocale } from "next-intl";
 
 interface ProductsProps {
-  category: string[] | string;
-  colors: string[] | string;
-  subcategory: string[] | string;
-  price: PriceProp;
-  locale: any;
+  slug: string;
 }
 
-const Products: React.FC<ProductsProps> = ({
-  category,
-  subcategory,
-  colors,
-  price,
-  locale,
-}) => {
-  const [searchQuery] = useAtom(searchQueryAtom);
-
+const Products: React.FC<ProductsProps> = ({ slug }) => {
+  const locale = useLocale();
   const query = qs.stringify(
     {
       populate: [
@@ -39,27 +22,10 @@ const Products: React.FC<ProductsProps> = ({
         "productAttributes",
       ],
       filters: {
-        categories: {
-          title: {
-            $containsi: category,
-          },
-        },
         subcategories: {
-          name: {
-            $containsi: subcategory,
+          slug: {
+            $containsi: slug,
           },
-        },
-        productAttributes: {
-          color: {
-            $containsi: colors,
-          },
-          price: {
-            $gte: price.from,
-            $lt: price.to,
-          },
-        },
-        name: {
-          $containsi: searchQuery,
         },
       },
     },
@@ -88,14 +54,9 @@ const Products: React.FC<ProductsProps> = ({
   if (isError) {
     return <div>Wystąpił błąd podczas pobierania danych.</div>;
   }
-  console.log(responseData);
 
   return (
     <div>
-      <div className="my-6 text-center">
-        Wyniki: <span className="font-medium">{responseData.data.length}</span>{" "}
-        {searchQuery && <span>dla "{searchQuery}"</span>}
-      </div>
       <div className="lg:flex flex-wrap gap-y-16 gap-x-6 justify-center items-center my-4 lg:mb-20">
         {responseData.data.map((item) => (
           <Link

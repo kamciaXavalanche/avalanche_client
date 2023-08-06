@@ -4,7 +4,6 @@ import { useEffect, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { AiOutlineStar } from "react-icons/ai";
 import { RxHamburgerMenu } from "react-icons/rx";
-import { RiGlobalLine } from "react-icons/ri";
 import AnnouncementBar from "./AnnouncementBar";
 import Link from "next/link";
 import Logo from "./Logo";
@@ -15,7 +14,6 @@ import Cart from "../Cart/Cart";
 import { cartAtom } from "../../lib/atoms";
 import { useAtom } from "jotai";
 import Cookies from "js-cookie";
-import LaunguageSwitcher from "./LaunguageSwitcher";
 
 const Navbar = ({ categories }) => {
   const [toggleMenu, setToggleMenu] = useState(false);
@@ -176,7 +174,6 @@ const Navbar = ({ categories }) => {
                   ></path>
                 </svg>
               </div>
-              <LaunguageSwitcher />
             </ul>
           </nav>
         </div>

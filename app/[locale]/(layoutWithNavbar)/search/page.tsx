@@ -10,8 +10,9 @@ import Products from "./Products";
 import { url } from "../../constants/constants";
 import Loader from "@/app/[locale]/components/Loader";
 import ColorFilter from "../../components/Filter/ColorFilter";
+import { useLocale } from "next-intl";
 
-const FilterPage = () => {
+const SearchPage = () => {
   const [activeParams, setActiveParams] = useState([]);
   const [category, setCategory] = useState([]);
   const [subcategory, setSubcategory] = useState([]);
@@ -20,13 +21,14 @@ const FilterPage = () => {
     from: 30,
     to: 900,
   });
+  const locale = useLocale();
 
   const subcategoryArray = Object.values(subcategory).flat();
 
   const { data, isLoading } = useQuery(["productData", category], {
     queryFn: async () => {
       const { data } = await axios.get(
-        `${url}/api/products?populate=productAttributes`
+        `${url}/api/products?locale=${locale}&populate=productAttributes`
       );
       return data;
     },
@@ -36,23 +38,17 @@ const FilterPage = () => {
     {
       queryFn: async () => {
         const { data } = await axios.get(
-          `${url}/api/categories?populate=subcategories`
+          `${url}/api/categories?locale=${locale}&populate=subcategories`
         );
         return data;
       },
     }
   );
 
-  const allCategories =
-    categoryData && categoryData.data
-      ? categoryData.data.map((item) => item.attributes.title)
-      : [];
   const test =
     categoryData && categoryData.data
       ? categoryData.data.map((item) => item.attributes)
       : [];
-
-  console.log(test);
 
   function getColorsFromProductAttributes(products) {
     return (
@@ -125,9 +121,10 @@ const FilterPage = () => {
         subcategory={subcategoryArray}
         price={price}
         colors={colors}
+        locale={locale}
       />
     </div>
   );
 };
 
-export default FilterPage;
+export default SearchPage;

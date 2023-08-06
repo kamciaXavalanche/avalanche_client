@@ -54,7 +54,7 @@ const Bestsellers = ({ products }) => {
           >
             <div
               onClick={() => handleAddToWishlist(product.attributes.slug)}
-              className="absolute top-2 lg:top-4 right-2 lg:right-4 z-10"
+              className="absolute flex items-center justify-center rounded bg-white w-12 h-10 top-4 right-0 lg:right-0 z-10"
             >
               {isProductInWishlist(product.attributes.slug) ? (
                 <AiFillStar className="fill-red" size={28} />

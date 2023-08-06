@@ -2,7 +2,9 @@
 import { useState } from "react";
 import Link from "next-intl/link";
 import { useLocale } from "next-intl";
-import { BiChevronDown } from "react-icons/bi";
+import { BiChevronDown, BiChevronUp } from "react-icons/bi";
+import { RiGlobalLine } from "react-icons/ri";
+
 const LaunguageSwitcher = () => {
   const locale = useLocale();
   const [toggle, setToggle] = useState(false);
@@ -10,12 +12,13 @@ const LaunguageSwitcher = () => {
     <div className="relative">
       <div
         onClick={() => setToggle((prev) => !prev)}
-        className="cursor-pointer uppercase font-semibold inline-flex items-center"
+        className="cursor-pointer uppercase font-semibold inline-flex items-center gap-1"
       >
-        {locale} <BiChevronDown size={20} />
+        <RiGlobalLine size={20} /> {locale}{" "}
+        {toggle ? <BiChevronUp size={20} /> : <BiChevronDown size={20} />}
       </div>
       {toggle && (
-        <div className="absolute flex flex-col gap-1 bg-white justify-center items-center w-10 h-20 rounded-sm">
+        <div className="absolute bottom-10 flex flex-col gap-1 bg-white justify-center items-center w-14 h-20 rounded-sm shadow-md">
           <Link
             className="font-medium w-full h-full hover:bg-black/10 flex items-center justify-center"
             href="/"

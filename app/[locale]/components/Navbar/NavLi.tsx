@@ -29,7 +29,7 @@ const NavLi: React.FC<NavLiProps> = ({
       setIsSubMenuVisible(true);
     }
   };
-  
+
   const handleMouseLeave = () => {
     if (window.innerWidth >= 768) {
       setIsSubMenuVisible(false);
@@ -79,7 +79,8 @@ const NavLi: React.FC<NavLiProps> = ({
         `}
       >
         {subcategories?.map((subcategory) => (
-          <li
+          <Link
+            href={`/collections/${subcategory.attributes.slug}`}
             className={`  
          relative 
          text-lg
@@ -103,7 +104,7 @@ const NavLi: React.FC<NavLiProps> = ({
          `}
           >
             {subcategory.attributes.name}
-          </li>
+          </Link>
         ))}
       </div>
     </div>

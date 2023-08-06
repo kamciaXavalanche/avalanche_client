@@ -83,7 +83,7 @@ const Menu: React.FC<MenuProps> = ({ setToggleMenu, categories }) => {
                         <>
                           <Link
                             onClick={() => setToggleMenu(false)}
-                            href="/search"
+                            href={`/collections/${subcategory.attributes.slug}`}
                           >
                             <li
                               className="py-2 font-medium"
