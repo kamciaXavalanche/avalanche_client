@@ -6,6 +6,7 @@ import { BsFacebook, BsInstagram } from "react-icons/bs";
 import { BiMinus, BiPlus } from "react-icons/bi";
 import { IoCloseOutline } from "react-icons/io5";
 import Link from "next/link";
+import { AiOutlineStar } from "react-icons/ai";
 
 interface MenuProps {
   setToggleMenu: (toggle: boolean) => void;
@@ -73,7 +74,37 @@ const Menu: React.FC<MenuProps> = ({ setToggleMenu, categories }) => {
                   <li className="text-lg font-semibold pb-2">
                     {category.attributes.title}
                   </li>
-                  {isExpanded ? "-" : "+"}
+                  {isExpanded ? (
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      strokeWidth={1.4}
+                      stroke="currentColor"
+                      className="w-5 h-5"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        d="M19.5 12h-15"
+                      />
+                    </svg>
+                  ) : (
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      strokeWidth={1.4}
+                      stroke="currentColor"
+                      className="w-5 h-5"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        d="M12 6v12m6-6H6"
+                      />
+                    </svg>
+                  )}
                 </div>
                 <hr className="bg-black w-full " />
                 {isExpanded && (
@@ -106,17 +137,37 @@ const Menu: React.FC<MenuProps> = ({ setToggleMenu, categories }) => {
           <Link
             onClick={() => setToggleMenu(false)}
             href="/login"
-            className="text-xl"
+            className="text-xl inline-flex gap-4"
           >
-            Konto
+            <div className="w-[26px] flex items-center pl-0.5">
+              <svg
+                className="w-[1.325rem] h-[1.325rem]"
+                role="presentation"
+                viewBox="0 0 20 20"
+              >
+                <g
+                  transform="translate(1 1)"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  fill="none"
+                  fill-rule="evenodd"
+                  stroke-linecap="square"
+                >
+                  <path d="M0 18c0-4.5188182 3.663-8.18181818 8.18181818-8.18181818h1.63636364C14.337 9.81818182 18 13.4811818 18 18"></path>
+                  <circle cx="9" cy="4.90909091" r="4.90909091"></circle>
+                </g>
+              </svg>
+            </div>
+            <h4 className="font-medium">Konto</h4>
           </Link>
           <hr className="bg-black w-full " />
           <Link
             onClick={() => setToggleMenu(false)}
             href="/favorite"
-            className="text-xl"
+            className="text-xl inline-flex gap-4"
           >
-            Ulubione
+            <AiOutlineStar size={26} />
+            <h4 className="font-medium">Ulubione</h4>
           </Link>
         </ul>
       </div>
@@ -130,8 +181,8 @@ const Menu: React.FC<MenuProps> = ({ setToggleMenu, categories }) => {
         }}
         className="px-7 py-8 border-t-[1.5px] flex items-center justify-around"
       >
-        <BsFacebook size={18} />
-        <BsInstagram size={18} />
+        <BsFacebook size={22} />
+        <BsInstagram size={22} />
       </motion.div>
     </motion.div>
   );
