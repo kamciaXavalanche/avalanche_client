@@ -10,8 +10,6 @@ const Bestsellers = ({ products }) => {
   const [wishlist, setWishlist] = useState([]);
   const t = useTranslations("bestsellers");
 
-  console.log(products);
-
   useEffect(() => {
     const wishlistFromCookies = Cookies.get("wishlist");
     if (wishlistFromCookies) {

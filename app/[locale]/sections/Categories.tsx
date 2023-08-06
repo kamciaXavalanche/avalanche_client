@@ -11,7 +11,7 @@ const Categories = () => {
         <img
           src={Sukienki.src}
           alt=""
-          className="w-[200px] lg:w-[310px] h-[340px] lg:h-[440px] object-cover cursor-pointer"
+          className="w-[200px] lg:w-[310px] h-[340px] lg:h-[440px] object-cover cursor-pointer hover:grayscale-[1] transition-all duration-500"
         />
         <h3 className="py-2 text-center text-2xl capitalize">{t("dresses")}</h3>
       </Link>
@@ -19,7 +19,7 @@ const Categories = () => {
         <img
           src={Komplety.src}
           alt=""
-          className="w-[200px] lg:w-[310px] h-[340px] lg:h-[440px] object-cover cursor-pointer"
+          className="w-[200px] lg:w-[310px] h-[340px] lg:h-[440px] object-cover cursor-pointer hover:grayscale-[1] transition-all duration-500"
         />
         <h3 className="py-2 text-center text-2xl capitalize">{t("sets")}</h3>
       </Link>

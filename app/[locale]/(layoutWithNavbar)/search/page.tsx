@@ -12,6 +12,7 @@ import Loader from "@/app/[locale]/components/Loader";
 import ColorFilter from "../../components/Filter/ColorFilter";
 import { useLocale, useTranslations } from "next-intl";
 import { useSearchParams } from "next/navigation";
+import Link from "next/link";
 
 const SearchPage = () => {
   const [activeParams, setActiveParams] = useState([]);
@@ -77,7 +78,9 @@ const SearchPage = () => {
   return (
     <div className="px-4 lg:px-[9rem] mt-5">
       <nav className="flex gap-4 mb-2 lg:mb-8">
-        <div>{t("home")}</div>
+        <Link className="font-medium" href="/">
+          {t("home")}
+        </Link>
       </nav>
       <div className=" mt-6 lg:flex gap-10 ">
         <Filter

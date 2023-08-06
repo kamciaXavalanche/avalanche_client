@@ -102,6 +102,9 @@ const NavLi: React.FC<NavLiProps> = ({
          hover:after:scale-x-[1.1] 
          hover:after:bg-textColor
          mb-2
+         flex
+         flex-col
+         gap-3
          `}
           >
             {subcategory.attributes.name}

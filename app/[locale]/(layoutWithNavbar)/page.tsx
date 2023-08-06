@@ -1,3 +1,4 @@
+import CookiesPopup from "../components/CookiesPopup";
 import Newsletter from "../components/Newsletter";
 import Slider from "../components/Slider";
 import { url } from "../constants/constants";
@@ -18,6 +19,7 @@ export default async function Home() {
   return (
     <main>
       <Slider images={images.data} />
+      <CookiesPopup />
       <Newsletter />
       <Categories />
       <Bestsellers products={products.data} />
