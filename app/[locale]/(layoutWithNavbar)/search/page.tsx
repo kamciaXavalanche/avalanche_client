@@ -11,6 +11,7 @@ import { url } from "../../constants/constants";
 import Loader from "@/app/[locale]/components/Loader";
 import ColorFilter from "../../components/Filter/ColorFilter";
 import { useLocale } from "next-intl";
+import { useSearchParams } from "next/navigation";
 
 const SearchPage = () => {
   const [activeParams, setActiveParams] = useState([]);
@@ -22,6 +23,8 @@ const SearchPage = () => {
     to: 900,
   });
   const locale = useLocale();
+  const searchParams = useSearchParams();
+  const query = searchParams.get("query");
 
   const subcategoryArray = Object.values(subcategory).flat();
 
@@ -54,8 +57,8 @@ const SearchPage = () => {
     return (
       products?.flatMap(
         (product) =>
-          product?.attributes?.productAttributes?.map(
-            (attribute) => attribute?.color
+          product?.attributes?.productAttributes?.map((attribute) =>
+            attribute?.color?.trim()
           ) ?? []
       ) ?? []
     );
@@ -66,7 +69,6 @@ const SearchPage = () => {
   const uniqueColorsArray = Array.isArray(colorsArray)
     ? colorsArray.filter((color, index) => colorsArray.indexOf(color) === index)
     : [];
-
   if (isLoading) {
     return <Loader />;
   }
@@ -122,6 +124,7 @@ const SearchPage = () => {
         price={price}
         colors={colors}
         locale={locale}
+        searchQueryParam={query}
       />
     </div>
   );

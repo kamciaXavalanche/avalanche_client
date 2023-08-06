@@ -38,7 +38,6 @@ const NavLi: React.FC<NavLiProps> = ({
 
   return (
     <div
-      // href={`/search`}
       onClick={() => setIsSubMenuVisible(true)}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
@@ -80,7 +79,9 @@ const NavLi: React.FC<NavLiProps> = ({
       >
         {subcategories?.map((subcategory) => (
           <Link
-            href={`/collections/${subcategory.attributes.slug}`}
+            href={`/collections/${title.toLocaleLowerCase()}/${
+              subcategory.attributes.slug
+            }`}
             className={`  
          relative 
          text-lg

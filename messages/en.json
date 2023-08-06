@@ -13,9 +13,9 @@
     "button": "Subscribe"
   },
   "bestsellers": {
-    "header": "OUR BESTSELLES",
-    "dresses": "DRESSES",
-    "sets": "SETS",
+    "header": "POPULAR PRODUCTS",
+    "dresses": "dresses",
+    "sets": "sets",
     "check-more": "check for more products"
   },
   "footer": {

@@ -83,7 +83,9 @@ const Menu: React.FC<MenuProps> = ({ setToggleMenu, categories }) => {
                         <>
                           <Link
                             onClick={() => setToggleMenu(false)}
-                            href={`/collections/${subcategory.attributes.slug}`}
+                            href={`/collections/${category.attributes.title.toLowerCase()}/${
+                              subcategory.attributes.slug
+                            }`}
                           >
                             <li
                               className="py-2 font-medium"

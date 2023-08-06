@@ -13,9 +13,9 @@
     "button": "Subskrybuj"
   },
   "bestsellers": {
-    "header": "NASZE BESTSELLERY",
-    "dresses": "SUKIENKI",
-    "sets": "KOMPLETY",
+    "header": "POPULARNE PRODUKTY",
+    "dresses": "sukienki",
+    "sets": "komplety",
     "check-more": "sprawdź więcej produktów"
   },
   "footer": {

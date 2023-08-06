@@ -21,7 +21,7 @@ const Search = ({ setToggleSearch }) => {
     e.preventDefault();
     setSearchQuery(inputQuery); // Ustaw wartość searchQuery po zatwierdzeniu
     setToggleSearch(false);
-    router.push("/search");
+    router.push("/search" + "?query=" + inputQuery);
   };
 
   return (

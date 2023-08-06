@@ -5,29 +5,14 @@ import axios from "axios";
 import { useQuery } from "@tanstack/react-query";
 import { url } from "@/app/[locale]/constants/constants";
 import Link from "next/link";
-
-type PriceProp = {
-  from: number;
-  to: number;
-};
+import { useLocale } from "next-intl";
 
 interface ProductsProps {
-  category: string[] | string;
-  colors: string[] | string;
-  subcategory: string[] | string;
-  price: PriceProp;
-  locale: any;
-  searchQueryParam: string;
+  slug: string;
 }
 
-const Products: React.FC<ProductsProps> = ({
-  category,
-  subcategory,
-  colors,
-  price,
-  locale,
-  searchQueryParam,
-}) => {
+const Products: React.FC<ProductsProps> = ({ slug }) => {
+  const locale = useLocale();
   const query = qs.stringify(
     {
       populate: [
@@ -39,25 +24,8 @@ const Products: React.FC<ProductsProps> = ({
       filters: {
         categories: {
           title: {
-            $containsi: category,
+            $containsi: slug,
           },
-        },
-        subcategories: {
-          name: {
-            $containsi: subcategory,
-          },
-        },
-        productAttributes: {
-          color: {
-            $containsi: colors,
-          },
-          price: {
-            $gte: price.from,
-            $lt: price.to,
-          },
-        },
-        name: {
-          $containsi: searchQueryParam,
         },
       },
     },
@@ -86,14 +54,9 @@ const Products: React.FC<ProductsProps> = ({
   if (isError) {
     return <div>Wystąpił błąd podczas pobierania danych.</div>;
   }
-  console.log(responseData);
 
   return (
     <div>
-      <div className="my-6 text-center">
-        Wyniki: <span className="font-medium">{responseData.data.length}</span>{" "}
-        {searchQueryParam && <span>dla "{searchQueryParam}"</span>}
-      </div>
       <div className="lg:flex flex-wrap gap-y-16 gap-x-6 justify-center items-center my-4 lg:mb-20">
         {responseData.data.map((item) => (
           <Link
