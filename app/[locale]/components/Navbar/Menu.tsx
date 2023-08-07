@@ -3,7 +3,6 @@
 import { useEffect, useRef, useState } from "react";
 import { motion } from "framer-motion";
 import { BsFacebook, BsInstagram } from "react-icons/bs";
-import { BiMinus, BiPlus } from "react-icons/bi";
 import { IoCloseOutline } from "react-icons/io5";
 import Link from "next/link";
 import { AiOutlineStar } from "react-icons/ai";

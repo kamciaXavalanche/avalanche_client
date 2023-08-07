@@ -112,7 +112,6 @@ const Navbar = ({ categories }) => {
             </div>
           </nav>
           <Logo />
-
           <nav className="flex-1 text-center">
             <ul className="flex justify-end items-center gap-3 lg:gap-6">
               <div onClick={() => setToggleSearch(true)}>

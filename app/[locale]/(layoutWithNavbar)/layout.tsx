@@ -11,9 +11,6 @@ const layout = async ({ children }: any) => {
   );
   const categories = await res.json();
 
-  const imagesResponse = await fetch(`${url}/api/slider-images?populate=*`);
-  const images = await imagesResponse.json();
-
   return (
     <div className="flex flex-col min-h-screen">
       <Navbar categories={categories.data} />

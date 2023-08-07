@@ -9,7 +9,7 @@ import { useLocale } from "next-intl";
 export default async function Home() {
   const locale = useLocale();
   const res = await fetch(
-    `${url}/api/products?locale=${locale}&populate=coverImages`
+    `${url}/api/products?locale=${locale}&pagination[pageSize]=8&populate=coverImages`
   );
   const products = await res.json();
 

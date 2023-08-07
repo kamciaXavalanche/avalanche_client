@@ -42,7 +42,7 @@ const Bestsellers = ({ products }) => {
         <nav className="flex gap-10 list-none mt-4"></nav>
       </div>
       <div className="w-full  grid grid-cols-1 lg:grid-cols-4 gap-y-10 gap-x-5">
-        {products.slice(0, 8).map((product) => (
+        {products.map((product) => (
           <div
             className="w-full h-full relative cursor-pointer product"
             key={product.id}
