@@ -77,6 +77,18 @@ const Shipping = () => {
             </Link>
           )}
         </div>
+        <div>
+          <h3 className="text-lg font-medium mb-4">Metoda wysyłki</h3>
+          <div className="w-full border border-gray-400 h-16 rounded-md px-8 flex gap-2 items-center justify-between cursor-pointer">
+            <div className="flex gap-3 items-center">
+              <div className="w-6 h-6 flex items-center justify-center bg-black rounded-full">
+                <div className="w-2 h-2 rounded-full bg-white" />
+              </div>
+              <p>Kurier</p>
+            </div>
+            <p>Darmowa</p>
+          </div>
+        </div>
         <div className="flex justify-between py-12">
           <Link
             className="text-[#5E2C04] hover:brightness-150 inline-flex items-center gap-2"
