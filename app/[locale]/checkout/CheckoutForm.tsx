@@ -7,7 +7,7 @@ import {
   useElements,
 } from "@stripe/react-stripe-js";
 import { useAtom } from "jotai";
-import {  cartAtom } from "../lib/atoms";
+import { cartAtom } from "../lib/atoms";
 import Cookies from "js-cookie";
 import axios from "axios";
 
@@ -18,21 +18,7 @@ export default function CheckoutForm({ userData, totalPrice }) {
   const [isLoading, setIsLoading] = useState(false);
   const [cartItems, setCartItems] = useAtom(cartAtom);
 
-  const url = "https://avalanche-client.vercel.app"
-
-  const sendEmail = async () => {
-    await axios
-      .post("http://localhost:5000/api/product/getbill", {
-        data: {
-          totalPrice: totalPrice,
-          products: cartItems,
-          customerData: userData,
-        },
-      })
-      .then((response) => {
-        console.log(response);
-      });
-  };
+  const url = "https://levarde.com";
 
   const postRequest = async () => {
     await axios
@@ -45,7 +31,6 @@ export default function CheckoutForm({ userData, totalPrice }) {
       })
       .then((response) => {
         console.log(response);
-        sendEmail();
       });
   };
 
@@ -124,10 +109,6 @@ export default function CheckoutForm({ userData, totalPrice }) {
 
   return (
     <form id="payment-form" onSubmit={handleSubmit}>
-      {/* <LinkAuthenticationElement
-        id="link-authentication-element"
-        onChange={(e) => setEmail(e.target.value)}
-      /> */}
       <PaymentElement id="payment-element" options={paymentElementOptions} />
       <button
         className="button-primary mt-4"

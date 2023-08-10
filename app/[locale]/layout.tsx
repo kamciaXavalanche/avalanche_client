@@ -5,7 +5,7 @@ import { NextIntlClientProvider } from "next-intl";
 import { notFound } from "next/navigation";
 
 export const metadata = {
-  title: "Avalanche",
+  title: "Levarde",
   description: "E-commerce site",
 };
 
