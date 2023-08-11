@@ -79,7 +79,14 @@ const Cart: React.FC<CartProps> = () => {
         }`}
       >
         {isLoadingPrice ? ( // Dodajemy warunek do wyświetlania ładowania lub ceny
-          "Wczytywanie ceny ... "
+          <div className="button-primary inline-flex items-center justify-center !w-80">
+            <div className="lds-ring">
+              <div></div>
+              <div></div>
+              <div></div>
+              <div></div>
+            </div>
+          </div>
         ) : (
           <Link
             href="/checkout/information"

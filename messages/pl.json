@@ -31,8 +31,8 @@
     "cart": "koszyk",
     "empty": "TWÓJ KOSZYK JEST PUSTY",
     "summary": "podsumowanie",
-    "size": "ROZMIAR",
-    "color": "KOLOR",
+    "size": "Rozmiar",
+    "color": "Kolor",
     "delete": "usuń"
   },
   "product": {

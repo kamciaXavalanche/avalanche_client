@@ -128,8 +128,15 @@ const Cart: React.FC<CartProps> = ({ setToggle }) => {
           cartItems.length === 0 && "hidden"
         }`}
       >
-        {isLoadingPrice ? ( // Dodajemy warunek do wyświetlania ładowania lub ceny
-          "Wczytywanie ceny ... "
+        {isLoadingPrice ? (
+          <div className="button-primary flex items-center justify-center">
+            <div className="lds-ring">
+              <div></div>
+              <div></div>
+              <div></div>
+              <div></div>
+            </div>
+          </div>
         ) : (
           <Link
             onClick={() => setToggle(false)}
