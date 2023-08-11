@@ -135,7 +135,7 @@ const Information = () => {
                 type="text"
                 handleChange={handleNameChange}
                 typedValue={name}
-                text="Imię (opcjonalnie)"
+                text="Imię"
               />
               <FloatingLabel
                 text="Nazwisko"

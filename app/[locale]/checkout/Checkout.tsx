@@ -34,7 +34,7 @@ export default function Checkout({ totalPrice, userData }: any) {
   };
 
   return (
-    <div className="p-4 lg:p-28 pt-8">
+    <div className="pt-6 lg:px-0">
       {clientSecret && (
         <Elements options={options} stripe={stripePromise}>
           <CheckoutForm userData={userData} totalPrice={totalPrice} />

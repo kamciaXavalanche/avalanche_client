@@ -16,6 +16,7 @@ import { BsArrowReturnLeft } from "react-icons/bs";
 import Link from "next/link";
 import Links from "../Links";
 import { IoIosArrowBack } from "react-icons/io";
+import Information from "../Information";
 
 const Shipping = () => {
   const email = useAtomValue(emailAtom);
@@ -36,49 +37,9 @@ const Shipping = () => {
         className="lg:basis-[55%] h-full px-6 lg:pl-[9%] pt-10 flex flex-col lg:justify-between "
       >
         <Header isActive />
-        <div className="border border-gray-400 rounded-md px-6 py-2">
-          {" "}
-          {email && address ? (
-            <div>
-              <div>
-                <div className="flex justify-between items-center">
-                  <div className="flex">
-                    <h4 className="text-gray-400 w-[100px]">Kontakt:</h4>
-                    <h4>{email}</h4>
-                  </div>
-                  <Link href="/checkout/information" className="underline">
-                    Zmień
-                  </Link>
-                </div>
-              </div>
-              <hr className="my-3 border-gray-400" />
-              <div>
-                <div className="flex justify-between items-center">
-                  <div className="flex items-center">
-                    <h4 className="text-gray-400 max-w-[100px]">
-                      Odbiorca dostawy:
-                    </h4>
-                    <h4>
-                      {address}, {postcode} {city}, {country}
-                    </h4>
-                  </div>
-                  <Link href="/checkout/information" className="underline">
-                    Zmień
-                  </Link>
-                </div>
-              </div>
-            </div>
-          ) : (
-            <Link
-              href="/checkout/information"
-              className="inline-flex gap-4 items-center hover:text-[#5E2C04] hover:brightness-150"
-            >
-              Wprowadź dane do wysyłki <BsArrowReturnLeft />
-            </Link>
-          )}
-        </div>
+        <Information />
         <div>
-          <h3 className="text-lg font-medium mb-4">Metoda wysyłki</h3>
+          <h3 className="text-lg font-medium my-4">Metoda wysyłki</h3>
           <div className="w-full border border-gray-400 h-16 rounded-md px-8 flex gap-2 items-center justify-between cursor-pointer">
             <div className="flex gap-3 items-center">
               <div className="w-6 h-6 flex items-center justify-center bg-black rounded-full">
