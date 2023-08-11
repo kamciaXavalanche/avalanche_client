@@ -70,12 +70,9 @@ const Payment = () => {
             <p>Darmowa</p>
           </div>
         </div>
-        {email &&
-          address &&
-          choosePayment === "online" &&
-          totalPrice !== null && (
-            <Checkout totalPrice={Math.round(totalPrice)} userData={userData} />
-          )}
+        {choosePayment === "online" && totalPrice !== null && (
+          <Checkout totalPrice={Math.round(totalPrice)} userData={userData} />
+        )}
         <Links />
       </div>
       <Summary />

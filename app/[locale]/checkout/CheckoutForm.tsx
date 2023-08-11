@@ -10,6 +10,7 @@ import { useAtom } from "jotai";
 import { cartAtom } from "../lib/atoms";
 import Cookies from "js-cookie";
 import axios from "axios";
+import { url } from "../constants/constants";
 
 export default function CheckoutForm({ userData, totalPrice }) {
   const stripe = useStripe();
@@ -18,7 +19,7 @@ export default function CheckoutForm({ userData, totalPrice }) {
   const [isLoading, setIsLoading] = useState(false);
   const [cartItems, setCartItems] = useAtom(cartAtom);
 
-  const url = "https://levarde.com";
+  const clientUrl = "https://levarde.com";
 
   const postRequest = async () => {
     await axios
@@ -85,7 +86,7 @@ export default function CheckoutForm({ userData, totalPrice }) {
       elements,
       confirmParams: {
         // Make sure to change this to your payment completion page
-        return_url: url + "/checkout/payment",
+        return_url: clientUrl + "/checkout/payment",
       },
     });
 
