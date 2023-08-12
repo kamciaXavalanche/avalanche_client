@@ -20,6 +20,7 @@ export default function CheckoutForm({ userData, totalPrice }) {
   const [cartItems, setCartItems] = useAtom(cartAtom);
 
   const clientUrl = "https://levarde.com";
+  // const clientUrl = "http://localhost:3000";
 
   const postRequest = async () => {
     await axios
@@ -86,7 +87,7 @@ export default function CheckoutForm({ userData, totalPrice }) {
       elements,
       confirmParams: {
         // Make sure to change this to your payment completion page
-        return_url: clientUrl + "/checkout/payment",
+        return_url: clientUrl + "/checkout/payment/success",
       },
     });
 
@@ -117,7 +118,13 @@ export default function CheckoutForm({ userData, totalPrice }) {
         id="submit"
       >
         <span id="button-text">
-          {isLoading ? <div className="spinner" id="spinner"></div> : "Pay now"}
+          {isLoading ? (
+            <div className="spinner" id="spinner">
+              Wait ...
+            </div>
+          ) : (
+            "Pay now"
+          )}
         </span>
       </button>
       {/* Show any error or success messages */}
