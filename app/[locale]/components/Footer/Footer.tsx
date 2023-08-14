@@ -7,8 +7,8 @@ const Footer = () => {
   const t = useTranslations("footer");
 
   return (
-    <footer className="border-t border-textColor bg-primaryColor">
-      <div className="mx-auto w-full max-w-screen-xl p-4 py-6 lg:py-8">
+    <footer className="border-t border-textColor bg-primaryColor  ">
+      <div className="mx-auto w-full px-6 lg:px-[9rem] py-4 lg:py-6">
         <div className="md:flex md:justify-between">
           <div className="mb-6 md:mb-0">
             <Logo />

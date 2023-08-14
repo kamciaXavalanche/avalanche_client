@@ -19,8 +19,8 @@ export default function CheckoutForm({ userData, totalPrice }) {
   const [isLoading, setIsLoading] = useState(false);
   const [cartItems, setCartItems] = useAtom(cartAtom);
 
-  const clientUrl = "https://levarde.com";
-  // const clientUrl = "http://localhost:3000";
+  // const clientUrl = "https://levarde.com";
+  const clientUrl = "http://localhost:3000";
 
   const postRequest = async () => {
     await axios
@@ -53,11 +53,11 @@ export default function CheckoutForm({ userData, totalPrice }) {
       switch (paymentIntent.status) {
         case "succeeded":
           setMessage("Payment succeeded!");
-          postRequest();
+          // postRequest();
+          //add product details
           setCartItems([]); // Set cartItems to an empty array
           Cookies.set("cart", JSON.stringify([]));
           Cookies.set("userData", JSON.stringify([]));
-
           break;
         case "processing":
           setMessage("Your payment is processing.");
@@ -87,7 +87,7 @@ export default function CheckoutForm({ userData, totalPrice }) {
       elements,
       confirmParams: {
         // Make sure to change this to your payment completion page
-        return_url: clientUrl + "/checkout/payment/success",
+        return_url: clientUrl + "/checkout/payment",
       },
     });
 
