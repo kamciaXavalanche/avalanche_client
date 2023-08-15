@@ -9,7 +9,8 @@ import ReactMarkdown from "react-markdown";
 import { useAtom } from "jotai";
 import { cartAtom } from "@/app/[locale]/lib/atoms";
 import Cookies from "js-cookie";
-import { useState } from "react";
+import { motion } from "framer-motion";
+import { useEffect, useState } from "react";
 import { url } from "@/app/[locale]/constants/constants";
 import {
   calculateDiscountedPrice,
@@ -19,15 +20,44 @@ import { IoIosArrowForward } from "react-icons/io";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useTranslations } from "next-intl";
+import Image from "next/image";
 
 const ProductPage = ({ params }) => {
   const [cartItems, setCartItems] = useAtom(cartAtom);
   const [choosenSize, setChoosenSize] = useState("");
   const [choosenColor, setChoosenColor] = useState("");
   const [selectedColor, setSelectedColor] = useState(0);
+  const [sizeError, setSizeError] = useState(false);
   const [popup, setPopup] = useState(false);
   const router = useRouter();
   const t = useTranslations("product");
+
+  const { data, isLoading } = useQuery(["productData", params.slug], {
+    queryFn: async () => {
+      const { data } = await axios.get(
+        `${url}/api/products/${params.slug}?populate=*`
+      );
+      return data;
+    },
+  });
+
+  useEffect(() => {
+    if (
+      data &&
+      data.data.attributes.productAttributes &&
+      Array.isArray(data.data.attributes.productAttributes) &&
+      data.data.attributes.productAttributes.length > 0
+    ) {
+      const defaultColor = data.data.attributes.productAttributes[0].color; // Wybierz pierwszy kolor jako domyślny
+      setChoosenColor(defaultColor);
+      setSelectedColor(0); // Ustaw także indeks pierwszego koloru jako wybrany
+    }
+    window.scrollTo(0, 0);
+  }, [data]);
+
+  if (isLoading) {
+    return <Loader />;
+  }
 
   function increaseCartQuantity(slug: string, size: string, color: string) {
     const uuid = crypto.randomUUID();
@@ -38,7 +68,10 @@ const ProductPage = ({ params }) => {
     }
 
     if (!size) {
-      alert("Wybierz rozmiar");
+      setSizeError(true);
+      setTimeout(() => {
+        setSizeError(false);
+      }, 1000); // Czas w milisekundach (tutaj 1000ms to 1 sekunda)
       return;
     }
 
@@ -118,24 +151,7 @@ const ProductPage = ({ params }) => {
     router.push("/cart");
   }
 
-  const { data, isLoading } = useQuery(["productData", params.slug], {
-    queryFn: async () => {
-      const { data } = await axios.get(
-        `${url}/api/products/${params.slug}?populate=*`
-      );
-      return data;
-    },
-  });
-
-  if (isLoading) {
-    return <Loader />;
-  }
-
-  if (!data || !data.data || !data.data.attributes) {
-    return <div>Error: Failed to fetch data</div>;
-  }
-
-  const { brand, name, description, sizes, categories, subcategories } =
+  const { brand, name, description, categories, subcategories } =
     data.data.attributes;
 
   const availabilitySizes =
@@ -154,11 +170,25 @@ const ProductPage = ({ params }) => {
     <div className="px-4 lg:pl-[9rem] lg:pr-[12rem] flex flex-col lg:flex-row gap-10 justify-between my-10">
       <div>
         <div className="mb-4 inline-flex items-center gap-1">
-          <Link href="/">{t("home")}</Link> <IoIosArrowForward />{" "}
-          {categories?.data[0]?.attributes?.title} <IoIosArrowForward />
-          <span className="font-medium">
+          <Link className="hover:font-medium " href="/">
+            {t("home")}
+          </Link>{" "}
+          <IoIosArrowForward />
+          <Link
+            className="hover:font-medium "
+            href={`/collections/${categories?.data[0]?.attributes?.title.toLowerCase()}`}
+          >
+            {categories?.data[0]?.attributes?.title}
+          </Link>
+          <IoIosArrowForward />
+          <Link
+            href={`/collections/${categories?.data[0]?.attributes?.title.toLowerCase()}/${
+              subcategories?.data[0]?.attributes?.slug
+            }`}
+            className="font-medium"
+          >
             {subcategories?.data[0]?.attributes?.name}
-          </span>
+          </Link>
         </div>
         <ProductSlider images={photos} />
       </div>
@@ -180,7 +210,7 @@ const ProductPage = ({ params }) => {
           </span>
         </div>
         <ReactMarkdown className="pt-4 pb-1">{description}</ReactMarkdown>
-        <div className="pb-1">
+        <div className="pb-2">
           {choosenColor === "" ? (
             <p>{t("select-color")}:</p>
           ) : (
@@ -192,41 +222,48 @@ const ProductPage = ({ params }) => {
         <div className="flex gap-4">
           {data.data.attributes.productAttributes &&
             Array.isArray(data.data.attributes.productAttributes) &&
-            data.data.attributes.productAttributes.map((item, index) => {
-              const imageUrl =
-                item.images?.data && Array.isArray(item.images.data)
-                  ? item.images.data[0]?.attributes?.url
-                  : null;
+            data.data.attributes.productAttributes.map(
+              (item, index: number) => {
+                const imageUrl =
+                  item.images?.data && Array.isArray(item.images.data)
+                    ? item.images.data[0]?.attributes?.url
+                    : null;
 
-              return (
-                <div
-                  key={index}
-                  className={`flex flex-col items-center gap-1 cursor-pointer ${
-                    choosenColor !== "" &&
-                    selectedColor === index &&
-                    "border-2 border-black"
-                  }`}
-                  onClick={() => {
-                    setSelectedColor(index);
-                    setChoosenColor(item.color);
-                  }}
-                >
-                  {imageUrl ? (
-                    <img
-                      className="w-28 h-40 object-cover"
-                      src={imageUrl}
-                      alt=""
-                    />
-                  ) : (
-                    <span>Image not available</span>
-                  )}
-                </div>
-              );
-            })}
+                return (
+                  <div
+                    key={index}
+                    className={`flex flex-col items-center gap-1 cursor-pointer ${
+                      choosenColor !== "" &&
+                      selectedColor === index &&
+                      "border-2 border-black"
+                    }`}
+                    onClick={() => {
+                      setSelectedColor(index);
+                      setChoosenColor(item.color);
+                    }}
+                  >
+                    {imageUrl ? (
+                      <div className="w-28 h-40 relative">
+                        <Image
+                          className="w-full h-full object-cover"
+                          src={imageUrl}
+                          alt=""
+                          fill
+                        />
+                      </div>
+                    ) : (
+                      <span>Image not available</span>
+                    )}
+                  </div>
+                );
+              }
+            )}
         </div>
-        <div>
-          <span className="py-4">{t("select-size")}:</span>
-          <div className="flex gap-4">
+        <div className="pt-3 pb-2">
+          <span className={`${sizeError && "text-red-500 font-medium"}`}>
+            {t("select-size")}:
+          </span>
+          <div className="flex gap-4 mt-2">
             {availabilitySizes.length > 0 ? (
               availabilitySizes.map((item) => {
                 if (item.size && item.quantity > 0) {
@@ -243,7 +280,7 @@ const ProductPage = ({ params }) => {
                 }
               })
             ) : (
-              <div>brak dostępnych produktów</div>
+              <div>Brak dostępnych produktów</div>
             )}
           </div>
         </div>
