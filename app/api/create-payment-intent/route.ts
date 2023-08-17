@@ -105,9 +105,7 @@ export async function POST(request: Request) {
   const paymentIntent = await stripe.paymentIntents.create({
     amount: convertPLNToInt(calculatedOrderAmount),
     currency: "pln",
-    automatic_payment_methods: {
-      enabled: true,
-    },
+    payment_method_types: ["card", "blik", "paypal", "p24"],
   });
 
   return NextResponse.json({ clientSecret: paymentIntent.client_secret });
