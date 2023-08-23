@@ -71,7 +71,7 @@ const Payment = () => {
           </div>
         </div>
         {choosePayment === "online" && totalPrice !== null && (
-          <Checkout totalPrice={Math.round(totalPrice)} userData={userData} />
+          <Checkout totalPrice={totalPrice} userData={userData} />
         )}
         <Links />
       </div>

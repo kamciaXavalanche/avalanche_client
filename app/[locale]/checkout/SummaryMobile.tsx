@@ -13,6 +13,8 @@ const SummaryMobile = () => {
   const [totalPrice, setTotalPrice] = useState(0);
   const [openSummary, setOpenSummary] = useState(false);
 
+  console.log(cartItems);
+
   useEffect(() => {
     const totalPriceFromCookie = parseFloat(Cookies.get("totalPrice") || "0");
     setTotalPrice(totalPriceFromCookie);

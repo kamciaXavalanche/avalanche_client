@@ -59,6 +59,8 @@ const ProductPage = ({ params }) => {
     return <Loader />;
   }
 
+  console.log(cartItems);
+
   function increaseCartQuantity(slug: string, size: string, color: string) {
     const uuid = crypto.randomUUID();
 
