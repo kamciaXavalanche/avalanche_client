@@ -14,6 +14,8 @@ const Summary = () => {
   useEffect(() => {
     const totalPriceFromCookie = parseFloat(Cookies.get("totalPrice") || "0");
     setTotalPrice(totalPriceFromCookie);
+    const cartFromCookies = JSON.parse(Cookies.get("cart"));
+    setCartItems(cartFromCookies);
   }, [cartItems, totalPrice]);
 
   return (
@@ -33,9 +35,9 @@ const Summary = () => {
         ))}
       </div>
       <div className="flex items-center gap-4 py-4">
-        <div className="basis-[70%] ">
+        <div className="basis-[70%]">
           <input
-            className="px-4 w-full h-full py-[0.75rem]"
+            className="px-4 w-full h-full py-[0.86rem]"
             type="text"
             placeholder="Kod rabatowy"
           />

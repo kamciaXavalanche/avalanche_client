@@ -6,14 +6,12 @@ import SummaryProduct from "./SummaryProduct";
 import Cookies from "js-cookie";
 import { useEffect, useState } from "react";
 import { formatPrice } from "../utils/functions";
-import { BsCart2, BsChevronDown } from "react-icons/bs";
+import { BsCart2, BsChevronDown, BsChevronUp } from "react-icons/bs";
 
 const SummaryMobile = () => {
   const [cartItems, setCartItems] = useAtom(cartAtom);
   const [totalPrice, setTotalPrice] = useState(0);
   const [openSummary, setOpenSummary] = useState(false);
-
-  console.log(cartItems);
 
   useEffect(() => {
     const totalPriceFromCookie = parseFloat(Cookies.get("totalPrice") || "0");
@@ -25,10 +23,17 @@ const SummaryMobile = () => {
       <div className="flex items-center justify-between my-4">
         <div
           onClick={() => setOpenSummary((prev) => !prev)}
-          className="text-sm inline-flex items-center "
+          className="text-sm flex gap-1 items-center justify-center"
         >
-          <BsCart2 /> Pokaż podsumowanie zamówienia{" "}
-          <BsChevronDown className="text-sm font-bold" />
+          <div className="inline-flex gap-4">
+            <BsCart2 size={17} />{" "}
+            {openSummary ? "Twoje zamówienie" : "Pokaż podsumowanie zamówienia"}{" "}
+          </div>
+          {openSummary ? (
+            <BsChevronUp className="text-sm font-bold" />
+          ) : (
+            <BsChevronDown className="text-sm font-bold" />
+          )}
         </div>
         <div className="font-semibold">{formatPrice(totalPrice)}</div>
       </div>
@@ -51,7 +56,7 @@ const SummaryMobile = () => {
           <div className="flex items-center gap-4 py-4">
             <div className="basis-[70%] ">
               <input
-                className="px-4 w-full h-full py-[0.75rem]"
+                className="px-4 w-full h-full py-[0.86rem]"
                 type="text"
                 placeholder="Kod rabatowy"
               />
