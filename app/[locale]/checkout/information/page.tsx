@@ -77,9 +77,8 @@ const Information = () => {
     setNumber(value);
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-
     if (
       !email ||
       !address ||
@@ -93,7 +92,6 @@ const Information = () => {
       setFormError("Please fill in all required fields");
       return;
     }
-
     setFormError("");
     router.push("/checkout/shipping");
   };

@@ -1,5 +1,8 @@
 "use client";
 
+import Information from "../Information";
+import Header from "../Header";
+import Summary from "../Summary";
 import {
   addressAtom,
   cityAtom,
@@ -8,15 +11,10 @@ import {
   zipcodeAtom,
 } from "@/app/[locale]/lib/atoms";
 import { useAtomValue } from "jotai";
-import Header from "../Header";
-import Summary from "../Summary";
-import StepBack from "../StepBack";
 import { useRouter } from "next/navigation";
-import { BsArrowReturnLeft } from "react-icons/bs";
 import Link from "next/link";
 import Links from "../Links";
 import { IoIosArrowBack } from "react-icons/io";
-import Information from "../Information";
 
 const Shipping = () => {
   const email = useAtomValue(emailAtom);
