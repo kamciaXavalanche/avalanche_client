@@ -13,7 +13,6 @@ interface SummaryProductProps {
   size: string;
   color: string;
   setCartItems: any;
-  cartItems: any;
 }
 
 const SummaryProduct: React.FC<SummaryProductProps> = ({
@@ -22,7 +21,6 @@ const SummaryProduct: React.FC<SummaryProductProps> = ({
   size,
   color,
   setCartItems,
-  cartItems,
 }) => {
   const [productDetails, setProductDetails] = useState<any>(null);
 
@@ -62,7 +60,7 @@ const SummaryProduct: React.FC<SummaryProductProps> = ({
         }
       })
     );
-  }, [productData, isLoading, color, slug, size, setCartItems]);
+  }, [productData]);
 
   return (
     <div className="flex justify-between">

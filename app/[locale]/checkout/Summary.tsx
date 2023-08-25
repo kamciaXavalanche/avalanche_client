@@ -16,17 +16,16 @@ const Summary = () => {
     setTotalPrice(totalPriceFromCookie);
     const cartFromCookies = JSON.parse(Cookies.get("cart"));
     setCartItems(cartFromCookies);
-  }, [cartItems, totalPrice]);
+  }, []);
 
   return (
     <div className="hidden lg:block lg:basis-[45%] bg-gray-200 pr-[9%] pl-8 pt-10 border-l-2 border-gray-300 ">
       <div className="flex gap-2 flex-col">
         {cartItems?.map((item) => (
           <SummaryProduct
-            key={item.id}
+            key={`${item.slug}${item.color}`}
             slug={item.slug}
             quantity={item.quantity}
-            id={item.id}
             setCartItems={setCartItems}
             cartItems={cartItems}
             size={item.size}

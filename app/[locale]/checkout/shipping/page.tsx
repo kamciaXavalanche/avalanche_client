@@ -3,25 +3,12 @@
 import Information from "../Information";
 import Header from "../Header";
 import Summary from "../Summary";
-import {
-  addressAtom,
-  cityAtom,
-  countryAtom,
-  emailAtom,
-  zipcodeAtom,
-} from "@/app/[locale]/lib/atoms";
-import { useAtomValue } from "jotai";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import Links from "../Links";
 import { IoIosArrowBack } from "react-icons/io";
 
 const Shipping = () => {
-  const email = useAtomValue(emailAtom);
-  const address = useAtomValue(addressAtom);
-  const postcode = useAtomValue(zipcodeAtom);
-  const city = useAtomValue(cityAtom);
-  const country = useAtomValue(countryAtom);
   const router = useRouter();
 
   const handleSubmit = () => {

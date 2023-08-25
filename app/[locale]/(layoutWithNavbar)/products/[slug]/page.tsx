@@ -9,7 +9,6 @@ import ReactMarkdown from "react-markdown";
 import { useAtom } from "jotai";
 import { cartAtom } from "@/app/[locale]/lib/atoms";
 import Cookies from "js-cookie";
-import { motion } from "framer-motion";
 import { useEffect, useState } from "react";
 import { url } from "@/app/[locale]/constants/constants";
 import {
@@ -58,8 +57,6 @@ const ProductPage = ({ params }) => {
   if (isLoading) {
     return <Loader />;
   }
-
-  console.log(cartItems);
 
   function increaseCartQuantity(slug: string, size: string, color: string) {
     const uuid = crypto.randomUUID();
@@ -271,6 +268,7 @@ const ProductPage = ({ params }) => {
                 if (item.size && item.quantity > 0) {
                   return (
                     <div
+                      key={item.size}
                       onClick={() => setChoosenSize(item.size)}
                       className={`w-14 h-7 border border-black flex items-center justify-center cursor-pointer ${
                         item.size === choosenSize && "bg-black text-white"

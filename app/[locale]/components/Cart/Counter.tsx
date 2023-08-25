@@ -65,11 +65,9 @@ const Counter: React.FC<CounterProps> = ({ slug, quantity, size, uuid }) => {
       >
         <BiMinus className="text-[16px]  lg:text-[18px]" />
       </button>
-      <input
-        className="w-[20px] text-center bg-transparent outline-none"
-        type="text"
-        value={quantity}
-      />
+      <span className="w-[20px] text-center bg-transparent outline-none">
+        {quantity}
+      </span>
       <button
         onClick={() => increaseCartQuantity(slug, size, uuid)}
         className="py-1 px-2 lg:py-2 lg:px-3"

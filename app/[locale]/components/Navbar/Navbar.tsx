@@ -98,7 +98,7 @@ const Navbar = ({ categories }) => {
             <ul className="hidden lg:flex  justify-start items-center gap-10">
               {attributes?.map((category) => (
                 <NavLi
-                  id={category.title}
+                  key={category.title}
                   title={category.title}
                   subcategories={category.subcategories.data}
                 />
@@ -123,10 +123,10 @@ const Navbar = ({ categories }) => {
                   <g
                     transform="translate(1 1)"
                     stroke="currentColor"
-                    stroke-width="2"
+                    strokeWidth="2"
                     fill="none"
-                    fill-rule="evenodd"
-                    stroke-linecap="square"
+                    fillRule="evenodd"
+                    strokeLinecap="square"
                   >
                     <path d="M18 18l-5.7096-5.7096"></path>
                     <circle cx="7.2" cy="7.2" r="7.2"></circle>
@@ -145,10 +145,10 @@ const Navbar = ({ categories }) => {
                   <g
                     transform="translate(1 1)"
                     stroke="currentColor"
-                    stroke-width="2"
+                    strokeWidth="2"
                     fill="none"
-                    fill-rule="evenodd"
-                    stroke-linecap="square"
+                    fillRule="evenodd"
+                    strokeLinecap="square"
                   >
                     <path d="M0 18c0-4.5188182 3.663-8.18181818 8.18181818-8.18181818h1.63636364C14.337 9.81818182 18 13.4811818 18 18"></path>
                     <circle cx="9" cy="4.90909091" r="4.90909091"></circle>

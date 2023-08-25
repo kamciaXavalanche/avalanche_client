@@ -104,7 +104,7 @@ const Cart: React.FC<CartProps> = ({ setToggle }) => {
         ) : (
           cartItems?.map((item) => (
             <Product
-              key={item.id}
+              key={`${item.slug}${item.color}`}
               slug={item.slug}
               quantity={item.quantity}
               size={item.size}

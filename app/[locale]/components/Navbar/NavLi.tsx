@@ -14,7 +14,6 @@ interface NavLiProps {
   title: string;
   isActive?: boolean;
   subcategories: attributes;
-  id: number;
 }
 
 const NavLi: React.FC<NavLiProps> = ({
@@ -79,6 +78,7 @@ const NavLi: React.FC<NavLiProps> = ({
       >
         {subcategories?.map((subcategory) => (
           <Link
+            key={subcategory.attributes.slug}
             href={`/collections/${title.toLocaleLowerCase()}/${
               subcategory.attributes.slug
             }`}
