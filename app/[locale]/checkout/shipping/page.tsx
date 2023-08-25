@@ -21,7 +21,7 @@ const Shipping = () => {
         onSubmit={handleSubmit}
         className="lg:basis-[55%] h-full px-6 lg:pl-[9%] pt-10 flex flex-col lg:justify-between "
       >
-        <Header isActive />
+        <Header />
         <Information />
         <div>
           <h3 className="text-lg font-medium my-4">Metoda wysyłki</h3>

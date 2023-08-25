@@ -28,44 +28,8 @@ export default function CheckoutForm({
   const [paymentStatus, setPaymentStatus] = useState<PaymentStatus>("idle");
   const [cartItems, setCartItems] = useAtom(cartAtom);
 
-  // const clientUrl = "https://levarde.com";
-  const clientUrl = "http://localhost:3000";
-
-  // useEffect(() => {
-  //   if (!stripe) {
-  //     return;
-  //   }
-
-  //   const clientSecret = new URLSearchParams(window.location.search).get(
-  //     "payment_intent_client_secret"
-  //   );
-
-  //   if (!clientSecret) {
-  //     return;
-  //   }
-
-  //   stripe.retrievePaymentIntent(clientSecret).then(({ paymentIntent }) => {
-  //     switch (paymentIntent.status) {
-  //       case "succeeded":
-  //         setMessage("Payment succeeded!");
-  //         postRequest();
-  //         setCartItems([]); // Set cartItems to an empty array
-  //         Cookies.set("cart", JSON.stringify([]));
-  //         Cookies.set("userData", JSON.stringify([]));
-
-  //         break;
-  //       case "processing":
-  //         setMessage("Your payment is processing.");
-  //         break;
-  //       case "requires_payment_method":
-  //         setMessage("Your payment was not successful, please try again.");
-  //         break;
-  //       default:
-  //         setMessage("Something went wrong.");
-  //         break;
-  //     }
-  //   });
-  // }, [stripe]);
+  const clientUrl = "https://levarde.com";
+  // const clientUrl = "http://localhost:3000";
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();

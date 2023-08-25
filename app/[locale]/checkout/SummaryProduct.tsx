@@ -5,6 +5,7 @@ import axios from "axios";
 import { calculateDiscountedPrice } from "../utils/functions";
 import { url } from "../constants/constants";
 import { useEffect, useState } from "react";
+import Cookies from "js-cookie";
 import Image from "next/image";
 
 interface SummaryProductProps {
@@ -13,6 +14,7 @@ interface SummaryProductProps {
   size: string;
   color: string;
   setCartItems: any;
+  cartItems: any;
 }
 
 const SummaryProduct: React.FC<SummaryProductProps> = ({
@@ -21,6 +23,7 @@ const SummaryProduct: React.FC<SummaryProductProps> = ({
   size,
   color,
   setCartItems,
+  cartItems,
 }) => {
   const [productDetails, setProductDetails] = useState<any>(null);
 
@@ -60,7 +63,8 @@ const SummaryProduct: React.FC<SummaryProductProps> = ({
         }
       })
     );
-  }, [productData]);
+    Cookies.set("cart", JSON.stringify(cartItems));
+  }, [color, slug, size, productPrice, productData]);
 
   return (
     <div className="flex justify-between">
