@@ -7,6 +7,7 @@ import Summary from "../Summary";
 import Cookies from "js-cookie";
 import Links from "../Links";
 import Information from "../Information";
+import Order from "../Order";
 
 const Payment = () => {
   const [totalPrice, setTotalPrice] = useState(null);
@@ -31,11 +32,11 @@ const Payment = () => {
         <Information />
         <div>
           <h3 className="text-lg font-medium my-4">Płatność</h3>
-          <div className="w-full border border-gray-400 h-16 rounded-md rounded-b-none px-8 flex gap-2 items-center justify-between cursor-pointer">
-            <div
-              onClick={() => choosePaymentMethod("online")}
-              className="flex gap-3 items-center"
-            >
+          <div
+            onClick={() => choosePaymentMethod("online")}
+            className="w-full border border-gray-400 h-16 rounded-md rounded-b-none px-8 flex gap-2 items-center justify-between cursor-pointer"
+          >
+            <div className="flex gap-3 items-center">
               {choosePayment === "online" ? (
                 <div className="w-6 h-6 flex items-center justify-center bg-black rounded-full">
                   <div className="w-2 h-2 rounded-full bg-white" />
@@ -64,9 +65,16 @@ const Payment = () => {
             <p>Darmowa</p>
           </div>
         </div>
-        {choosePayment === "online" && totalPrice !== null && (
-          <Checkout totalPrice={totalPrice} userData={userData} />
-        )}
+        {choosePayment === "online" &&
+          totalPrice !== null &&
+          userData.length !== 0 && (
+            <Checkout totalPrice={totalPrice} userData={userData} />
+          )}
+        {choosePayment === "przy-odbiorze" &&
+          totalPrice !== null &&
+          userData.length !== 0 && (
+            <Order totalPrice={totalPrice} userData={userData} />
+          )}
         <Links />
       </div>
       <Summary />

@@ -146,10 +146,10 @@ export default function CheckoutForm({
         id="submit"
       >
         <span id="button-text">
-          {paymentStatus === "idle" && "Pay now"}
-          {paymentStatus === "loading" && "Processing payment..."}
-          {paymentStatus === "success" && "Payment is successful!"}
-          {paymentStatus === "error" && "Payment unsuccessful!"}
+          {paymentStatus === "idle" && "Zapłać teraz"}
+          {paymentStatus === "loading" && "Przetwarzam płatność..."}
+          {paymentStatus === "success" && "Płatność pomyślna!"}
+          {paymentStatus === "error" && "Płatoność niepomyślna!"}
         </span>
       </button>
 
