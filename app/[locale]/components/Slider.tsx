@@ -2,7 +2,6 @@
 
 import { useState } from "react";
 import { BsChevronLeft, BsChevronRight } from "react-icons/bs";
-import { ApiSliderImageSliderImage } from "../types/schemas";
 
 const Slider = ({ images }) => {
   const largeImages = images[0].attributes.ImagesXL.data;
@@ -18,7 +17,7 @@ const Slider = ({ images }) => {
   };
 
   return (
-    <div className="w-full group h-[460px] overflow-hidden relative">
+    <div className="w-full group h-[630px] overflow-hidden relative">
       <div
         className="w-full h-full flex transition-all duration-700 ease-in-out "
         style={{ transform: `translateX(-${slideIndex * 100}%)` }}
