@@ -1,40 +1,34 @@
 "use client";
-import { useState } from "react";
 
 type Props = {
   text: string;
   type: string;
   handleChange: (param: any) => void;
-  typedValue: string | number;
   required?: boolean;
+  name: string;
+  value: string | number;
 };
 
 function FloatingLabel({
   text,
   type,
+  name,
   handleChange,
-  typedValue,
   required,
+  value,
 }: Props) {
-  const [inputValue, setInputValue] = useState("");
-
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const value = e.target.value;
-    setInputValue(value);
-    handleChange(value);
-  };
-
   return (
-    <div className="relative">
+    <div className="relative flex-grow">
       <input
-        autoComplete="off"
+        autoComplete="on"
         id={text}
         className="block px-2.5 pb-2.5 pt-4 w-full text-lg text-black bg-transparent rounded-sm border border-borderColor appearance-none focus:outline-none focus:ring-0 focus:border-primaryColor peer"
         placeholder=" "
         type={type}
-        value={typedValue ? typedValue : inputValue}
-        onChange={handleInputChange}
+        onChange={handleChange}
         required={required}
+        name={name}
+        value={value}
       />
       <label
         htmlFor={text}

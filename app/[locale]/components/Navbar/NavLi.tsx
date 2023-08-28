@@ -77,11 +77,8 @@ const NavLi: React.FC<NavLiProps> = ({
         `}
       >
         {subcategories?.map((subcategory) => (
-          <Link
+          <li
             key={subcategory.attributes.slug}
-            href={`/collections/${title.toLocaleLowerCase()}/${
-              subcategory.attributes.slug
-            }`}
             className={`  
          relative 
          text-lg
@@ -107,8 +104,14 @@ const NavLi: React.FC<NavLiProps> = ({
          gap-3
          `}
           >
-            {subcategory.attributes.name}
-          </Link>
+            <Link
+              href={`/collections/${title.toLocaleLowerCase()}/${
+                subcategory.attributes.slug
+              }`}
+            >
+              {subcategory.attributes.name}
+            </Link>
+          </li>
         ))}
       </div>
     </div>

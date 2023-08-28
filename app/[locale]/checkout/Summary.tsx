@@ -18,8 +18,6 @@ const Summary = () => {
     setCartItems(cartFromCookies);
   }, []);
 
-  console.log(cartItems);
-
   return (
     <div className="hidden lg:block lg:basis-[45%] bg-gray-200 pr-[9%] pl-8 pt-10 border-l-2 border-gray-300 ">
       <div className="flex gap-2 flex-col">

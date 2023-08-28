@@ -24,6 +24,7 @@ const Slider = ({ images }) => {
       >
         {largeImages?.map((image) => (
           <div
+            key={image}
             style={{
               backgroundImage: `url('${image.attributes.url}')`,
             }}
@@ -36,6 +37,7 @@ const Slider = ({ images }) => {
       <div className="absolute inset-0 flex items-end justify-center gap-6 z-20">
         {largeImages?.map((i, index) => (
           <div
+            key={index}
             onClick={() => setSlideIndex(index)}
             className={`mb-6 w-3.5 h-3.5 rounded-full cursor-pointer ${
               index === slideIndex ? "bg-gray-200" : "border"
