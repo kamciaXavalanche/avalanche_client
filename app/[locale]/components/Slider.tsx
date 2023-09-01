@@ -7,24 +7,25 @@ const Slider = ({ images }) => {
   const largeImages = images[0].attributes.ImagesXL.data;
 
   const [slideIndex, setSlideIndex] = useState(0);
+  const slideNumber = 2;
 
   const nextSlide = () => {
-    setSlideIndex((slideIndex + 1) % 3);
+    setSlideIndex((slideIndex + 1) % slideNumber);
   };
 
   const prevSlide = () => {
-    setSlideIndex((slideIndex - 1 + 3) % 3);
+    setSlideIndex((slideIndex - 1 + slideNumber) % slideNumber);
   };
 
   return (
-    <div className="w-full group h-[630px] overflow-hidden relative">
+    <div className="w-full group h-[600px] overflow-hidden relative">
       <div
         className="w-full h-full flex transition-all duration-700 ease-in-out "
         style={{ transform: `translateX(-${slideIndex * 100}%)` }}
       >
         {largeImages?.map((image) => (
           <div
-            key={image}
+            key={image.attributes.url}
             style={{
               backgroundImage: `url('${image.attributes.url}')`,
             }}
@@ -35,9 +36,9 @@ const Slider = ({ images }) => {
         ))}
       </div>
       <div className="absolute inset-0 flex items-end justify-center gap-6 z-20">
-        {largeImages?.map((i, index) => (
+        {largeImages?.map((image, index) => (
           <div
-            key={index}
+            key={image.attributes.url}
             onClick={() => setSlideIndex(index)}
             className={`mb-6 w-3.5 h-3.5 rounded-full cursor-pointer ${
               index === slideIndex ? "bg-gray-200" : "border"
@@ -48,11 +49,11 @@ const Slider = ({ images }) => {
       <div className="hidden group-hover:flex absolute inset-0  justify-between items-center px-6 lg:px-8">
         <BsChevronLeft
           onClick={prevSlide}
-          className="cursor-pointer z-20 w-7 lg:w-14 lg:h-14 h-7 fill-gray-200"
+          className="cursor-pointer z-20 w-7 lg:w-14 lg:h-14 h-7 fill-gray-200 bg-black border-2 p-1 border-gray-200"
         />
         <BsChevronRight
           onClick={nextSlide}
-          className="cursor-pointer z-20 w-7 lg:w-14 lg:h-14  h-7 fill-gray-200"
+          className="cursor-pointer z-20 w-7 lg:w-14 lg:h-14  h-7 fill-gray-200 bg-black border-2 p-1 border-gray-200"
         />
       </div>
     </div>

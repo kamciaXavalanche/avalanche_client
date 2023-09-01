@@ -18,12 +18,14 @@ const Payment = () => {
     const total = parseFloat(Cookies.get("totalPrice") || "0");
     const userData = Cookies.get("userData");
     setTotalPrice(total);
-    setUserData(userData);
+    setUserData([userData]);
   }, []);
 
   const choosePaymentMethod = (item) => {
     setChoosePayment(item);
   };
+
+  console.log(userData);
 
   return (
     <div className="flex flex-col lg:flex-row gap-14 min-h-screen ">
