@@ -1,33 +1,33 @@
 "use client";
 
-import { useAtom, useAtomValue } from "jotai";
+import { useAtomValue } from "jotai";
 import Link from "next/link";
-import React, { useEffect } from "react";
-import { formAtom } from "../lib/atoms";
+import React from "react";
+import {
+  addressAtom,
+  cityAtom,
+  countryAtom,
+  emailAtom,
+  zipcodeAtom,
+} from "../lib/atoms";
 import { BsArrowReturnLeft } from "react-icons/bs";
-import Cookies from "js-cookie";
 
 const Information = () => {
-  const [form, setForm] = useAtom(formAtom);
-
-  useEffect(() => {
-    const storedFormData = Cookies.get("userData");
-
-    if (storedFormData) {
-      setForm(JSON.parse(storedFormData));
-    }
-  }, []);
-
+  const email = useAtomValue(emailAtom);
+  const address = useAtomValue(addressAtom);
+  const postcode = useAtomValue(zipcodeAtom);
+  const city = useAtomValue(cityAtom);
+  const country = useAtomValue(countryAtom);
   return (
     <div className="border border-gray-400 rounded-md px-6 py-2">
       {" "}
-      {form.email && form.address ? (
+      {email && address ? (
         <div>
           <div>
             <div className="flex justify-between items-center">
               <div className="flex">
                 <h4 className="text-gray-400 w-[100px]">Kontakt:</h4>
-                <h4>{form.email}</h4>
+                <h4>{email}</h4>
               </div>
               <Link href="/checkout/information" className="underline">
                 Zmień
@@ -42,7 +42,7 @@ const Information = () => {
                   Odbiorca dostawy:
                 </h4>
                 <h4>
-                  {form.address}, {form.zipCode} {form.city}, {form.country}
+                  {address}, {postcode} {city}, {country}
                 </h4>
               </div>
               <Link href="/checkout/information" className="underline">

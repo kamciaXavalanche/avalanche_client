@@ -1,52 +1,99 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { useAtom } from "jotai";
 import FloatingLabel from "../FloatingLabel";
 import Summary from "../Summary";
 import Link from "next/link";
 import Header from "../Header";
+import {
+  addressAtom,
+  cityAtom,
+  countryAtom,
+  emailAtom,
+  nameAtom,
+  numberAtom,
+  secondNameAtom,
+  zipcodeAtom,
+} from "@/app/[locale]/lib/atoms";
 import { useRouter } from "next/navigation";
 import Cookies from "js-cookie";
 import { AiOutlineInfoCircle } from "react-icons/ai";
 import Links from "../Links";
-import { useAtom } from "jotai";
-import { formAtom } from "../../lib/atoms";
 
 const Information = () => {
-  const [form, setForm] = useAtom(formAtom);
+  const [email, setEmail] = useAtom(emailAtom);
+  const [address, setAddress] = useAtom(addressAtom);
+  const [country, setCountry] = useAtom(countryAtom);
+  const [name, setName] = useAtom(nameAtom);
+  const [secondName, setSecondName] = useAtom(secondNameAtom);
+  const [zipcode, setZipcode] = useAtom(zipcodeAtom);
+  const [city, setCity] = useAtom(cityAtom);
+  const [number, setNumber] = useAtom(numberAtom);
   const [formError, setFormError] = useState("");
   const router = useRouter();
 
   useEffect(() => {
-    const storedFormData = Cookies.get("userData");
+    Cookies.set(
+      "userData",
+      JSON.stringify([
+        {
+          email: email,
+          address: address,
+          country: country,
+          firstname: name,
+          secondname: secondName,
+          postcode: zipcode,
+          city: city,
+          number: number,
+        },
+      ])
+    );
+  }, [email, address, country, name, secondName, zipcode, city, number]);
 
-    if (storedFormData) {
-      setForm(JSON.parse(storedFormData));
-    }
-  }, []);
-
-  useEffect(() => {
-    Cookies.set("userData", JSON.stringify(form));
-  }, [form]);
-
-  const handleChange = (e: any) => {
-    setForm({
-      ...form,
-      [e.target.name]: e.target.value,
-    });
+  const handleEmailChange = (value: string) => {
+    setEmail(value);
   };
 
-  function isFormFilled(formState: any) {
-    return Object.values(formState).every((value) => value !== "");
-  }
-  const isFilled = isFormFilled(form);
+  const handleAddressChange = (value: string) => {
+    setAddress(value);
+  };
+  const handleCountryChange = (value: string) => {
+    setCountry(value);
+  };
+  const handleNameChange = (value: string) => {
+    setName(value);
+  };
+  const handleSecondNameChange = (value: string) => {
+    setSecondName(value);
+  };
+  const handleZipcodeChange = (value: string) => {
+    setZipcode(value);
+  };
+  const handleCityChange = (value: string) => {
+    setCity(value);
+  };
+  const handleNumberChange = (value: string) => {
+    setNumber(value);
+  };
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
-    if (!isFilled) {
+
+    if (
+      !email ||
+      !address ||
+      !country ||
+      !name ||
+      !secondName ||
+      !zipcode ||
+      !city ||
+      !number
+    ) {
       setFormError("Please fill in all required fields");
       return;
     }
+
     setFormError("");
     router.push("/checkout/shipping");
   };
@@ -54,7 +101,7 @@ const Information = () => {
   return (
     <div className="flex flex-col lg:flex-row gap-14">
       <div className="lg:basis-[55%] px-6 lg:pl-[9%] pt-10">
-        <Header />
+        <Header isActive />
         <form onSubmit={handleSubmit}>
           <div className="">
             <div className="flex justify-between items-center mb-3">
@@ -67,48 +114,42 @@ const Information = () => {
               </div>
             </div>
             <FloatingLabel
-              handleChange={handleChange}
+              handleChange={handleEmailChange}
+              typedValue={email}
               text="E-mail"
               type="e-mail"
-              name="email"
-              value={form.email}
             />
           </div>
-          <div className="flex gap-4 my-4 flex-shrink">
-            <FloatingLabel
-              type="text"
-              handleChange={handleChange}
-              text="Imię"
-              name="firstName"
-              value={form.firstName}
-            />
-            <FloatingLabel
-              text="Nazwisko"
-              type="text"
-              handleChange={handleChange}
-              name="secondName"
-              value={form.secondName}
-            />
-          </div>
-          <div>
-            <div className="flex flex-col gap-3 mb-3">
+          <div className="">
+            <div className="flex justify-between items-center mb-3">
               <h2 className="font-semibold mt-2">Adres wysyłki</h2>
+            </div>
+            <FloatingLabel
+              handleChange={handleCountryChange}
+              typedValue={country}
+              type="country"
+              text="Kraj/region"
+            />
+            <div className="flex gap-4 my-4">
               <FloatingLabel
-                handleChange={handleChange}
                 type="text"
-                text="Kraj/region"
-                name="country"
-                value={form.country}
+                handleChange={handleNameChange}
+                typedValue={name}
+                text="Imię"
               />
               <FloatingLabel
-                handleChange={handleChange}
+                text="Nazwisko"
                 type="text"
-                text="Adres"
-                name="address"
-                value={form.address}
+                handleChange={handleSecondNameChange}
+                typedValue={secondName}
               />
             </div>
-
+            <FloatingLabel
+              handleChange={handleAddressChange}
+              type="text"
+              typedValue={address}
+              text="Adres"
+            />
             <div className="flex gap-2 mt-3 items-center">
               <AiOutlineInfoCircle size={18} />
               <div>Dodaj numer domu, jeśli go posiadasz</div>
@@ -117,24 +158,21 @@ const Information = () => {
               <FloatingLabel
                 text="Kod pocztowy"
                 type="text"
-                handleChange={handleChange}
-                name="zipCode"
-                value={form.zipCode}
+                handleChange={handleZipcodeChange}
+                typedValue={zipcode}
               />
               <FloatingLabel
                 text="Miasto"
                 type="text"
-                handleChange={handleChange}
-                name="city"
-                value={form.city}
+                typedValue={city}
+                handleChange={handleCityChange}
               />
             </div>
             <FloatingLabel
               text="Telefon"
               type="tel"
-              handleChange={handleChange}
-              name="phoneNumber"
-              value={form.phoneNumber}
+              handleChange={handleNumberChange}
+              typedValue={number}
             />
           </div>
           {formError && <p className="text-red-500">{formError}</p>}

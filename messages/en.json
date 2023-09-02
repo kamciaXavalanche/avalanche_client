@@ -31,13 +31,13 @@
     "cart": "cart",
     "empty": "your basket is empty",
     "summary": "summary",
-    "size": "SIZE",
-    "color": "COLOR",
+    "size": "Size",
+    "color": "Color",
     "delete": "delete"
   },
   "product": {
     "home": "Home",
-    "color": "COLOR",
+    "color": "Color",
     "size": "size",
     "select-color": "Select color",
     "select-size": "Select size",
@@ -48,5 +48,10 @@
     "home": "Home",
     "results": "Results",
     "for": "for"
+  },
+  "buying-popup": {
+    "add-message": "You added to cart",
+    "button1": "Continue shopping",
+    "button2": "go to order"
   }
 }

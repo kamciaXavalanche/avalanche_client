@@ -7,8 +7,8 @@ import Cookies from "js-cookie";
 
 const Order = ({ totalPrice, userData }: any) => {
   const [cartItems, setCartItems] = useAtom(cartAtom);
-  const router = useRouter();
   const [isOrdering, setIsOrdering] = useState(false);
+  const router = useRouter();
 
   const handleOrderClick = async () => {
     try {
@@ -21,7 +21,7 @@ const Order = ({ totalPrice, userData }: any) => {
             totalPrice,
             products: cartItems,
             customerData: userData,
-            orderStatus: "not-paid",
+            orderStatus: "cash-on-delivery",
           },
         }),
         headers: {
@@ -47,7 +47,7 @@ const Order = ({ totalPrice, userData }: any) => {
   return (
     <button
       onClick={handleOrderClick}
-      className="button-primary"
+      className="button-primary mt-6 lg:mt-0"
       disabled={isOrdering}
     >
       {isOrdering ? "Trwa zamawianie..." : "Zamawiam za pobraniem"}

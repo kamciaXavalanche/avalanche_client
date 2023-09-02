@@ -23,7 +23,7 @@ const Summary = () => {
       <div className="flex gap-2 flex-col">
         {cartItems?.map((item) => (
           <SummaryProduct
-            key={`${item.slug}${item.color}`}
+            key={`${item.slug}${item.color}${item.size}`}
             slug={item.slug}
             quantity={item.quantity}
             setCartItems={setCartItems}

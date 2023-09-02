@@ -42,10 +42,9 @@ const SummaryMobile = () => {
           <div className="flex gap-2 flex-col">
             {cartItems?.map((item) => (
               <SummaryProduct
-                key={item.id}
+                key={`${item.slug}${item.size}${item.color}`}
                 slug={item.slug}
                 quantity={item.quantity}
-                id={item.id}
                 setCartItems={setCartItems}
                 cartItems={cartItems}
                 size={item.size}

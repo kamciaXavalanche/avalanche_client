@@ -8,7 +8,7 @@ import { cartAtom } from "../lib/atoms";
 import { useAtom } from "jotai";
 
 const stripePromise = loadStripe(
-  "pk_test_51KsNPHD2JGtC3oa6OQkbmhflMcj5GrbkMYv0CntoAUn3ttNg9yJqst8Fg9zzdJMQW6L4LMe04WE2fyArRZjpP8Ra00TzBHDE1d"
+  process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY!
 );
 
 export default function Checkout({ totalPrice, userData }: any) {

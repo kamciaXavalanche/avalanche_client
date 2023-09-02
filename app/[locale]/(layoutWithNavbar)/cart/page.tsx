@@ -10,13 +10,14 @@ import { formatPrice } from "@/app/[locale]/utils/functions";
 import Link from "next/link";
 import Cookies from "js-cookie";
 import { url } from "@/app/[locale]/constants/constants";
-import { useLocale } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 
 const Cart: React.FC<CartProps> = () => {
   const [products, setProducts] = useState([]);
   const [cartItems, setCartItems] = useAtom(cartAtom);
   const [isLoadingPrice, setIsLoadingPrice] = useState(true);
   const locale = useLocale();
+  const t = useTranslations("cart");
 
   useEffect(() => {
     const fetchData = async () => {
@@ -54,24 +55,26 @@ const Cart: React.FC<CartProps> = () => {
 
   return (
     <div className="bg-backgroundColor w-full flex flex-col justify-between ">
-      <div className="flex justify-center items-center px-7 h-[80px] border-b ">
-        <span className="text-2xl">Koszyk</span>
+      <div className="flex justify-center items-center px-7 h-[80px] border-b">
+        <span className="text-2xl uppercase">{t("cart")}</span>
       </div>
       <div className="h-full p-4 lg:px-40 flex flex-col gap-4 ">
-        {cartItems.length === 0
-          ? "TWÓJ KOSZYK JEST PUSTY"
-          : cartItems?.map((item) => (
-              <Product
-                key={item.id}
-                slug={item.slug}
-                quantity={item.quantity}
-                size={item.size}
-                setCartItems={setCartItems}
-                cartItems={cartItems}
-                uuid={item.uuid}
-                color={item.color}
-              />
-            ))}
+        {cartItems.length === 0 ? (
+          <p className="text-center uppercase">{t("empty")}</p>
+        ) : (
+          cartItems?.map((item) => (
+            <Product
+              key={`${item.slug}${item.color}${item.size}`}
+              slug={item.slug}
+              quantity={item.quantity}
+              size={item.size}
+              setCartItems={setCartItems}
+              cartItems={cartItems}
+              uuid={item.uuid}
+              color={item.color}
+            />
+          ))
+        )}
       </div>
       <div
         className={`px-7 py-8 border-t-[1.5px] flex items-center justify-center ${
@@ -90,9 +93,9 @@ const Cart: React.FC<CartProps> = () => {
         ) : (
           <Link
             href="/checkout/information"
-            className="button-primary inline-flex items-center justify-center !w-80"
+            className="button-primary inline-flex items-center justify-center !w-80 uppercase"
           >
-            PODSUMOWANIE <BsDot /> {formatPrice(totalPrice)}
+            {t("summary")} <BsDot /> {formatPrice(totalPrice)}
           </Link>
         )}
       </div>

@@ -28,8 +28,8 @@ export default function CheckoutForm({
   const [paymentStatus, setPaymentStatus] = useState<PaymentStatus>("idle");
   const [cartItems, setCartItems] = useAtom(cartAtom);
 
-  const clientUrl = "https://levarde.com";
-  // const clientUrl = "http://localhost:3000";
+  // const clientUrl = "https://levarde.com";
+  const clientUrl = "http://localhost:3000";
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -48,6 +48,7 @@ export default function CheckoutForm({
           products: cartItems,
           customerData: userData,
           orderStatus: "not-paid",
+          isStripeVerified: false,
         },
       }),
       headers: {
@@ -74,6 +75,17 @@ export default function CheckoutForm({
         return_url:
           clientUrl +
           `/checkout/payment/success?orderId=${createdOrder.data.id}`,
+        payment_method_data: {
+          billing_details: {
+            // Enter data from form when it is typesafe
+            // name: userData.firstName + userData.lastName,
+            // email: userData.email,
+            // phone: userData.phone
+            name: "John Doe",
+            email: "johndoe@gmail.com",
+            phone: "12421414",
+          },
+        },
       },
     });
 
@@ -85,6 +97,7 @@ export default function CheckoutForm({
           body: JSON.stringify({
             data: {
               orderStatus: "successful",
+              stripePaymentIntentId: paymentIntent.id,
             },
           }),
           headers: {

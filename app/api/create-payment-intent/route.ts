@@ -5,10 +5,9 @@ import { url } from "@/app/[locale]/constants/constants";
 
 // ADD process.env.STRIPE_SECRET_KEY
 
-const stripe = new Stripe(
-  "sk_test_51KsNPHD2JGtC3oa6rGcps0s4R3JtrgMLO1rZy9KRyWZbKXu2i4LvX06vurhoUj8q1IxVyzl2vNz0dLhgjn4g3gGa00bxFqE5YK",
-  { apiVersion: "2020-08-27" }
-);
+const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
+  apiVersion: "2020-08-27",
+});
 
 const cartItemSchema = z.object({
   uuid: z.string().uuid(),

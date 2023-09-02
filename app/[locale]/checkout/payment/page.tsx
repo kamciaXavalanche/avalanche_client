@@ -6,6 +6,8 @@ import Header from "../Header";
 import Summary from "../Summary";
 import Cookies from "js-cookie";
 import Links from "../Links";
+import { useAtomValue } from "jotai";
+import { addressAtom, emailAtom } from "@/app/[locale]/lib/atoms";
 import Information from "../Information";
 import Order from "../Order";
 
@@ -13,19 +15,19 @@ const Payment = () => {
   const [totalPrice, setTotalPrice] = useState(null);
   const [userData, setUserData] = useState([]);
   const [choosePayment, setChoosePayment] = useState(null);
+  const email = useAtomValue(emailAtom);
+  const address = useAtomValue(addressAtom);
 
   useEffect(() => {
     const total = parseFloat(Cookies.get("totalPrice") || "0");
     const userData = Cookies.get("userData");
     setTotalPrice(total);
-    setUserData([userData]);
+    setUserData(userData);
   }, []);
 
   const choosePaymentMethod = (item) => {
     setChoosePayment(item);
   };
-
-  console.log(userData);
 
   return (
     <div className="flex flex-col lg:flex-row gap-14 min-h-screen ">

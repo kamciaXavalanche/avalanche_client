@@ -7,6 +7,7 @@ import Cookies from "js-cookie";
 import ProductPrice from "../../components/ProductPrice";
 import { url } from "@/app/[locale]/constants/constants";
 import Image from "next/image";
+import { useTranslations } from "next-intl";
 
 interface ProductProps {
   slug: string;
@@ -22,6 +23,7 @@ const Product: React.FC<ProductProps> = ({
   uuid,
   color,
 }) => {
+  const t = useTranslations("cart");
   const { data: productData, isLoading } = useQuery(["productData", slug], {
     queryFn: async () => {
       const { data } = await axios.get(`${url}/api/products/${slug}`);
@@ -61,10 +63,10 @@ const Product: React.FC<ProductProps> = ({
         <div className="flex flex-col lg:min-w-[200px] gap-2">
           <h2 className="font-medium">{productData.data.attributes.name}</h2>
           <h2 className="text-sm lg:">
-            Rozmiar: <span className="font-medium">{size}</span>
+            {t("size")}: <span className="font-medium">{size}</span>
           </h2>
           <h2 className="text-sm lg:">
-            Kolor: <span className="font-medium">{color}</span>
+            {t("color")}: <span className="font-medium">{color}</span>
           </h2>
           <ProductPrice
             price={znalezionyObiekt.price * quantity}
@@ -75,9 +77,9 @@ const Product: React.FC<ProductProps> = ({
           <Counter slug={slug} quantity={quantity} size={size} uuid={uuid} />
           <div
             onClick={() => removeFromCart(uuid)}
-            className="border-b-[1.2px] border-black  hover:border-white text-xs lg:text-sm transition duration-500 cursor-pointer"
+            className="border-b-[1.2px] border-black uppercase hover:border-white text-xs lg:text-sm transition duration-500 cursor-pointer"
           >
-            USUŃ
+            {t("delete")}
           </div>
         </div>
       </div>

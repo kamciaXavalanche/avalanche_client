@@ -12,6 +12,10 @@
 /.next/
 /out/
 
+#stripe
+.stripe.exe
+/stripe.exe
+./stripe.exe
 # production
 /build
 

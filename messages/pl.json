@@ -48,5 +48,10 @@
     "home": "Strona Główna",
     "results": "Wyniki",
     "for": "dla"
+  },
+  "buying-popup": {
+    "add-message": "Dodałeś do koszyka",
+    "button1": "kontynuuj zakupy",
+    "button2": "przejdź do zamówienia"
   }
 }
