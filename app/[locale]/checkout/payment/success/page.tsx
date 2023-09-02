@@ -41,7 +41,7 @@ const SuccesPage = () => {
     }
   }, []);
   return (
-    <div className="px-6 py-8 flex flex-col justify-center text-center">
+    <div className="px-6 py-8 flex flex-col items-center justify-center text-center">
       <Logo />
       <div className="flex justify-center my-5 items-center gap-2">
         <BsCheckCircle size={24} />
