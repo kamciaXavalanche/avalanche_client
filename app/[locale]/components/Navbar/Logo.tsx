@@ -4,8 +4,8 @@ import Image from "next/image";
 
 const Logo = () => {
   return (
-    <Link href="/">
-      <Image src={logo} width={160} height={70} alt="logo" />
+    <Link href="/" className="flex justify-center items-center">
+      <Image src={logo} width={180} height={70} alt="logo" />
     </Link>
   );
 };
