@@ -28,8 +28,8 @@ export default function CheckoutForm({
   const [paymentStatus, setPaymentStatus] = useState<PaymentStatus>("idle");
   const [cartItems, setCartItems] = useAtom(cartAtom);
 
-  // const clientUrl = "https://levarde.com";
-  const clientUrl = "http://localhost:3000";
+  const clientUrl = "https://levarde.com";
+  // const clientUrl = "http://localhost:3000";
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
