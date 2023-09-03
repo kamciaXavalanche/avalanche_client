@@ -24,9 +24,11 @@ const Information = () => {
       {email && address ? (
         <div>
           <div>
-            <div className="flex justify-between items-center">
+            <div className="flex justify-between items-center flex-wrap">
               <div className="flex">
-                <h4 className="text-gray-400 w-[100px]">Kontakt:</h4>
+                <h4 className="text-gray-400 w-[80px] lg:w-[100px]">
+                  Kontakt:
+                </h4>
                 <h4>{email}</h4>
               </div>
               <Link href="/checkout/information" className="underline">
@@ -36,12 +38,12 @@ const Information = () => {
           </div>
           <hr className="my-3 border-gray-400" />
           <div>
-            <div className="flex justify-between items-center">
+            <div className="flex justify-between items-center flex-wrap">
               <div className="flex items-center">
-                <h4 className="text-gray-400 max-w-[100px]">
+                <h4 className="text-gray-400 max-w-[80px] lg:max-w-[100px]">
                   Odbiorca dostawy:
                 </h4>
-                <h4>
+                <h4 className="max-w-[130px] lg:max-w-[330px]">
                   {address}, {postcode} {city}, {country}
                 </h4>
               </div>

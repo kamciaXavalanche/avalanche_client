@@ -38,8 +38,6 @@ const Menu: React.FC<MenuProps> = ({ setToggleMenu, categories }) => {
     };
   }, []);
 
-  console.log(categories);
-
   return (
     <motion.div
       initial={{ x: "-100%" }}
@@ -58,10 +56,12 @@ const Menu: React.FC<MenuProps> = ({ setToggleMenu, categories }) => {
       </div>
       <div className="h-full p-10 flex flex-col gap-4 overflow-y-scroll">
         <ul className="flex flex-col gap-2 justify-start ">
-          {categories.map((category) => {
+          {categories.map((category, i) => {
             const isExpanded = expandedCategory === category.id;
             return (
-              <div key={category.id}>
+              <div
+                key={`${category.attributes.title}${category.attributes.id}${i}`}
+              >
                 <div
                   className="flex justify-between items-center cursor-pointer"
                   onClick={() =>
@@ -109,8 +109,8 @@ const Menu: React.FC<MenuProps> = ({ setToggleMenu, categories }) => {
                 {isExpanded && (
                   <div className="ml-6">
                     {category.attributes.subcategories.data.map(
-                      (subcategory) => (
-                        <>
+                      (subcategory, i) => (
+                        <div key={`${category.attributes.title}${i}`}>
                           <Link
                             onClick={() => setToggleMenu(false)}
                             href={`/collections/${category.attributes.title.toLowerCase()}/${
@@ -125,7 +125,7 @@ const Menu: React.FC<MenuProps> = ({ setToggleMenu, categories }) => {
                             </li>
                           </Link>
                           <hr className="bg-black w-full " />
-                        </>
+                        </div>
                       )
                     )}
                   </div>
@@ -147,10 +147,10 @@ const Menu: React.FC<MenuProps> = ({ setToggleMenu, categories }) => {
                 <g
                   transform="translate(1 1)"
                   stroke="currentColor"
-                  stroke-width="2"
+                  strokeWidth="2"
                   fill="none"
-                  fill-rule="evenodd"
-                  stroke-linecap="square"
+                  fillRule="evenodd"
+                  strokeLinecap="square"
                 >
                   <path d="M0 18c0-4.5188182 3.663-8.18181818 8.18181818-8.18181818h1.63636364C14.337 9.81818182 18 13.4811818 18 18"></path>
                   <circle cx="9" cy="4.90909091" r="4.90909091"></circle>
@@ -180,8 +180,12 @@ const Menu: React.FC<MenuProps> = ({ setToggleMenu, categories }) => {
         }}
         className="px-7 py-8 border-t-[1.5px] flex items-center justify-around"
       >
-        <BsFacebook size={22} />
-        <BsInstagram size={22} />
+        <Link href="https://m.facebook.com/profile.php/?id=100093022143540">
+          <BsFacebook size={22} />
+        </Link>
+        <Link href="https://www.instagram.com/levarde_/?fbclid=IwAR3CwA2SzAOvrM8QtXC65JEJDJZMKeSYljOVw1zsh-4spmbX9uQIrFX2ipI">
+          <BsInstagram size={22} />
+        </Link>
       </motion.div>
     </motion.div>
   );
