@@ -99,3 +99,8 @@ body {
     transform: rotate(360deg);
   }
 }
+
+::marker {
+  display: flex;
+  flex-direction: row;
+}
