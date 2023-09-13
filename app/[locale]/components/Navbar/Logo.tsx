@@ -5,7 +5,7 @@ import Image from "next/image";
 const Logo = () => {
   return (
     <Link href="/" className="flex justify-center w-fit">
-      <Image src={logo} width={180} height={70} alt="logo" />
+      <Image src={logo} width={165} height={30} alt="logo" />
     </Link>
   );
 };

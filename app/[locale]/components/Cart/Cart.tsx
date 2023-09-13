@@ -98,7 +98,11 @@ const Cart: React.FC<CartProps> = ({ setToggle }) => {
           <IoCloseOutline size={26} />
         </div>
       </div>
-      <div className="h-full p-4 lg:p-10 flex flex-col gap-4 overflow-y-scroll">
+      <div
+        className={`h-full p-4 lg:p-10 flex flex-col gap-4 overflow-y-scroll ${
+          cartItems.length === 0 && "justify-center"
+        }`}
+      >
         {cartItems.length === 0 ? (
           <p className="uppercase text-center">{t("empty")}</p>
         ) : (
