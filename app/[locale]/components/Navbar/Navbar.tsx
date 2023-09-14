@@ -80,19 +80,6 @@ const Navbar = ({ categories }) => {
         z-50
       `}
       >
-        <AnimatePresence>
-          {toggleSearch && (
-            <motion.div
-              initial={{ opacity: 0, y: -8 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -8 }}
-              transition={{ duration: 0.3 }}
-              className="w-full h-screen bg-black/70 absolute top-[90px] lg:top-[100px] left-0 right-0 bottom-0"
-            >
-              <Search setToggleSearch={setToggleSearch} />
-            </motion.div>
-          )}
-        </AnimatePresence>
         <div className="flex justify-between items-center py-4 ">
           <nav className="flex-1  start text-center">
             <ul className="hidden lg:flex  justify-start items-center gap-10">
@@ -189,6 +176,19 @@ const Navbar = ({ categories }) => {
             <div className="fixed top-0 left-0 right-0 w-full h-full bg-black/70 flex justify-start">
               <Menu setToggleMenu={setToggleMenu} categories={categories} />
             </div>
+          )}
+        </AnimatePresence>
+        <AnimatePresence>
+          {toggleSearch && (
+            <motion.div
+              initial={{ opacity: 0, y: -8 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -8 }}
+              transition={{ duration: 0.3 }}
+              className="w-full h-screen bg-black/70 absolute top-[71px] lg:top-[90px] lg:bottom-0 left-0 right-0 bottom-0"
+            >
+              <Search setToggleSearch={setToggleSearch} />
+            </motion.div>
           )}
         </AnimatePresence>
       </header>

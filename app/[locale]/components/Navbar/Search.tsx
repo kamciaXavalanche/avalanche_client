@@ -40,10 +40,10 @@ const Search = ({ setToggleSearch }) => {
               <g
                 transform="translate(1 1)"
                 stroke="currentColor"
-                stroke-width="2"
+                strokeWidth="2"
                 fill="none"
-                fill-rule="evenodd"
-                stroke-linecap="square"
+                fillRule="evenodd"
+                strokeLinecap="square"
               >
                 <path d="M18 18l-5.7096-5.7096"></path>
                 <circle cx="7.2" cy="7.2" r="7.2"></circle>
