@@ -80,7 +80,7 @@ const Footer = () => {
           <span className="text-sm text-textColor sm:text-center">
             © 2023{" "}
             <a href="/" className="hover:underline">
-              Avalanche™
+              Levarde™
             </a>
             . All Rights Reserved.
           </span>
