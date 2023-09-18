@@ -21,9 +21,7 @@ const Footer = () => {
               </h2>
               <ul className="font-base">
                 <li className="mb-4">
-                  <a href="" className="hover:underline">
-                    {t("about")}
-                  </a>
+                  <span className="hover:underline">{t("about")}</span>
                 </li>
                 <li>
                   <a href="" className="hover:underline">
@@ -60,15 +58,16 @@ const Footer = () => {
                 {t("client")}
               </h2>
               <ul className="font-base">
-                <li className="mb-4">
-                  <a href="#" className="hover:underline">
-                    {t("policy")}
-                  </a>
-                </li>
                 <li>
                   <Link href="/regulations" className="hover:underline">
                     {t("statue")}
                   </Link>
+                </li>
+                <li className="font-medium mt-4">
+                  <a href="mailto:sklep@levarde.com">sklep@levarde.com</a>
+                </li>
+                <li className="font-medium mt-2">
+                  <a href="mailto:pomoc@levarde.com">pomoc@levarde.com</a>
                 </li>
               </ul>
             </div>
