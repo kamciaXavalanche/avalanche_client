@@ -100,7 +100,7 @@ const Bestsellers = ({ products }) => {
           </div>
         ))}
       </div>
-      <Link href="/search" className="button-primary mt-14 lg:mt-24 !w-fit">
+      <Link href="/search" className="button-primary mt-24 !w-fit">
         {t("check-more")}
       </Link>
     </section>
