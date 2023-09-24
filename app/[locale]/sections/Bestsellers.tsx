@@ -36,10 +36,8 @@ const Bestsellers = ({ products }) => {
     return wishlist.includes(slug);
   };
 
-  console.log(products);
-
   return (
-    <section className="px-4 lg:px-[9rem] flex flex-col items-center text-center mb-20">
+    <section className="px-6 lg:px-[9rem] flex flex-col items-center text-center mb-20">
       <div className="my-6">
         <h2 className="font-medium text-lg">{t("header")}</h2>
       </div>
@@ -51,7 +49,7 @@ const Bestsellers = ({ products }) => {
           >
             <div
               onClick={() => handleAddToWishlist(product.attributes.slug)}
-              className="absolute flex items-center justify-center rounded bg-white w-12 h-10 top-4 right-0 lg:right-0 z-10 cursor-none"
+              className="absolute flex items-center justify-center rounded bg-white w-12 h-10 top-4 right-0 lg:right-0 z-10 cursor-pointer"
             >
               {isProductInWishlist(product.attributes.slug) ? (
                 <AiFillStar className="fill-red" size={28} />
@@ -89,7 +87,7 @@ const Bestsellers = ({ products }) => {
               </div>
             </Link>
             <div className="w-full h-fit pl-4 my-1 text-left">
-              <p className=" text-gray-600 text-sm font-medium">
+              <p className=" text-gray-600 font-medium">
                 {product.attributes.name}
               </p>
               <p className="font-medium text-lg">

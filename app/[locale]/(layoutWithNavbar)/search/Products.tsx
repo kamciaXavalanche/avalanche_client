@@ -91,7 +91,7 @@ const Products: React.FC<ProductsProps> = ({
   }
 
   return (
-    <div>
+    <section className="px-2">
       <div className="my-6 text-center">
         {t("results")}:{" "}
         <span className="font-medium">{responseData.data.length}</span>{" "}
@@ -101,9 +101,10 @@ const Products: React.FC<ProductsProps> = ({
           </span>
         )}
       </div>
-      <div className="grid grid-cols-5 gap-y-16 gap-x-4 mb-20">
+      <div className="grid grid-cols-1 lg:grid-cols-5 gap-y-16 gap-x-4 mb-20">
         {responseData.data.map((item) => (
           <Link
+            key={item?.attributes?.slug}
             href={`/products/${item?.attributes?.slug}`}
             className=" lg:h-full lg:w-full"
           >
@@ -124,7 +125,7 @@ const Products: React.FC<ProductsProps> = ({
           </Link>
         ))}
       </div>
-    </div>
+    </section>
   );
 };
 

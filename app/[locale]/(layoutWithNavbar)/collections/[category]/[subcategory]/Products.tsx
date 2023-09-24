@@ -58,10 +58,11 @@ const Products: React.FC<ProductsProps> = ({ slug }) => {
   }
 
   return (
-    <section className="lg:px-20 py-2 lg:py-6">
+    <section className="px-2 lg:px-20 py-2 lg:py-6">
       <div className="grid grid-cols-1 mg:grid-cols-4 lg:grid-cols-5 gap-y-16 gap-x-4 mb-20">
         {responseData.data.map((item) => (
           <Link
+            key={item?.attributes?.slug}
             href={`/products/${item?.attributes?.slug}`}
             className=" lg:h-full lg:w-full"
           >
