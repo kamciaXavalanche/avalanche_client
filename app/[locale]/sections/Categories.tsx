@@ -19,7 +19,7 @@ const Categories = () => {
         <img
           src={Komplety.src}
           alt=""
-          className="w-[320px] lg:w-[310px] h-[340px] lg:h-[440px] object-cover cursor-pointer hover:grayscale-[1] transition-all duration-500"
+          className="w-full  lg:w-[310px] lg:h-[440px] object-cover cursor-pointer hover:grayscale-[1] transition-all duration-500"
         />
         <h3 className="py-2 text-center text-2xl capitalize">{t("sets")}</h3>
       </Link>

@@ -7,6 +7,7 @@ import { url } from "@/app/[locale]/constants/constants";
 import Link from "next/link";
 import { useTranslations } from "next-intl";
 import { calculateDiscountedPrice } from "../../utils/functions";
+import Image from "next/image";
 
 type PriceProp = {
   from: number;
@@ -91,7 +92,7 @@ const Products: React.FC<ProductsProps> = ({
   }
 
   return (
-    <section className="px-2">
+    <section>
       <div className="my-6 text-center">
         {t("results")}:{" "}
         <span className="font-medium">{responseData.data.length}</span>{" "}
@@ -101,19 +102,21 @@ const Products: React.FC<ProductsProps> = ({
           </span>
         )}
       </div>
-      <div className="grid grid-cols-1 lg:grid-cols-5 gap-y-16 gap-x-4 mb-20">
+      <div className="grid grid-cols-1  md:grid-cols-4 lg:grid-cols-4 xl:grid-cols-5  gap-x-4 mb-20">
         {responseData.data.map((item) => (
           <Link
             key={item?.attributes?.slug}
             href={`/products/${item?.attributes?.slug}`}
-            className=" lg:h-full lg:w-full"
           >
-            <img
-              className="w-full h-full object-cover lg:hover:scale-[1.03] lg:hover:shadow-sm lg:hover:shadow-black overflow-hidden transition duration-300"
-              src={item?.attributes?.coverImages?.data[0]?.attributes?.url}
-              alt=""
-            />
-            <div className="mt-2 mb-4 flex flex-col font-semibold">
+            <div className="relative w-full h-[28rem] lg:h-[24rem]">
+              <Image
+                className="w-full h-full object-cover lg:hover:scale-[1.0115] lg:hover:shadow-sm lg:hover:shadow-black overflow-hidden transition duration-300"
+                src={item?.attributes?.coverImages?.data[0]?.attributes?.url}
+                alt={item?.attributes?.name}
+                fill
+              />
+            </div>
+            <div className="mt-2 mb-4 flex flex-col font-semibold text-black z-30">
               <h2 className="text-gray-600"> {item?.attributes?.name}</h2>
               <h3>
                 {calculateDiscountedPrice(
