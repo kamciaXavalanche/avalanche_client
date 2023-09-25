@@ -242,17 +242,14 @@ const ProductPage = ({ params }) => {
                     }}
                   >
                     {imageUrl ? (
-                      <Link
-                        href={`?color=${item.color}&size=${choosenSize}`}
-                        className="w-28 h-40 relative"
-                      >
+                      <div className="w-28 h-40 relative">
                         <Image
                           className="w-full h-full object-cover"
                           src={imageUrl}
                           alt=""
                           fill
                         />
-                      </Link>
+                      </div>
                     ) : (
                       <span>Image not available</span>
                     )}
@@ -270,8 +267,7 @@ const ProductPage = ({ params }) => {
               availabilitySizes.map((item) => {
                 if (item.size && item.quantity > 0) {
                   return (
-                    <Link
-                      href={`?color=${choosenColor}&size=${item.size}`}
+                    <div
                       key={item.size}
                       onClick={() => setChoosenSize(item.size)}
                       className={`w-14 h-7 border border-black flex items-center justify-center cursor-pointer ${
@@ -279,7 +275,7 @@ const ProductPage = ({ params }) => {
                       }`}
                     >
                       {item.size}
-                    </Link>
+                    </div>
                   );
                 }
               })
