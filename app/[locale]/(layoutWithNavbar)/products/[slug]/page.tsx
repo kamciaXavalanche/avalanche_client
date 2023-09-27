@@ -51,7 +51,7 @@ const ProductPage = ({ params }) => {
       setChoosenColor(defaultColor);
       setSelectedColor(0); // Ustaw także indeks pierwszego koloru jako wybrany
     }
-    window.scrollTo(0, 0);
+    // window.scrollTo(0, 0);
   }, [data]);
 
   if (isLoading) {
@@ -150,7 +150,7 @@ const ProductPage = ({ params }) => {
     router.push("/cart");
   }
 
-  const { brand, name, description, categories, subcategories } =
+  const { brand, name, description, categories, subcategories, slug } =
     data.data.attributes;
 
   const availabilitySizes =
@@ -267,7 +267,11 @@ const ProductPage = ({ params }) => {
               availabilitySizes.map((item) => {
                 if (item.size && item.quantity > 0) {
                   return (
-                    <div
+                    <Link
+                      href={{
+                        pathname: `/products/${slug}`,
+                        query: { size: item.size },
+                      }}
                       key={item.size}
                       onClick={() => setChoosenSize(item.size)}
                       className={`w-14 h-7 border border-black flex items-center justify-center cursor-pointer ${
@@ -275,7 +279,7 @@ const ProductPage = ({ params }) => {
                       }`}
                     >
                       {item.size}
-                    </div>
+                    </Link>
                   );
                 }
               })
