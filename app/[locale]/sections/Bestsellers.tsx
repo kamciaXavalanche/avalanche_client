@@ -100,6 +100,27 @@ const Bestsellers = ({ products }) => {
                 )}
               </p>
             </div>
+            <div className="block z-30 bg-backgroundColor pb-3 mb-3 ">
+              <div className="pl-2 grid grid-cols-4 gap-2 mb-3">
+                {product?.attributes.productAttributes.map(
+                  ({ color, images }: { color: string; images: any }) => (
+                    <Link
+                      className="w-full h-20 relative"
+                      href={`/products/${
+                        product.attributes.slug
+                      }?color=${color.toLowerCase()}`}
+                    >
+                      <Image
+                        src={images.data[0].attributes.url}
+                        alt={product?.attributes?.name}
+                        fill
+                        className="hover:brightness-110 w-full h-full object-cover"
+                      />
+                    </Link>
+                  )
+                )}
+              </div>
+            </div>
           </div>
         ))}
       </div>

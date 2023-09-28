@@ -25,7 +25,6 @@ const Products: React.FC<ProductsProps> = ({ slug }) => {
         productAttributes: {
           populate: {
             images: true,
-            availability: true,
           },
         },
       },
@@ -93,7 +92,7 @@ const Products: React.FC<ProductsProps> = ({ slug }) => {
               </h3>
             </div>
             <div className="block lg:hidden left-0 -bottom-30 z-30 bg-backgroundColor pb-3 right-0 group-hover:block lg:absolute  mb-3 ">
-              <div className="grid grid-cols-4 gap-1 mb-3 overflow-x-scroll">
+              <div className="grid grid-cols-4 gap-1 mb-3">
                 {item?.attributes.productAttributes.map(
                   ({ color, images }: { color: string; images: any }) => (
                     <Link

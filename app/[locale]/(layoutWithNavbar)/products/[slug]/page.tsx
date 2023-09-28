@@ -18,18 +18,21 @@ import {
 import { IoIosArrowForward } from "react-icons/io";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { useSearchParams } from "next/navigation";
 import { useTranslations } from "next-intl";
 import Image from "next/image";
 
 const ProductPage = ({ params }) => {
   const [cartItems, setCartItems] = useAtom(cartAtom);
   const [choosenSize, setChoosenSize] = useState("");
-  const [choosenColor, setChoosenColor] = useState("");
+  const [choosenColor, setChoosenColor] = useState("czarny");
   const [selectedColor, setSelectedColor] = useState(0);
   const [sizeError, setSizeError] = useState(false);
   const [popup, setPopup] = useState(false);
   const router = useRouter();
+  const searchParams = useSearchParams();
   const t = useTranslations("product");
+  const HEHE = searchParams.get("color");
 
   const { data, isLoading } = useQuery(["productData", params.slug], {
     queryFn: async () => {
@@ -258,6 +261,7 @@ const ProductPage = ({ params }) => {
               }
             )}
         </div>
+        <div>{HEHE}123</div>
         <div className="pt-3 pb-2">
           <span className={`${sizeError && "text-red-500 font-medium"}`}>
             {t("select-size")}:
