@@ -9,7 +9,7 @@ import ReactMarkdown from "react-markdown";
 import { useAtom } from "jotai";
 import { cartAtom } from "@/app/[locale]/lib/atoms";
 import Cookies from "js-cookie";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { url } from "@/app/[locale]/constants/constants";
 import {
   calculateDiscountedPrice,
@@ -23,16 +23,14 @@ import { useTranslations } from "next-intl";
 import Image from "next/image";
 
 const ProductPage = ({ params }) => {
+  const searchParams = useSearchParams();
+  const color = searchParams.get("color");
+  const size = searchParams.get("size");
   const [cartItems, setCartItems] = useAtom(cartAtom);
-  const [choosenSize, setChoosenSize] = useState("");
-  const [choosenColor, setChoosenColor] = useState("czarny");
-  const [selectedColor, setSelectedColor] = useState(0);
   const [sizeError, setSizeError] = useState(false);
   const [popup, setPopup] = useState(false);
   const router = useRouter();
-  const searchParams = useSearchParams();
   const t = useTranslations("product");
-  const HEHE = searchParams.get("color");
 
   const { data, isLoading } = useQuery(["productData", params.slug], {
     queryFn: async () => {
@@ -42,20 +40,6 @@ const ProductPage = ({ params }) => {
       return data;
     },
   });
-
-  useEffect(() => {
-    if (
-      data &&
-      data.data.attributes.productAttributes &&
-      Array.isArray(data.data.attributes.productAttributes) &&
-      data.data.attributes.productAttributes.length > 0
-    ) {
-      const defaultColor = data.data.attributes.productAttributes[0].color; // Wybierz pierwszy kolor jako domyślny
-      setChoosenColor(defaultColor);
-      setSelectedColor(0); // Ustaw także indeks pierwszego koloru jako wybrany
-    }
-    // window.scrollTo(0, 0);
-  }, [data]);
 
   if (isLoading) {
     return <Loader />;
@@ -73,7 +57,7 @@ const ProductPage = ({ params }) => {
       setSizeError(true);
       setTimeout(() => {
         setSizeError(false);
-      }, 1000); // Czas w milisekundach (tutaj 1000ms to 1 sekunda)
+      }, 1000);
       return;
     }
 
@@ -153,20 +137,30 @@ const ProductPage = ({ params }) => {
     router.push("/cart");
   }
 
+  function capitalizeFirstLetter(string) {
+    return string?.charAt(0).toUpperCase() + string?.slice(1).toLowerCase();
+  }
+
   const { brand, name, description, categories, subcategories, slug } =
     data.data.attributes;
 
   const availabilitySizes =
-    data.data.attributes.productAttributes[selectedColor].availability;
+    data.data.attributes.productAttributes[0].availability;
 
   const photos = data.data.attributes.productAttributes.flatMap(
     (item) => item.images.data
   );
 
-  const selectedVariant = data.data.attributes.productAttributes[selectedColor];
+  const selectedVariant = data.data.attributes.productAttributes[0];
 
   const price = selectedVariant.price;
   const discount = selectedVariant.discount;
+
+  // console.log(
+  //   data.data.attributes.find((item) => {
+  //     return item.color === "Czarny";
+  //   })
+  // );
 
   return (
     <div className="px-4 lg:pl-[9rem] lg:pr-[12rem] flex flex-col lg:flex-row gap-10 justify-between my-10">
@@ -213,11 +207,14 @@ const ProductPage = ({ params }) => {
         </div>
         <ReactMarkdown className="pt-4 pb-1">{description}</ReactMarkdown>
         <div className="pb-2">
-          {choosenColor === "" ? (
+          {color === null ? (
             <p>{t("select-color")}:</p>
           ) : (
             <div>
-              {t("color")}: <span className="font-medium">{choosenColor}</span>
+              {t("color")}:{" "}
+              <span className="font-medium ">
+                {capitalizeFirstLetter(color)}
+              </span>
             </div>
           )}
         </div>
@@ -232,17 +229,28 @@ const ProductPage = ({ params }) => {
                     : null;
 
                 return (
-                  <div
+                  <Link
+                    href={
+                      size !== null
+                        ? {
+                            pathname: `/products/${slug}`,
+                            query: {
+                              color: item.color.trim().toLowerCase(),
+                              size: size,
+                            },
+                          }
+                        : {
+                            pathname: `/products/${slug}`,
+                            query: {
+                              color: item.color.trim().toLowerCase(),
+                            },
+                          }
+                    }
                     key={index}
                     className={`flex flex-col items-center gap-1 cursor-pointer ${
-                      choosenColor !== "" &&
-                      selectedColor === index &&
+                      item.color.trim().toLowerCase() === color &&
                       "border-2 border-black"
                     }`}
-                    onClick={() => {
-                      setSelectedColor(index);
-                      setChoosenColor(item.color);
-                    }}
                   >
                     {imageUrl ? (
                       <div className="w-28 h-40 relative">
@@ -256,12 +264,12 @@ const ProductPage = ({ params }) => {
                     ) : (
                       <span>Image not available</span>
                     )}
-                  </div>
+                  </Link>
                 );
               }
             )}
         </div>
-        <div>{HEHE}123</div>
+
         <div className="pt-3 pb-2">
           <span className={`${sizeError && "text-red-500 font-medium"}`}>
             {t("select-size")}:
@@ -274,12 +282,15 @@ const ProductPage = ({ params }) => {
                     <Link
                       href={{
                         pathname: `/products/${slug}`,
-                        query: { size: item.size },
+                        query: {
+                          color: color,
+                          size: item.size.toLowerCase(),
+                        },
                       }}
                       key={item.size}
-                      onClick={() => setChoosenSize(item.size)}
                       className={`w-14 h-7 border border-black flex items-center justify-center cursor-pointer ${
-                        item.size === choosenSize && "bg-black text-white"
+                        item.size.toLowerCase() === size &&
+                        "bg-black text-white"
                       }`}
                     >
                       {item.size}
@@ -296,8 +307,8 @@ const ProductPage = ({ params }) => {
           onClick={() => {
             increaseCartQuantity(
               data.data.attributes.slug,
-              choosenSize,
-              choosenColor
+              capitalizeFirstLetter(size),
+              capitalizeFirstLetter(color)
             );
           }}
           className="button-secondary my-4"
@@ -306,7 +317,11 @@ const ProductPage = ({ params }) => {
         </button>
         <button
           onClick={() => {
-            addToCart(data.data.attributes.slug, choosenSize, choosenColor);
+            addToCart(
+              data.data.attributes.slug,
+              capitalizeFirstLetter(size),
+              capitalizeFirstLetter(color)
+            );
           }}
           className="button-primary"
         >
