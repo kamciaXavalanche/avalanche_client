@@ -21,6 +21,7 @@ import { useRouter } from "next/navigation";
 import { useSearchParams } from "next/navigation";
 import { useTranslations } from "next-intl";
 import Image from "next/image";
+import { type ProductData } from "@/app/[locale]/types/types";
 
 const ProductPage = ({ params }) => {
   const searchParams = useSearchParams();
@@ -32,14 +33,17 @@ const ProductPage = ({ params }) => {
   const router = useRouter();
   const t = useTranslations("product");
 
-  const { data, isLoading } = useQuery(["productData", params.slug], {
-    queryFn: async () => {
-      const { data } = await axios.get(
-        `${url}/api/products/${params.slug}?populate=*`
-      );
-      return data;
-    },
-  });
+  const { data, isLoading } = useQuery<ProductData>(
+    ["productData", params.slug],
+    {
+      queryFn: async () => {
+        const { data } = await axios.get(
+          `${url}/api/products/${params.slug}?populate=*`
+        );
+        return data;
+      },
+    }
+  );
 
   if (isLoading) {
     return <Loader />;
@@ -137,30 +141,26 @@ const ProductPage = ({ params }) => {
     router.push("/cart");
   }
 
-  function capitalizeFirstLetter(string) {
+  function capitalizeFirstLetter(string: string) {
     return string?.charAt(0).toUpperCase() + string?.slice(1).toLowerCase();
   }
 
-  const { brand, name, description, categories, subcategories, slug } =
+  const { name, description, categories, subcategories, slug } =
     data.data.attributes;
 
   const availabilitySizes =
-    data.data.attributes.productAttributes[0].availability;
+    data?.data.attributes.productAttributes[0].availability;
 
-  const photos = data.data.attributes.productAttributes.flatMap(
-    (item) => item.images.data
+  const selectedVariant = data?.data.attributes.productAttributes.find(
+    (item) => {
+      return item.color.trim() === capitalizeFirstLetter(color ?? "");
+    }
   );
 
-  const selectedVariant = data.data.attributes.productAttributes[0];
+  const selectedPhotos = selectedVariant?.images.data;
 
-  const price = selectedVariant.price;
-  const discount = selectedVariant.discount;
-
-  // console.log(
-  //   data.data.attributes.find((item) => {
-  //     return item.color === "Czarny";
-  //   })
-  // );
+  const price = selectedVariant?.price;
+  const discount = selectedVariant?.discount;
 
   return (
     <div className="px-4 lg:pl-[9rem] lg:pr-[12rem] flex flex-col lg:flex-row gap-10 justify-between my-10">
@@ -186,11 +186,10 @@ const ProductPage = ({ params }) => {
             {subcategories?.data[0]?.attributes?.name}
           </Link>
         </div>
-        <ProductSlider images={photos} />
+        <ProductSlider images={selectedPhotos} />
       </div>
       <div className="basis-[35%] w-full h-full flex flex-col">
         <div className="border-b flex flex-col">
-          <h2 className="pb-1">{brand}</h2>
           <h1 className="text-xl font-medium">{name}</h1>
           <span className="text-lg text-neutral-500 pt-2 pb-4">
             {discount ? (
@@ -219,7 +218,7 @@ const ProductPage = ({ params }) => {
           )}
         </div>
         <div className="flex gap-4">
-          {data.data.attributes.productAttributes &&
+          {data?.data.attributes.productAttributes &&
             Array.isArray(data.data.attributes.productAttributes) &&
             data.data.attributes.productAttributes.map(
               (item, index: number) => {
@@ -230,6 +229,7 @@ const ProductPage = ({ params }) => {
 
                 return (
                   <Link
+                    scroll={false}
                     href={
                       size !== null
                         ? {
@@ -276,7 +276,7 @@ const ProductPage = ({ params }) => {
           </span>
           <div className="flex gap-4 mt-2">
             {availabilitySizes.length > 0 ? (
-              availabilitySizes.map((item) => {
+              availabilitySizes?.map((item) => {
                 if (item.size && item.quantity > 0) {
                   return (
                     <Link
@@ -288,6 +288,7 @@ const ProductPage = ({ params }) => {
                         },
                       }}
                       key={item.size}
+                      scroll={false}
                       className={`w-14 h-7 border border-black flex items-center justify-center cursor-pointer ${
                         item.size.toLowerCase() === size &&
                         "bg-black text-white"
@@ -307,8 +308,8 @@ const ProductPage = ({ params }) => {
           onClick={() => {
             increaseCartQuantity(
               data.data.attributes.slug,
-              capitalizeFirstLetter(size),
-              capitalizeFirstLetter(color)
+              capitalizeFirstLetter(size ?? ""),
+              capitalizeFirstLetter(color ?? "")
             );
           }}
           className="button-secondary my-4"
@@ -319,8 +320,8 @@ const ProductPage = ({ params }) => {
           onClick={() => {
             addToCart(
               data.data.attributes.slug,
-              capitalizeFirstLetter(size),
-              capitalizeFirstLetter(color)
+              capitalizeFirstLetter(size ?? ""),
+              capitalizeFirstLetter(color ?? "")
             );
           }}
           className="button-primary"
