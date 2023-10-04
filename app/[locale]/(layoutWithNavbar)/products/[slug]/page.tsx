@@ -148,16 +148,29 @@ const ProductPage = ({ params }) => {
   const { name, description, categories, subcategories, slug } =
     data.data.attributes;
 
-  const availabilitySizes =
-    data?.data.attributes.productAttributes[0].availability;
+  let selectedVariant = data?.data.attributes.productAttributes.find((item) => {
+    return item.color.trim() === capitalizeFirstLetter(color ?? "");
+  });
 
-  const selectedVariant = data?.data.attributes.productAttributes.find(
-    (item) => {
-      return item.color.trim() === capitalizeFirstLetter(color ?? "");
-    }
-  );
+  const sizes = [{ size: "S" }, { size: "M" }, { size: "L" }];
 
+  let images;
   const selectedPhotos = selectedVariant?.images.data;
+  const allPhotos = data?.data.attributes.productAttributes.flatMap((item) => {
+    return item.images.data;
+  });
+
+  if (selectedPhotos) {
+    images = selectedPhotos;
+  } else {
+    images = allPhotos;
+  }
+
+  let availabilitySizes = selectedVariant?.availability;
+
+  if (!availabilitySizes) {
+    availabilitySizes = sizes;
+  }
 
   const price = selectedVariant?.price;
   const discount = selectedVariant?.discount;
@@ -186,7 +199,7 @@ const ProductPage = ({ params }) => {
             {subcategories?.data[0]?.attributes?.name}
           </Link>
         </div>
-        <ProductSlider images={selectedPhotos} />
+        <ProductSlider images={images} />
       </div>
       <div className="basis-[35%] w-full h-full flex flex-col">
         <div className="border-b flex flex-col">
@@ -277,27 +290,24 @@ const ProductPage = ({ params }) => {
           <div className="flex gap-4 mt-2">
             {availabilitySizes.length > 0 ? (
               availabilitySizes?.map((item) => {
-                if (item.size && item.quantity > 0) {
-                  return (
-                    <Link
-                      href={{
-                        pathname: `/products/${slug}`,
-                        query: {
-                          color: color,
-                          size: item.size.toLowerCase(),
-                        },
-                      }}
-                      key={item.size}
-                      scroll={false}
-                      className={`w-14 h-7 border border-black flex items-center justify-center cursor-pointer ${
-                        item.size.toLowerCase() === size &&
-                        "bg-black text-white"
-                      }`}
-                    >
-                      {item.size}
-                    </Link>
-                  );
-                }
+                return (
+                  <Link
+                    href={{
+                      pathname: `/products/${slug}`,
+                      query: {
+                        color: color,
+                        size: item.size.toLowerCase(),
+                      },
+                    }}
+                    key={item.size}
+                    scroll={false}
+                    className={`w-14 h-7 border border-black flex items-center justify-center cursor-pointer ${
+                      item.size.toLowerCase() === size && "bg-black text-white"
+                    }`}
+                  >
+                    {item.size}
+                  </Link>
+                );
               })
             ) : (
               <div>Brak dostępnych produktów</div>
