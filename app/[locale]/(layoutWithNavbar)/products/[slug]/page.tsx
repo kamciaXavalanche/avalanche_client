@@ -29,6 +29,7 @@ const ProductPage = ({ params }) => {
   const size = searchParams.get("size");
   const [cartItems, setCartItems] = useAtom(cartAtom);
   const [sizeError, setSizeError] = useState(false);
+  const [colorError, setColorError] = useState(false);
   const [popup, setPopup] = useState(false);
   const router = useRouter();
   const t = useTranslations("product");
@@ -53,7 +54,10 @@ const ProductPage = ({ params }) => {
     const uuid = crypto.randomUUID();
 
     if (!color) {
-      alert("Wybierz kolor");
+      setColorError(true);
+      setTimeout(() => {
+        setColorError(false);
+      }, 1000);
       return;
     }
 
@@ -152,6 +156,10 @@ const ProductPage = ({ params }) => {
     return item.color.trim() === capitalizeFirstLetter(color ?? "");
   });
 
+  if (!selectedVariant) {
+    selectedVariant = data?.data.attributes.productAttributes[0];
+  }
+
   const sizes = [{ size: "S" }, { size: "M" }, { size: "L" }];
 
   let images;
@@ -218,9 +226,12 @@ const ProductPage = ({ params }) => {
           </span>
         </div>
         <ReactMarkdown className="pt-4 pb-1">{description}</ReactMarkdown>
+
         <div className="pb-2">
           {color === null ? (
-            <p>{t("select-color")}:</p>
+            <span className={`${colorError && "text-red-500 font-medium"}`}>
+              {t("select-color")}:
+            </span>
           ) : (
             <div>
               {t("color")}:{" "}
