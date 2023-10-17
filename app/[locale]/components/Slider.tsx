@@ -1,5 +1,8 @@
 "use client";
 
+import { useState } from "react";
+import { BsChevronLeft, BsChevronRight } from "react-icons/bs";
+
 
 const Slider = ({ images }) => {
   // Check if images is provided and not empty
@@ -26,7 +29,7 @@ const Slider = ({ images }) => {
           <div
             key={image.attributes.url}
             style={{
-              backgroundImage: `url('${image.attributes.url}')`,
+              backgroundImage: `url('${image?.attributes.url}')`,
             }}
             className="w-full h-full flex-shrink-0 bg-cover lg:bg-center relative "
           >
@@ -35,9 +38,9 @@ const Slider = ({ images }) => {
         ))}
       </div>
       <div className="absolute inset-0 flex items-end justify-center gap-6 z-20">
-        {largeImages.map((image, index) => (
+        {largeImages.map((image, index:number) => (
           <div
-            key={image.attributes.url}
+            key={image?.attributes.url}
             onClick={() => setSlideIndex(index)}
             className={`mb-6 w-3.5 h-3.5 rounded-full cursor-pointer ${
               index === slideIndex ? "bg-gray-200" : "border"
