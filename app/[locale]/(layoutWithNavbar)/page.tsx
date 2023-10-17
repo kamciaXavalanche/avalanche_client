@@ -18,7 +18,7 @@ export default async function Home() {
 
   return (
     <main>
-{/*       <Slider images={images.data} /> */}
+      <Slider images={images.data} />
       <CookiesPopup />
       <Newsletter />
       <Categories />
