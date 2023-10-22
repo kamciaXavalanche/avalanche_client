@@ -1,8 +1,8 @@
 import Stripe from "stripe";
 import { NextResponse } from "next/server";
+import { cookies } from "next/headers";
 import { z } from "zod";
 import { url } from "@/app/[locale]/constants/constants";
-
 // ADD process.env.STRIPE_SECRET_KEY
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
@@ -24,7 +24,10 @@ const cartItemsSchema = z.object({
 
 type CartItemSchema = z.infer<typeof cartItemSchema>;
 
-const calculateOrderAmount = async (cartItems: CartItemSchema[]) => {
+const calculateOrderAmount = async (
+  cartItems: CartItemSchema[],
+  promoCode: any
+) => {
   let totalAmountPLN = 0;
   const productRequests = [];
 
@@ -74,8 +77,17 @@ const convertPLNToInt = (plnAmount: number) => {
   return Math.round(plnAmount * 100);
 };
 
+type PromoCuponType = {
+  name: string;
+  discount: number;
+  totalPrice: number;
+};
+
 export async function POST(request: Request) {
   const body = await request.json();
+
+  const response = cookies().get("promoCupon")?.value;
+  const promoCupon = JSON.parse(response) as PromoCuponType;
 
   const parsedBody = cartItemsSchema.safeParse(body);
 
@@ -87,11 +99,25 @@ export async function POST(request: Request) {
   }
 
   const calculatedOrderAmount = await calculateOrderAmount(
-    parsedBody.data.cartItems
+    parsedBody.data.cartItems,
+    promoCupon.discount
   );
 
-  if (calculatedOrderAmount !== parsedBody.data.totalPrice) {
-    console.log(calculatedOrderAmount, parsedBody.data.totalPrice);
+  const total = convertPLNToInt(
+    promoCupon.discount
+      ? calculatedOrderAmount - calculatedOrderAmount * promoCupon.discount
+      : calculatedOrderAmount
+  );
+  const totalFromDb = convertPLNToInt(
+    promoCupon.discount
+      ? parsedBody.data.totalPrice -
+          parsedBody.data.totalPrice * promoCupon.discount
+      : parsedBody.data.totalPrice
+  );
+
+  if (total !== totalFromDb) {
+    console.log(total, totalFromDb);
+
     return NextResponse.json(
       {
         message:
@@ -102,7 +128,7 @@ export async function POST(request: Request) {
   }
 
   const paymentIntent = await stripe.paymentIntents.create({
-    amount: convertPLNToInt(calculatedOrderAmount),
+    amount: total,
     currency: "pln",
     payment_method_types: ["card", "blik", "p24"],
   });

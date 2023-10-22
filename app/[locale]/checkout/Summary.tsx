@@ -72,6 +72,12 @@ const Summary = () => {
       });
       const total = totalPrice - totalPrice * cupon.attributes.discount;
       Cookies.set("totalPrice", total.toString());
+      const discountObject = {
+        name: cupon.attributes.codeName,
+        discount: cupon.attributes.discount,
+        totalPrice: total,
+      };
+      Cookies.set("promoCupon", JSON.stringify(discountObject));
     } else {
       alert("You entered a wrong code");
     }
