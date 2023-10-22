@@ -62,7 +62,7 @@ const calculateOrderAmount = async (
             filteredProduct.price *
             cartItem.quantity
           : 0;
-        if (promoCode) {
+        if (promoCode !== 0) {
           const hej = filteredProduct.price * cartItem.quantity - discount;
           totalAmountPLN += hej - hej * promoCode;
         } else {
@@ -92,7 +92,9 @@ export async function POST(request: Request) {
   const body = await request.json();
 
   const response = cookies().get("promoCupon")?.value;
-  const promoCupon = JSON.parse(response) as PromoCuponType;
+  const promoCupon: PromoCuponType = response
+    ? JSON.parse(response)
+    : { name: "", discount: 0, totalPrice: 0 };
 
   const parsedBody = cartItemsSchema.safeParse(body);
 
@@ -115,14 +117,14 @@ export async function POST(request: Request) {
   //     : parsedBody.data.totalPrice
   // );
 
-  const totalFromDb = convertPLNToInt(promoCupon.totalPrice);
+  const test = promoCupon
+    ? parsedBody.data.totalPrice -
+      parsedBody.data.totalPrice * promoCupon.discount
+    : parsedBody.data.totalPrice;
 
-  if (totalFromDb !== convertPLNToInt(calculatedOrderAmount)) {
-    console.log(
-      promoCupon.totalPrice * 100,
-      convertPLNToInt(calculatedOrderAmount)
-    );
-
+  console.log("calculatedOrderAmount", calculatedOrderAmount);
+  console.log("parsedBody", test);
+  if (calculatedOrderAmount !== test) {
     return NextResponse.json(
       {
         message:
@@ -133,7 +135,7 @@ export async function POST(request: Request) {
   }
 
   const paymentIntent = await stripe.paymentIntents.create({
-    amount: convertPLNToInt(promoCupon.totalPrice * 100),
+    amount: convertPLNToInt(calculatedOrderAmount),
     currency: "pln",
     payment_method_types: ["card", "blik", "p24"],
   });
