@@ -13,7 +13,9 @@ export default async function Home() {
   );
   const products = await res.json();
 
-  const imagesResponse = await fetch(`${url}/api/slider-images?populate=*`);
+  const imagesResponse = await fetch(
+    `${url}/api/slider-images?locale=${locale}&populate=*`
+  );
   const images = await imagesResponse.json();
 
   return (
