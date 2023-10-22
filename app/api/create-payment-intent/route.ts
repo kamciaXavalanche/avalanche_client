@@ -26,7 +26,7 @@ type CartItemSchema = z.infer<typeof cartItemSchema>;
 
 const calculateOrderAmount = async (
   cartItems: CartItemSchema[],
-  promoCode: any
+  promoCode: number
 ) => {
   let totalAmountPLN = 0;
   const productRequests = [];
@@ -62,8 +62,13 @@ const calculateOrderAmount = async (
             filteredProduct.price *
             cartItem.quantity
           : 0;
-
-        totalAmountPLN += filteredProduct.price * cartItem.quantity - discount;
+        if (promoCode) {
+          const hej = filteredProduct.price * cartItem.quantity - discount;
+          totalAmountPLN += hej - hej * promoCode;
+        } else {
+          totalAmountPLN +=
+            filteredProduct.price * cartItem.quantity - discount;
+        }
       }
     }
 
@@ -103,20 +108,20 @@ export async function POST(request: Request) {
     promoCupon.discount
   );
 
-  const total = convertPLNToInt(
-    promoCupon.discount
-      ? calculatedOrderAmount - calculatedOrderAmount * promoCupon.discount
-      : calculatedOrderAmount
-  );
-  const totalFromDb = convertPLNToInt(
-    promoCupon.discount
-      ? parsedBody.data.totalPrice -
-          parsedBody.data.totalPrice * promoCupon.discount
-      : parsedBody.data.totalPrice
-  );
+  // const totalFromDb = convertPLNToInt(
+  //   promoCupon.discount
+  //     ? parsedBody.data.totalPrice -
+  //         parsedBody.data.totalPrice * promoCupon.discount
+  //     : parsedBody.data.totalPrice
+  // );
 
-  if (total !== totalFromDb) {
-    console.log(total, totalFromDb);
+  const totalFromDb = convertPLNToInt(promoCupon.totalPrice);
+
+  if (totalFromDb !== convertPLNToInt(calculatedOrderAmount)) {
+    console.log(
+      promoCupon.totalPrice * 100,
+      convertPLNToInt(calculatedOrderAmount)
+    );
 
     return NextResponse.json(
       {
@@ -128,7 +133,7 @@ export async function POST(request: Request) {
   }
 
   const paymentIntent = await stripe.paymentIntents.create({
-    amount: total,
+    amount: convertPLNToInt(promoCupon.totalPrice * 100),
     currency: "pln",
     payment_method_types: ["card", "blik", "p24"],
   });
