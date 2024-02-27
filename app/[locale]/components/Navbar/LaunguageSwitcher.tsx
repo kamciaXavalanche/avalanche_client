@@ -1,6 +1,6 @@
 "use client";
 import { useState } from "react";
-import Link from "next-intl/link";
+import { Link } from "../../../../navigation";
 import { useLocale } from "next-intl";
 import { BiChevronDown, BiChevronUp } from "react-icons/bi";
 import { RiGlobalLine } from "react-icons/ri";

@@ -61,7 +61,11 @@ const Regulations = () => {
         </li>
       </ol>
       <div className="mt-10 flex flex-col justify-center items-center">
-        <h2 className="font-semibold text-lg mb-4">
+        <h2 className="font-semibold text-lg mb-4">Pełny regulamin</h2>
+        <a href="/regulamin.docx" download>
+          <AiOutlineDownload size={28} />
+        </a>
+        <h2 className="font-semibold text-lg mb-4 mt-6">
           Formularz odstąpienia od umowy
         </h2>
         <a href="/formularz.odt" download>

@@ -77,7 +77,10 @@ const Summary = () => {
         discount: cupon.attributes.discount,
         totalPrice: total,
       };
-      Cookies.set("promoCupon", JSON.stringify(discountObject));
+      Cookies.set("promoCupon", JSON.stringify(discountObject), {
+        expires: 0.1,
+        secure: true,
+      });
     } else {
       alert("You entered a wrong code");
     }
